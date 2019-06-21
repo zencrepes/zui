@@ -77,7 +77,7 @@ jobs:
       - run:
           name: SSH - Update settings.json with environment variable
           command: |
-            ssh $SSH_USER@$SSH_HOST "sed -i \"s/GOOGLE_ANALYTICS/$PROD_ZUI_GOOGLE_ANALYTICS/gi\" ~/zencrepes_zui_prod/settings.json && sed -i \"s/METEOR_GITHUB_CLIENTID/$PROD_ZUI_METEOR_GITHUB_CLIENTID/gi\" ~/zencrepes_zui_prod/settings.json && sed -i \"s/METEOR_GITHUB_CLIENTSECRET/$PROD_ZUI_METEOR_GITHUB_CLIENTSECRET/gi\" ~/zencrepes_zui_prod/settings.json"
+            ssh $SSH_USER@$SSH_HOST "sed -i \"s/GOOGLE_ANALYTICS/$PROD_GOOGLE_ANALYTICS/gi\" ~/zencrepes_zui_prod/settings.json && sed -i \"s/METEOR_GITHUB_CLIENTID/$PROD_METEOR_GITHUB_CLIENTID/gi\" ~/zencrepes_zui_prod/settings.json && sed -i \"s/METEOR_GITHUB_CLIENTSECRET/$PROD_METEOR_GITHUB_CLIENTSECRET/gi\" ~/zencrepes_zui_prod/settings.json"
 
       - run:
           name: SSH - Update settings.json with menus content
@@ -134,7 +134,7 @@ jobs:
       - run:
           name: SSH - Update settings.json with environment variable
           command: |
-            ssh $SSH_USER@$SSH_HOST "sed -i \"s/GOOGLE_ANALYTICS/$DEV_ZUI_GOOGLE_ANALYTICS/gi\" ~/zencrepes_zui_dev/settings.json && sed -i \"s/METEOR_GITHUB_CLIENTID/$DEV_ZUI_METEOR_GITHUB_CLIENTID/gi\" ~/zencrepes_zui_dev/settings.json && sed -i \"s/METEOR_GITHUB_CLIENTSECRET/$DEV_ZUI_METEOR_GITHUB_CLIENTSECRET/gi\"  ~/zencrepes_zui_dev/settings.json"
+            ssh $SSH_USER@$SSH_HOST "sed -i \"s/GOOGLE_ANALYTICS/$DEV_GOOGLE_ANALYTICS/gi\" ~/zencrepes_zui_dev/settings.json && sed -i \"s/METEOR_GITHUB_CLIENTID/$DEV_METEOR_GITHUB_CLIENTID/gi\" ~/zencrepes_zui_dev/settings.json && sed -i \"s/METEOR_GITHUB_CLIENTSECRET/$DEV_METEOR_GITHUB_CLIENTSECRET/gi\"  ~/zencrepes_zui_dev/settings.json"
 
       - run:
           name: SSH - Update settings.json with menus content
