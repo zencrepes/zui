@@ -43,7 +43,7 @@ class Step1 extends Component {
           populated with GitHub data. <br />
           The next step of the wizard will let you specify a remote cluster to
           connect to. ZenCrepes API is stateless, it does process your data, but
-          doesn't store anything outside of your Elasticsearch cluster.
+          doesn&apos;t store anything outside of your Elasticsearch cluster.
         </p>
         <p className={classes.subtitle}>Still connected to GitHub</p>
         <p className={classes.paragraph}>

@@ -172,7 +172,20 @@ class Step2 extends Component {
   }
 }
 
-Step2.propTypes = {};
+Step2.propTypes = {
+  classes: PropTypes.object.isRequired,
+  cfgEsType: PropTypes.string.isRequired,
+  cfgEsHost: PropTypes.string.isRequired,
+  cfgEssId: PropTypes.string.isRequired,
+  cfgEssUsername: PropTypes.string.isRequired,
+  cfgEssPassword: PropTypes.string.isRequired,
+
+  updateCfgEsType: PropTypes.func.isRequired,
+  updateCfgEsHost: PropTypes.func.isRequired,
+  updateCfgEssId: PropTypes.func.isRequired,
+  updateCfgEssUsername: PropTypes.func.isRequired,
+  updateCfgEssPassword: PropTypes.func.isRequired
+};
 
 const mapState = state => ({
   cfgEsType: state.global.cfg_es_type,

@@ -30,13 +30,16 @@ class Step3 extends Component {
   }
 }
 
-const mapState = state => ({});
+Step3.propTypes = {
+  classes: PropTypes.object.isRequired,
+  fetchAuth: PropTypes.func.isRequired
+};
 
 const mapDispatch = dispatch => ({
   fetchAuth: dispatch.wizardView.fetchAuth
 });
 
 export default connect(
-  mapState,
+  null,
   mapDispatch
 )(withStyles(styles)(Step3));

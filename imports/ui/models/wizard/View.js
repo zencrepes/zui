@@ -54,7 +54,6 @@ export default {
       const setUserAuthError = this.setUserAuthError;
       setUserAuthLoading(true);
       setUserAuth({});
-      console.log(rootState.global.apiHeaders);
       axios({
         method: "get",
         url: rootState.global.api + "/alive",
@@ -67,7 +66,6 @@ export default {
         .catch(function(error) {
           setUserAuth({});
           setUserAuthError(error);
-          console.log(error);
         })
         .finally(function() {
           setUserAuthLoading(false);

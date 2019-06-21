@@ -126,20 +126,10 @@ export default {
         cfg_ess_username: rootState.global.cfg_ess_username,
         cfg_ess_password: rootState.global.cfg_ess_password
       };
-      console.log(cfgConnector);
       const apiHeaders = {
         cfg_connector: JSON.stringify(cfgConnector)
       };
       this.setApiHeaders(apiHeaders);
-    },
-
-    async checkData() {
-      const incorrectIssues = cfgIssues
-        .find({ data_version: { $ne: Meteor.settings.public.data_version } })
-        .count();
-      if (incorrectIssues > 0) {
-        this.setDataRefresh(true);
-      }
     }
   }
 };

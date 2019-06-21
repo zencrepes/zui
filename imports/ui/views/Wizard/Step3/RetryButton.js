@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { isEmpty } from "lodash";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -34,6 +33,12 @@ class RetryButton extends Component {
     return null;
   }
 }
+
+RetryButton.propTypes = {
+  classes: PropTypes.object.isRequired,
+  userAuthLoading: PropTypes.bool.isRequired,
+  fetchAuth: PropTypes.func.isRequired
+};
 
 const mapState = state => ({
   userAuthLoading: state.wizardView.userAuthLoading

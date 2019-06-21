@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Data from './Data.js';
+import Data from "./Data.js";
 
 class UsersFetch extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <Data />
-        );
-    }
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <Data />;
+  }
 }
 
-UsersFetch.propTypes = {
-
-};
+UsersFetch.propTypes = {};
 
 export default UsersFetch;

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { isEmpty } from "lodash";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -23,14 +22,18 @@ class Loading extends Component {
   }
 }
 
+Loading.propTypes = {
+  classes: PropTypes.object.isRequired,
+  userAuthLoading: PropTypes.bool.isRequired,
+  userAuthError: PropTypes.object
+};
+
 const mapState = state => ({
   userAuthLoading: state.wizardView.userAuthLoading,
   userAuthError: state.wizardView.userAuthError
 });
 
-const mapDispatch = dispatch => ({});
-
 export default connect(
   mapState,
-  mapDispatch
+  null
 )(withStyles(styles)(Loading));

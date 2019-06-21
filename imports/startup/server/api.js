@@ -1,1 +1,1 @@
-import '../../api/OAuth/server/methods.js';
+import "../../api/OAuth/server/methods.js";
