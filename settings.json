@@ -1,0 +1,34 @@
+{
+  "public": {
+    "analyticsSettings": {
+      "Google Analytics": { "trackingId": "GOOGLE_ANALYTICS" }
+    },
+    "menus": {},
+    "labels": {
+      "effort": {
+        "loe:x-small": 1,
+        "loe:small": 1,
+        "loe:medium": 3,
+        "loe:large": 7,
+        "loe:x-large": 15,
+        "loe:xx-large": 30
+      },
+      "sprint_prefix": "sprint:",
+      "phase_prefix": "phase:",
+      "activity_label": "Activity",
+      "area_prefix": "area:"
+    },
+    "data_version": 3,
+    "api": "https://api.zencrepes.io"
+  },
+  "private": {
+    "MAIL_URL": "",
+    "OAuth": {
+      "github": {
+        "clientId": "METEOR_GITHUB_CLIENTID",
+        "secret": "METEOR_GITHUB_CLIENTSECRET",
+        "loginStyle": "popup"
+      }
+    }
+  }
+}
