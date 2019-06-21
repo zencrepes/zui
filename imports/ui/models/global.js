@@ -7,14 +7,16 @@ export default {
   state: {
     log: {},
     menus: {},
+    api: null,
+    apiHeaders: {},
     dataRefresh: false,
     updateQueryPath: "",
     updateQuery: {},
     cfg_es_type: "elasticsearch",
-    cfg_es_host: null,
-    cfg_ess_id: null,
-    cfg_ess_username: null,
-    cfg_ess_password: null
+    cfg_es_host: "",
+    cfg_ess_id: "",
+    cfg_ess_username: "",
+    cfg_ess_password: ""
   },
   reducers: {
     setLog(state, payload) {
@@ -22,6 +24,12 @@ export default {
     },
     setMenus(state, payload) {
       return { ...state, menus: payload };
+    },
+    setApi(state, payload) {
+      return { ...state, api: payload };
+    },
+    setApiHeaders(state, payload) {
+      return { ...state, apiHeaders: JSON.parse(JSON.stringify(payload)) };
     },
     setDataRefresh(state, payload) {
       return { ...state, dataRefresh: payload };
@@ -63,16 +71,17 @@ export default {
         this.setMenus(Meteor.settings.public.menus);
       }
 
+      if (Meteor.settings.public.api !== undefined) {
+        this.setApi(Meteor.settings.public.api);
+      }
+
       //Load credentials from local storage
       this.setCfgEsType(reactLocalStorage.get("cfg_es_type", "elasticsearch"));
-      this.setCfgEsHost(JSON.parse(reactLocalStorage.get("cfg_es_host", null)));
-      this.setCfgEssId(JSON.parse(reactLocalStorage.get("cfg_ess_id", null)));
-      this.setCfgEssUsername(
-        JSON.parse(reactLocalStorage.get("cfg_ess_username", null))
-      );
-      this.setCfgEssPassword(
-        JSON.parse(reactLocalStorage.get("cfg_ess_password", null))
-      );
+      this.setCfgEsHost(reactLocalStorage.get("cfg_es_host", ""));
+      this.setCfgEssId(reactLocalStorage.get("cfg_ess_id", ""));
+      this.setCfgEssUsername(reactLocalStorage.get("cfg_ess_username", ""));
+      this.setCfgEssPassword(reactLocalStorage.get("cfg_ess_password", ""));
+      this.updateApiHeaders();
     },
 
     async updateCfgEsType(payload) {
@@ -80,28 +89,48 @@ export default {
       if (estype !== "elasticcloud" && estype !== "elasticsearch") {
         estype = "elasticsearch";
       }
-      reactLocalStorage.set("cfg_es_type", payload);
-      this.setCfgEsType(payload);
+      reactLocalStorage.set("cfg_es_type", estype);
+      this.setCfgEsType(estype);
+      this.updateApiHeaders();
     },
 
     async updateCfgEsHost(payload) {
       reactLocalStorage.set("cfg_es_host", payload);
       this.setCfgEsHost(payload);
+      this.updateApiHeaders();
     },
 
     async updateCfgEssId(payload) {
       reactLocalStorage.set("cfg_ess_id", payload);
       this.setCfgEssId(payload);
+      this.updateApiHeaders();
     },
 
     async updateCfgEssUsername(payload) {
       reactLocalStorage.set("cfg_ess_username", payload);
       this.setCfgEssUsername(payload);
+      this.updateApiHeaders();
     },
 
     async updateCfgEssPassword(payload) {
       reactLocalStorage.set("cfg_ess_password", payload);
       this.setCfgEssPassword(payload);
+      this.updateApiHeaders();
+    },
+
+    async updateApiHeaders(payload, rootState) {
+      const cfgConnector = {
+        cfg_es_type: rootState.global.cfg_es_type,
+        cfg_es_host: rootState.global.cfg_es_host,
+        cfg_ess_id: rootState.global.cfg_ess_id,
+        cfg_ess_username: rootState.global.cfg_ess_username,
+        cfg_ess_password: rootState.global.cfg_ess_password
+      };
+      console.log(cfgConnector);
+      const apiHeaders = {
+        cfg_connector: JSON.stringify(cfgConnector)
+      };
+      this.setApiHeaders(apiHeaders);
     },
 
     async checkData() {

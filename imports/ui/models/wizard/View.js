@@ -5,7 +5,9 @@ export default {
     steps: ["Welcome !", "Elasticsearch", "Test Connectivity", "Be Agile !"],
     activeStep: 0,
     reposIssues: 0,
-    userAuth: {}
+    userAuth: {},
+    userAuthError: null,
+    userAuthLoading: false
   },
   reducers: {
     setActiveStep(state, payload) {
@@ -17,7 +19,19 @@ export default {
     setUserAuth(state, payload) {
       return {
         ...state,
-        reposIssuserAuthues: JSON.parse(JSON.stringify(payload))
+        userAuth: JSON.parse(JSON.stringify(payload))
+      };
+    },
+    setUserAuthError(state, payload) {
+      return {
+        ...state,
+        userAuthError: payload
+      };
+    },
+    setUserAuthLoading(state, payload) {
+      return {
+        ...state,
+        userAuthLoading: payload
       };
     }
   },
@@ -32,21 +46,31 @@ export default {
       this.setReposIssues(issuesCount);
     },
 
-    fetchAuth() {
+    // Fetch the auth status of the Elasticsearch instance.
+    // This is used to validate the ES cluster is actually reachable for querying
+    fetchAuth(payload, rootState) {
+      const setUserAuth = this.setUserAuth;
+      const setUserAuthLoading = this.setUserAuthLoading;
+      const setUserAuthError = this.setUserAuthError;
+      setUserAuthLoading(true);
+      setUserAuth({});
+      console.log(rootState.global.apiHeaders);
       axios({
         method: "get",
-        url: "http://localhost:5000/alive"
+        url: rootState.global.api + "/alive",
+        headers: rootState.global.apiHeaders
       })
         .then(function(response) {
-          // handle success
-          console.log(response);
+          setUserAuth(response.data.body);
+          setUserAuthError(null);
         })
         .catch(function(error) {
-          // handle error
+          setUserAuth({});
+          setUserAuthError(error);
           console.log(error);
         })
         .finally(function() {
-          // always executed
+          setUserAuthLoading(false);
         });
     }
   }

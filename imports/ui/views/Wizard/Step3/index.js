@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
+import Loading from "./Loading";
+import Elasticsearch from "./Elasticsearch";
+import RetryButton from "./RetryButton";
+
 const styles = {};
 
 class Step3 extends Component {
@@ -18,7 +22,9 @@ class Step3 extends Component {
   render() {
     return (
       <React.Fragment>
-        <span>Step 3 </span>
+        <Loading />
+        <Elasticsearch />
+        <RetryButton />
       </React.Fragment>
     );
   }

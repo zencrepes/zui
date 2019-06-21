@@ -87,7 +87,7 @@ class Step2 extends Component {
           spacing={2}
         >
           <Grid item xs={6} sm container>
-            <FormControl className={classes.selectType}>
+            <FormControl className={classes.selectType} autoComplete="off">
               <InputLabel htmlFor="host-type">Host type</InputLabel>
               <Select
                 value={cfgEsType}
@@ -121,6 +121,7 @@ class Step2 extends Component {
                     className={classes.textField}
                     helperText="Such as: https://username:password@hostname:port"
                     margin="normal"
+                    autoComplete="off"
                   />
                 </Grid>
               </Grid>
@@ -137,26 +138,29 @@ class Step2 extends Component {
                     id="essid"
                     label="Elastic Cloud ID"
                     defaultValue={cfgEssId}
-                    onChange={this.updateEsType}
+                    onChange={this.updateCfgEssId}
                     className={classes.textField}
                     margin="normal"
+                    autoComplete="off"
                   />
                   <TextField
                     id="essusername"
                     label="Username"
                     defaultValue={cfgEssUsername}
-                    onChange={this.updateEsType}
+                    onChange={this.updateCfgEssUsername}
                     className={classes.textField}
                     margin="normal"
+                    autoComplete="off"
                   />
                   <TextField
                     id="esspassword"
                     label="Password"
                     type="password"
                     defaultValue={cfgEssPassword}
-                    onChange={this.updateEsType}
+                    onChange={this.updateCfgEssPassword}
                     className={classes.textField}
                     margin="normal"
+                    autoComplete="off"
                   />
                 </Grid>
               </Grid>
