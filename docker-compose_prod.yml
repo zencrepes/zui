@@ -1,0 +1,16 @@
+zui_prod:
+  image: zencrepes/zui
+  ports:
+    - "8000:3000"
+  links:
+    - mongo_prod
+  environment:
+    - ROOT_URL=https://zui.zencrepes.io
+    - STARTUP_DELAY=20
+    - DISABLE_WEBSOCKETS=1
+    - METEOR_SETTINGS=$PROD_ZUI_METEOR_SETTINGS
+    - MONGO_URL=mongodb://mongo_prod:27017/meteor
+
+mongo_prod:
+  image: mongo:latest
+  command: mongod --storageEngine=wiredTiger
