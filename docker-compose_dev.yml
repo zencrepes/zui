@@ -1,7 +1,7 @@
 zui_dev:
   image: zencrepes/zui
   ports:
-    - "9000:3000"
+    - "11000:3000"
   links:
     - mongo_dev
   environment:
