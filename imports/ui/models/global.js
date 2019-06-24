@@ -127,7 +127,7 @@ export default {
         cfg_ess_password: rootState.global.cfg_ess_password
       };
       let apiHeaders = {};
-      apiHeaders["X-CfgConnector"] = JSON.stringify(cfgConnector);
+      apiHeaders["x-cfgconnector"] = JSON.stringify(cfgConnector);
       this.setApiHeaders(apiHeaders);
     }
   }
