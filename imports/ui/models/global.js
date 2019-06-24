@@ -126,9 +126,8 @@ export default {
         cfg_ess_username: rootState.global.cfg_ess_username,
         cfg_ess_password: rootState.global.cfg_ess_password
       };
-      const apiHeaders = {
-        cfg_connector: JSON.stringify(cfgConnector)
-      };
+      let apiHeaders = {};
+      apiHeaders["X-CfgConnector"] = JSON.stringify(cfgConnector);
       this.setApiHeaders(apiHeaders);
     }
   }
