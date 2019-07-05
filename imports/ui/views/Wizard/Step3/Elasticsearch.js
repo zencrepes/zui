@@ -17,7 +17,11 @@ class Elasticsearch extends Component {
       return (
         <React.Fragment>
           <span>Success</span> <br />
-          <span>{JSON.stringify(userAuth)}</span>
+          <span>
+            You are successfully connected with username: {userAuth.username}
+          </span>
+          <br />
+          <span>Your roles are: {JSON.stringify(userAuth.roles)}</span>
         </React.Fragment>
       );
     }
