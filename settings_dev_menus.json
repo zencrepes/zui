@@ -1,9 +1,0 @@
-{
-  "issues": true,
-  "sprints": true,
-  "milestones": true,
-  "labels": true,
-  "settings": true,
-  "roadmap": true,
-  "projects": true
-}
