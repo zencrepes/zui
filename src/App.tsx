@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Dashboard from './views/dashboard';
 import Settings from './views/settings';
+import Data from './views/data';
 
 interface Type {
   key: string;
@@ -29,6 +30,7 @@ const App: React.FC = () => {
   if (data === undefined) {
     return <p>Loading..., please wait</p>;
   } else {
+    console.log(data);
     return (
       <div className='App'>
         <Router>
@@ -48,6 +50,16 @@ const App: React.FC = () => {
               path='/settings'
               render={props => <Settings {...props} types={data.types} />}
             />
+            {data.types.map(({ key }) => (
+              <Route
+                key={key}
+                exact
+                path={'/' + key}
+                render={props => (
+                  <Data {...props} types={data.types} currentTypeKey={key} />
+                )}
+              />
+            ))}
           </Switch>
         </Router>
       </div>

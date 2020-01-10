@@ -6,6 +6,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 
+import AdapterLink from '../../utils/adapterLink';
+
 import { Type } from '../../global';
 
 interface Props {
@@ -20,7 +22,7 @@ const dynamicMenu: React.FC<Props> = props => {
   return (
     <List>
       {props.types.map(({ key }) => (
-        <ListItem button key={key}>
+        <ListItem button key={key} component={AdapterLink} to={'/' + key}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
