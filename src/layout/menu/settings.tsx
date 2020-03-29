@@ -8,17 +8,10 @@ import TuneIcon from '@material-ui/icons/Tune';
 
 import AdapterLink from '../../utils/adapterLink';
 
-interface Props {}
-
-const SettingsMenu: React.FC<Props> = props => {
+const SettingsMenu: React.FC<object> = () => {
   return (
     <List>
-      <ListItem
-        button
-        key={'Settings'}
-        component={AdapterLink}
-        to={'/settings'}
-      >
+      <ListItem button key={'Settings'} component={AdapterLink} to={'/settings'}>
         <ListItemIcon>
           <TuneIcon />
         </ListItemIcon>

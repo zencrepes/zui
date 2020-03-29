@@ -9,7 +9,7 @@ interface Props {
   datasets?: Dataset[];
 }
 
-const Settings: React.FC<Props> = props => {
+const Settings: React.FC<Props> = (props) => {
   return (
     <Layout {...props}>
       <Typography paragraph>This is the settings section</Typography>

@@ -10,16 +10,10 @@ interface Props {
   currentDatasetKey?: string;
 }
 
-const Data: React.FC<Props> = props => {
-  const index = 'zencrepesg';
-  const graphqlField = '';
-  const projectId = 'githubIssues';
-
+const Data: React.FC<Props> = (props: Props) => {
   return (
     <Layout {...props}>
-      <Typography paragraph>
-        This is the data view section for {props.currentDatasetKey}
-      </Typography>
+      <Typography paragraph>This is the data view section for {props.currentDatasetKey}</Typography>
       <Typography paragraph>blah blah blah</Typography>
     </Layout>
   );

@@ -14,7 +14,7 @@ interface Props {
   datasets?: Dataset[];
 }
 
-const dynamicMenu: React.FC<Props> = props => {
+const dynamicMenu: React.FC<Props> = (props: Props) => {
   console.log(props);
   if (props === undefined || props.datasets === undefined) {
     return null;

@@ -8,9 +8,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 
 import AdapterLink from '../../utils/adapterLink';
 
-interface Props {}
-
-const DashboardMenu: React.FC<Props> = props => {
+const DashboardMenu: React.FC<object> = () => {
   return (
     <List>
       <ListItem button key={'Dashboard'} component={AdapterLink} to={'/'}>

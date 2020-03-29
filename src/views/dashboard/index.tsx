@@ -9,7 +9,7 @@ interface Props {
   datasets?: Dataset[];
 }
 
-const Dashboard: React.FC<Props> = props => {
+const Dashboard: React.FC<Props> = (props) => {
   return (
     <Layout {...props}>
       <Typography paragraph>This is the dashboard section</Typography>
