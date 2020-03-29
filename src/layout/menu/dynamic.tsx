@@ -8,20 +8,20 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 
 import AdapterLink from '../../utils/adapterLink';
 
-import { Type } from '../../global';
+import { Dataset } from '../../global';
 
 interface Props {
-  types?: Type[];
+  datasets?: Dataset[];
 }
 
 const dynamicMenu: React.FC<Props> = props => {
   console.log(props);
-  if (props === undefined || props.types === undefined) {
+  if (props === undefined || props.datasets === undefined) {
     return null;
   }
   return (
     <List>
-      {props.types.map(({ key }) => (
+      {props.datasets.map(({ key }) => (
         <ListItem button key={key} component={AdapterLink} to={'/' + key}>
           <ListItemIcon>
             <InboxIcon />

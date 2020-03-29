@@ -17,14 +17,14 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { Type } from '../global';
+import { Dataset } from '../global';
 
 import DynamicMenu from './menu/dynamic';
 import DashboardMenu from './menu/dashboard';
 import SettingsMenu from './menu/settings';
 
 interface Props {
-  types?: Type[];
+  datasets?: Dataset[];
   children: any[];
 }
 
@@ -149,7 +149,7 @@ const Layout: React.FC<Props> = props => {
         <Divider />
         <DashboardMenu />
         <Divider />
-        <DynamicMenu types={props.types} />
+        <DynamicMenu datasets={props.datasets} />
         <Divider />
         <SettingsMenu />
       </Drawer>

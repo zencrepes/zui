@@ -7,25 +7,35 @@ import Dashboard from './views/dashboard';
 import Settings from './views/settings';
 import Data from './views/data';
 
-interface Type {
+interface Dataset {
   key: string;
   name: string;
 }
 
-interface TypeData {
-  types: Type[];
+interface DatasetData {
+  nodes: Dataset[];
+}
+
+interface Config {
+  config: {
+    datasets: DatasetData;
+  };
 }
 
 const App: React.FC = () => {
-  const DATATYPES = gql`
+  const DATASETS = gql`
     {
-      types {
-        key
-        name
+      config {
+        datasets {
+          nodes {
+            key
+            name
+          }
+        }
       }
     }
   `;
-  const { data } = useQuery<TypeData>(DATATYPES);
+  const { data } = useQuery<Config>(DATASETS);
 
   if (data === undefined) {
     return <p>Loading..., please wait</p>;
@@ -38,25 +48,35 @@ const App: React.FC = () => {
             <Route
               exact
               path='/'
-              render={props => <Dashboard {...props} types={data.types} />}
+              render={props => (
+                <Dashboard {...props} datasets={data.config.datasets.nodes} />
+              )}
             />
             <Route
               exact
               path='/dashboard'
-              render={props => <Dashboard {...props} types={data.types} />}
+              render={props => (
+                <Dashboard {...props} datasets={data.config.datasets.nodes} />
+              )}
             />
             <Route
               exact
               path='/settings'
-              render={props => <Settings {...props} types={data.types} />}
+              render={props => (
+                <Settings {...props} datasets={data.config.datasets.nodes} />
+              )}
             />
-            {data.types.map(({ key }) => (
+            {data.config.datasets.nodes.map(({ key }) => (
               <Route
                 key={key}
                 exact
                 path={'/' + key}
                 render={props => (
-                  <Data {...props} types={data.types} currentTypeKey={key} />
+                  <Data
+                    {...props}
+                    datasets={data.config.datasets.nodes}
+                    currentDatasetKey={key}
+                  />
                 )}
               />
             ))}

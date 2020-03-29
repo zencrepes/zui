@@ -1,4 +1,4 @@
-export interface Type {
+export interface Dataset {
   key: string;
   name: string;
 }

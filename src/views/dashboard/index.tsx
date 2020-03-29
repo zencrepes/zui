@@ -3,10 +3,10 @@ import Typography from '@material-ui/core/Typography';
 
 import Layout from '../../layout';
 
-import { Type } from '../../global';
+import { Dataset } from '../../global';
 
 interface Props {
-  types?: Type[];
+  datasets?: Dataset[];
 }
 
 const Dashboard: React.FC<Props> = props => {
