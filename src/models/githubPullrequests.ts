@@ -12,7 +12,7 @@ export const githubPullrequests = createModel({
   state: {
     log: {},
     loading: false,
-    selectedTab: 'completionchart',
+    selectedTab: 'stats',
   },
   reducers: {
     setLog(state: any, payload: any) {

@@ -1,22 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-interface Props {
-  selectedTab: string;
-}
+import { iRootState } from '../../../store';
 
-const NavTabs: React.FC<Props> = (props: Props) => {
-  const { selectedTab } = props;
+const mapState = (state: iRootState) => ({
+  selectedTab: state.githubPullrequests.selectedTab,
+});
 
-  const [value, setValue] = React.useState(2);
+const mapDispatch = (dispatch: any) => ({
+  setSelectedTab: dispatch.githubPullrequests.setSelectedTab,
+});
 
-  console.log(value);
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
+
+const NavTabs: React.FC<connectedProps> = (props: connectedProps) => {
+  const { selectedTab, setSelectedTab } = props;
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    console.log(newValue);
-    setValue(newValue);
+    setSelectedTab(newValue);
   };
 
   return (
@@ -27,4 +31,4 @@ const NavTabs: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default NavTabs;
+export default connect(mapState, mapDispatch)(NavTabs);

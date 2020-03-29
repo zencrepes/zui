@@ -34,7 +34,7 @@ const Data: React.FC<Props> = (props: Props) => {
               <span>Query Box</span>
             </Grid>
             <Grid item xs={12} sm className={classes.fullWidth}>
-              <NavTabs selectedTab={'stats'} />
+              <NavTabs />
             </Grid>
             <Grid item xs={12} sm className={classes.fullWidth}>
               <Typography paragraph>This is the data view section for {props.currentDatasetKey}</Typography>
