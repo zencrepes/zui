@@ -2,11 +2,12 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import Layout from '../../layout';
 import { Dataset } from '../../global';
 import NavTabs from './navTabs';
+
+import Content from './content';
 
 interface Props {
   datasets?: Dataset[];
@@ -37,8 +38,7 @@ const Data: React.FC<Props> = (props: Props) => {
               <NavTabs />
             </Grid>
             <Grid item xs={12} sm className={classes.fullWidth}>
-              <Typography paragraph>This is the data view section for {props.currentDatasetKey}</Typography>
-              <Typography paragraph>blah blah blah abcd </Typography>
+              <Content />
             </Grid>
           </Grid>
         </Grid>

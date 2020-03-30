@@ -25,7 +25,7 @@ const NavTabs: React.FC<connectedProps> = (props: connectedProps) => {
 
   return (
     <Tabs value={selectedTab} onChange={handleChange} indicatorColor="primary" textColor="primary">
-      <Tab label="Explore" value="stats" />
+      <Tab label="Explore" value="explore" />
       <Tab label="List" value="list" />
     </Tabs>
   );
