@@ -1,0 +1,50 @@
+query($from: Int, $size: Int) {
+  githubPullrequests {
+    data {
+      items(from: $from, size: $size) {
+        totalCount
+        nodes {
+          assignees {
+            edges {
+              node {
+                login
+                name
+                avatarUrl
+              }
+            }
+            totalCount
+          }
+          author {
+            url
+            login
+          }
+          id
+          labels {
+            totalCount
+            edges {
+              node {
+                name
+                color
+              }
+            }
+          }
+          title
+          repository {
+            name
+            url
+            owner {
+              id
+              login
+              url
+            }
+          }
+          milestone {
+            title
+          }
+          state
+          url
+        }
+      }
+    }
+  }
+}

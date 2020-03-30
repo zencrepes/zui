@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { loader } from 'graphql.macro';
 
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,60 +16,9 @@ import { iRootState } from '../../../../store';
 import Header from './header';
 import PullrequestWide from './pullrequestWide';
 
-//https://www.apollographql.com/docs/react/data/pagination/
+const PRS_QUERY = loader('./getPullRequests.graphql');
 
-const PRS_QUERY = gql`
-  query($from: Int, $size: Int) {
-    githubPullrequests {
-      data {
-        items(from: $from, size: $size) {
-          totalCount
-          nodes {
-            assignees {
-              edges {
-                node {
-                  login
-                  name
-                  avatarUrl
-                }
-              }
-              totalCount
-            }
-            author {
-              url
-              login
-            }
-            id
-            labels {
-              totalCount
-              edges {
-                node {
-                  name
-                  color
-                }
-              }
-            }
-            title
-            repository {
-              name
-              url
-              owner {
-                id
-                login
-                url
-              }
-            }
-            milestone {
-              title
-            }
-            state
-            url
-          }
-        }
-      }
-    }
-  }
-`;
+//https://www.apollographql.com/docs/react/data/pagination/
 
 const mapState = (state: iRootState) => ({
   tablePaginationRowsPerPage: state.githubPullrequests.tablePaginationRowsPerPage,
@@ -150,10 +100,3 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
 };
 
 export default connect(mapState, mapDispatch)(List);
-
-// <ItemsTable
-//   items={nodes}
-//   paginationOffset={paginationOffset}
-//   paginationLimit={paginationLimit}
-//   totalCount={totalCount}
-// />;
