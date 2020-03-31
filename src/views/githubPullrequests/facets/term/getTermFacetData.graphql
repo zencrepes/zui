@@ -1,0 +1,13 @@
+query($field: String!) {
+  githubPullrequests {
+    data {
+      aggregations(field: $field) {
+        field
+        buckets {
+          docCount
+          key
+        }
+      }
+    }
+  }
+}

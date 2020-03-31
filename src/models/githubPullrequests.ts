@@ -8,6 +8,55 @@ declare global {
   }
 }
 
+const facets = [
+  {
+    type: 'term',
+    field: 'author.login',
+    name: 'Authors',
+    nullValue: 'EMPTY',
+  },
+  {
+    type: 'term',
+    field: 'state',
+    name: 'States',
+    nullValue: 'EMPTY',
+  },
+  {
+    type: 'term',
+    field: 'repository.name.keyword',
+    name: 'Repository',
+    nullValue: 'EMPTY',
+  },
+  {
+    type: 'term',
+    field: 'repository.owner.login',
+    name: 'Organization',
+    nullValue: 'EMPTY',
+  },
+  {
+    type: 'term',
+    field: 'milestone.title.keyword',
+    name: 'Milestones',
+    nullValue: 'EMPTY',
+  },
+  {
+    type: 'term',
+    field: 'milestone.state',
+    name: 'Milestones States',
+    nullValue: 'EMPTY',
+  },
+  {
+    type: 'date',
+    field: 'createdAt',
+    name: 'Created At',
+  },
+  {
+    type: 'date',
+    field: 'closedAt',
+    name: 'Closed At',
+  },
+];
+
 export const githubPullrequests = createModel({
   state: {
     log: {},
@@ -18,6 +67,8 @@ export const githubPullrequests = createModel({
     tablePaginationCurrentPage: 0,
     tablePaginationOffset: 0,
     tablePaginationLimit: 25,
+    facets: facets,
+    defaultPoints: false,
   },
   reducers: {
     setLog(state: any, payload: any) {

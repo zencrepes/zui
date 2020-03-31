@@ -8,6 +8,7 @@ import { Dataset } from '../../global';
 import NavTabs from './navTabs';
 
 import Content from './content';
+import Facets from './facets';
 
 interface Props {
   datasets?: Dataset[];
@@ -27,7 +28,7 @@ const Data: React.FC<Props> = (props: Props) => {
     <Layout {...props}>
       <Grid container direction="row" justify="flex-start" alignItems="flex-start">
         <Grid item>
-          <span>Facets Column</span>
+          <Facets />
         </Grid>
         <Grid item xs={12} sm container>
           <Grid container direction="column" justify="flex-start" alignItems="flex-start">
