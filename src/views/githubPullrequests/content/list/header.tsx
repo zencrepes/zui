@@ -17,7 +17,7 @@ const Header: React.FC<Props> = (props: Props) => {
         <TableCell>
           <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={8}>
             <Grid item>
-              <span>{totalCount} Issues</span>
+              <span>{totalCount} Pull Requests</span>
             </Grid>
             <Grid item xs={12} sm container></Grid>
           </Grid>

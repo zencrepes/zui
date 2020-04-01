@@ -1,0 +1,14 @@
+query {
+  githubPullrequests {
+    config {
+      aggregations {
+        totalCount
+        nodes {
+          name
+          field
+          facetType
+        }
+      }
+    }
+  }
+}

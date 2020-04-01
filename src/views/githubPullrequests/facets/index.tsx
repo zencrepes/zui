@@ -7,9 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import { iRootState } from '../../../store';
 
 import TermFacet from './term';
+import { Facet } from './types';
 
 const mapState = (state: iRootState) => ({
-  facets: state.githubPullrequests.facets,
   defaultPoints: state.githubPullrequests.defaultPoints,
 });
 
@@ -22,23 +22,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & { facets: Array<Facet> };
 
 const Facets: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
   const { facets, defaultPoints } = props;
 
+  console.log(facets);
   return (
     <div className={classes.root}>
       <Grid container direction="column" justify="flex-start" alignItems="flex-start">
         {facets.map((facet: any) => {
-          if (facet.type === 'term') {
+          if (facet.facetType === 'term') {
             return (
               <Grid item key={facet.field}>
                 <TermFacet facet={facet} defaultPoints={defaultPoints} />
               </Grid>
             );
-          } else if (facet.type === 'date') {
+          } else if (facet.facetType === 'date') {
             return (
               <Grid item key={facet.field}>
                 <div>Date Facet</div>
