@@ -1,10 +1,7 @@
 import React from 'react';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 
 import { Query, Facet } from '../../types';
 
@@ -34,14 +31,14 @@ const QueryRow: React.FC<Props> = (props: Props) => {
   return (
     <TableRow key={query.name}>
       <TableCell padding="none">
-        <OpenButton onClick={loadQuery} />
+        <OpenButton onClick={openQuery} />
       </TableCell>
       <TableCell scope="row">{query.name}</TableCell>
       <TableCell>
         <DisplayQuery query={query.query} facets={facets} updateQuery={null} />
       </TableCell>
       <TableCell padding="none">
-        <DeleteButton onClick={deleteQuery} />
+        <DeleteButton onClick={removeQuery} />
       </TableCell>
     </TableRow>
   );

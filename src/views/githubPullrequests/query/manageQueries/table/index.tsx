@@ -8,11 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 import { Query, Facet } from '../../types';
 
-import OpenButton from './openButton';
-import DeleteButton from './deleteButton';
 import QueryRow from './queryRow';
-
-import DisplayQuery from '../../displayQuery';
 
 interface Props {
   queries: Array<Query>;

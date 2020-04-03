@@ -16,8 +16,6 @@ import DisplayQuery from './displayQuery/index';
 import ManageQueries from './manageQueries';
 import SaveQuery from './saveQuery';
 
-import { addRemoveFromQuery } from '../../../utils/query';
-
 import { Facet, Query } from './types';
 
 const mapState = (state: iRootState) => ({
@@ -48,7 +46,7 @@ type connectedProps = ReturnType<typeof mapState> &
 
 const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
-  const { query, updateQuery, location, match, history, setSelectedTab, facets } = props;
+  const { query, updateQuery, location, history, setSelectedTab, facets } = props;
   const [openSaveQueryDialog, setStateOpenSaveQueryDialog] = React.useState(false);
   const [openManageQueryDialog, setStateOpenManageQueryDialog] = React.useState(false);
 

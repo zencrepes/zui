@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { Query, Facet } from '../types';
+import { Query } from '../types';
 
 interface Props {
   openSaveQueryDialog: boolean;
