@@ -21,6 +21,7 @@ const PRS_QUERY = loader('./getPullRequests.graphql');
 //https://www.apollographql.com/docs/react/data/pagination/
 
 const mapState = (state: iRootState) => ({
+  query: state.githubPullrequests.query,
   tablePaginationRowsPerPage: state.githubPullrequests.tablePaginationRowsPerPage,
   tablePaginationCurrentPage: state.githubPullrequests.tablePaginationCurrentPage,
   tablePaginationOffset: state.githubPullrequests.tablePaginationOffset,
@@ -43,6 +44,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     setTablePaginationLimit,
     tablePaginationCurrentPage,
     setTablePaginationCurrentPage,
+    query,
   } = props;
 
   const changeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +59,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     variables: {
       from: tablePaginationOffset,
       size: tablePaginationLimit,
+      query: JSON.stringify(query),
     },
     fetchPolicy: 'cache-and-network',
   });

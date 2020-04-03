@@ -1,6 +1,8 @@
 // https://github.com/pimterry/loglevel
 import * as log from 'loglevel';
-import { createModel } from '@rematch/core';
+//import { createModel } from '@rematch/core';
+
+import { Dispatch } from '../store';
 
 declare global {
   interface Window {
@@ -8,66 +10,19 @@ declare global {
   }
 }
 
-const facets = [
-  {
-    type: 'term',
-    field: 'author.login',
-    name: 'Authors',
-    nullValue: 'EMPTY',
-  },
-  {
-    type: 'term',
-    field: 'state',
-    name: 'States',
-    nullValue: 'EMPTY',
-  },
-  {
-    type: 'term',
-    field: 'repository.name.keyword',
-    name: 'Repository',
-    nullValue: 'EMPTY',
-  },
-  {
-    type: 'term',
-    field: 'repository.owner.login',
-    name: 'Organization',
-    nullValue: 'EMPTY',
-  },
-  {
-    type: 'term',
-    field: 'milestone.title.keyword',
-    name: 'Milestones',
-    nullValue: 'EMPTY',
-  },
-  {
-    type: 'term',
-    field: 'milestone.state',
-    name: 'Milestones States',
-    nullValue: 'EMPTY',
-  },
-  {
-    type: 'date',
-    field: 'createdAt',
-    name: 'Created At',
-  },
-  {
-    type: 'date',
-    field: 'closedAt',
-    name: 'Closed At',
-  },
-];
-
-export const githubPullrequests = createModel({
+export const githubPullrequests = {
   state: {
     log: {},
     loading: false,
     selectedTab: 'explore',
 
+    query: {},
+    queries: [],
+
     tablePaginationRowsPerPage: 25,
     tablePaginationCurrentPage: 0,
     tablePaginationOffset: 0,
     tablePaginationLimit: 25,
-    facets: facets,
     defaultPoints: false,
   },
   reducers: {
@@ -80,7 +35,6 @@ export const githubPullrequests = createModel({
     setSelectedTab(state: any, payload: any) {
       return { ...state, selectedTab: payload };
     },
-
     setTablePaginationRowsPerPage(state: any, payload: any) {
       // Whenever we change the number of rows per page, we also reset all to default
       return {
@@ -101,8 +55,14 @@ export const githubPullrequests = createModel({
     setTablePaginationLimit(state: any, payload: any) {
       return { ...state, tablePaginationLimit: payload };
     },
+    setQuery(state: any, payload: any) {
+      return { ...state, query: payload };
+    },
+    setQueries(state: any, payload: any) {
+      return { ...state, queries: payload };
+    },
   },
-  effects: {
+  effects: (dispatch: Dispatch) => ({
     async initView() {
       const logger = log.noConflict();
       if (process.env.NODE_ENV !== 'production') {
@@ -111,7 +71,22 @@ export const githubPullrequests = createModel({
         logger.disableAll();
       }
       logger.info('githubPullrequests Logger initialized');
-      this.setLog(logger);
+      dispatch.githubPullrequests.setLog(logger);
     },
-  },
-});
+
+    async saveQuery() {
+      console.log('MODEL SAVE QUERY');
+    },
+    async deleteQuery() {
+      console.log('MODEL DELETE QUERY');
+    },
+
+    async updateQuery(query: any) {
+      if (query === null) {
+        dispatch.githubPullrequests.setQuery({});
+      } else {
+        dispatch.githubPullrequests.setQuery(query);
+      }
+    },
+  }),
+};

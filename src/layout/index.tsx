@@ -98,7 +98,6 @@ const Layout: React.FC<Props> = (props: Props) => {
     setOpen(false);
   };
 
-  console.log(props);
   return (
     <div className={classes.root}>
       <CssBaseline />

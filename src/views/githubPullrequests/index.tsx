@@ -11,6 +11,7 @@ import NavTabs from './navTabs';
 
 import Content from './content';
 import Facets from './facets';
+import Query from './query';
 
 const QUERY_GETFACETS = loader('./getFacets.graphql');
 
@@ -35,16 +36,17 @@ const Data: React.FC<Props> = (props: Props) => {
   if (data === undefined) {
     return <p>Loading..., please wait</p>;
   } else {
+    const facets = data.githubPullrequests.config.aggregations.nodes;
     return (
       <Layout {...props}>
-        <Grid container direction="row" justify="flex-start" alignItems="flex-start">
+        <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={2}>
           <Grid item>
-            <Facets facets={data.githubPullrequests.config.aggregations.nodes} />
+            <Facets facets={facets} />
           </Grid>
           <Grid item xs={12} sm container>
             <Grid container direction="column" justify="flex-start" alignItems="flex-start">
               <Grid item xs={12} sm className={classes.fullWidth}>
-                <span>Query Box</span>
+                <Query facets={facets} />
               </Grid>
               <Grid item xs={12} sm className={classes.fullWidth}>
                 <NavTabs />

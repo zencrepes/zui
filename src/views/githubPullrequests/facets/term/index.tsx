@@ -10,18 +10,19 @@ const TERMFACET_QUERY = loader('./getTermFacetData.graphql');
 interface Props {
   facet: Facet;
   defaultPoints: boolean;
+  addRemoveFacet: Function;
 }
 
 const TermFacet: React.FC<Props> = (props: Props) => {
-  const { facet, defaultPoints } = props;
+  const { facet, defaultPoints, addRemoveFacet } = props;
 
   const clickedFacetItem = (key: string) => {
     console.log('User clicked on: ', key);
+    addRemoveFacet(key, facet);
   };
 
   const selectedValue: string[] = [];
 
-  console.log(facet.field);
   const { data } = useQuery(TERMFACET_QUERY, {
     variables: {
       field: facet.field,
@@ -29,7 +30,6 @@ const TermFacet: React.FC<Props> = (props: Props) => {
     fetchPolicy: 'cache-and-network',
   });
   if (data !== undefined) {
-    console.log(data);
     return (
       <Layout
         facet={facet}

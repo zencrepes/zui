@@ -1,9 +1,13 @@
-query($from: Int, $size: Int) {
+query($from: Int, $size: Int, $query: String) {
   githubPullrequests {
-    data {
+    data(query: $query) {
       items(from: $from, size: $size) {
         totalCount
         nodes {
+          id
+          createdAt
+          closedAt
+          updatedAt
           assignees {
             edges {
               node {
@@ -18,7 +22,6 @@ query($from: Int, $size: Int) {
             url
             login
           }
-          id
           labels {
             totalCount
             edges {
