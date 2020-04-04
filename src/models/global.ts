@@ -1,7 +1,32 @@
 // https://github.com/pimterry/loglevel
 import * as log from 'loglevel';
-import { createModel } from '@rematch/core';
 import createAuth0Client from '@auth0/auth0-spa-js';
+
+import { Dispatch } from '../store';
+import Dexie from 'dexie';
+
+interface Query {
+  id?: number;
+  dataset?: string;
+  name?: string;
+  query?: any;
+}
+
+//https://github.com/dfahlander/Dexie.js/blob/master/samples/typescript-simple/src/index.ts
+//https://github.com/dfahlander/Dexie.js/issues/801
+class QueryDatabase extends Dexie {
+  constructor() {
+    super('queries');
+
+    this.version(1).stores({
+      queries: `++id,dataset,name,query`,
+    });
+  }
+}
+
+interface QueryDatabase {
+  queries: Dexie.Table<Query, string>;
+}
 
 declare global {
   interface Window {
@@ -26,7 +51,7 @@ const setAuth0Config = async () => {
   return window.Auth0;
 };
 
-export const global = createModel({
+export const global = {
   state: {
     log: {},
     loading: false,
@@ -44,6 +69,7 @@ export const global = createModel({
     accessToken: '',
 
     loginMenuOpen: false,
+    dexieDb: new QueryDatabase(),
   },
   reducers: {
     setLog(state: any, payload: any) {
@@ -73,6 +99,9 @@ export const global = createModel({
     setAccessToken(state: any, payload: any) {
       return { ...state, accessToken: payload };
     },
+    setDexieDB(state: any, payload: any) {
+      return { ...state, dexieDb: payload };
+    },
     setShowMenu(state: any, payload: any) {
       return { ...state, showMenu: payload };
     },
@@ -95,8 +124,8 @@ export const global = createModel({
       };
     },
   },
-  effects: {
-    async initApp() {
+  effects: (dispatch: Dispatch) => ({
+    async initApp(payload: any, rootState: any) {
       const logger = log.noConflict();
       if (process.env.NODE_ENV !== 'production') {
         logger.enableAll();
@@ -104,7 +133,7 @@ export const global = createModel({
         logger.disableAll();
       }
       logger.info('Logger initialized');
-      this.setLog(logger);
+      dispatch.global.setLog(logger);
     },
 
     async doLogOut() {
@@ -112,11 +141,11 @@ export const global = createModel({
         window.Auth0.logout({
           returnTo: window.location.origin,
         });
-        this.setLoggedIn(false);
-        this.setAuth0Initialized(false);
-        this.setAuthMessage('');
-        this.setAccessToken('');
-        this.setAuthUser(null);
+        dispatch.global.setLoggedIn(false);
+        dispatch.global.setAuth0Initialized(false);
+        dispatch.global.setAuthMessage('');
+        dispatch.global.setAccessToken('');
+        dispatch.global.setAuthUser(null);
       }
     },
 
@@ -124,17 +153,17 @@ export const global = createModel({
       if (JSON.parse(window._env_.AUTH0_DISABLED) !== true) {
         log.info('User not logged in, initializing authentication');
         if (window.Auth0 !== undefined) {
-          this.setAuth0Initialized(true);
+          dispatch.global.setAuth0Initialized(true);
         } else {
-          this.setLoading(true);
+          dispatch.global.setLoading(true);
           await setAuth0Config();
-          this.setAuth0Initialized(true);
-          this.setLoading(false);
+          dispatch.global.setAuth0Initialized(true);
+          dispatch.global.setLoading(false);
           const isLoggedIn = await window.Auth0.isAuthenticated();
           if (isLoggedIn === true) {
             const accessToken = await window.Auth0.getTokenSilently();
             const user = await window.Auth0.getUser();
-            this.setCallbackState({
+            dispatch.global.setCallbackState({
               loggedIn: isLoggedIn,
               accessToken,
               authUser: user,
@@ -145,10 +174,10 @@ export const global = createModel({
       }
     },
 
-    async loginCallback(payload, rootState) {
+    async loginCallback(payload: any, rootState: any) {
       // tslint:disable-next-line:no-shadowed-variable
       const log = rootState.global.log;
-      this.setLoading(true);
+      dispatch.global.setLoading(true);
       log.info('Received callback, finalizing logging');
       const auth0 = window.Auth0 === undefined ? await setAuth0Config() : window.Auth0;
       if (window.Auth0 !== undefined && rootState.global.loggedIn === false) {
@@ -158,20 +187,20 @@ export const global = createModel({
         if (isLoggedIn === true) {
           const accessToken = await auth0.getTokenSilently();
           const user = await auth0.getUser();
-          this.setCallbackState({
+          dispatch.global.setCallbackState({
             loggedIn: isLoggedIn,
             accessToken,
             authUser: user,
           });
         } else {
-          this.setCallbackState({
+          dispatch.global.setCallbackState({
             loggedIn: isLoggedIn,
             accessToken: '',
             authUser: null,
           });
         }
       }
-      this.setLoading(false);
+      dispatch.global.setLoading(false);
     },
-  },
-});
+  }),
+};

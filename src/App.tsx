@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './App.css';
 import Dashboard from './views/dashboard';
@@ -23,7 +24,15 @@ interface Config {
   };
 }
 
-const App: React.FC = () => {
+const mapDispatch = (dispatch: any) => ({
+  initApp: dispatch.global.initApp,
+});
+
+type connectedProps = ReturnType<typeof mapDispatch>;
+
+const App: React.FC<connectedProps> = (props: connectedProps) => {
+  const { initApp } = props;
+  initApp();
   const DATASETS = gql`
     {
       config {
@@ -77,4 +86,4 @@ const App: React.FC = () => {
   }
 };
 
-export default App;
+export default connect(null, mapDispatch)(App);

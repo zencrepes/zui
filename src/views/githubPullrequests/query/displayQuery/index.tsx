@@ -49,7 +49,7 @@ const DisplayQuery: React.FC<Props> = (props: Props) => {
       </div>
     );
   }
-  return <div className={classes.root}>{JSON.stringify(query)}</div>;
+  return null;
 };
 
 export default DisplayQuery;

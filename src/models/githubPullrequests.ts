@@ -1,6 +1,5 @@
 // https://github.com/pimterry/loglevel
 import * as log from 'loglevel';
-//import { createModel } from '@rematch/core';
 
 import { Dispatch } from '../store';
 
@@ -15,6 +14,7 @@ export const githubPullrequests = {
     log: {},
     loading: false,
     selectedTab: 'explore',
+    dataset: 'githubPullrequests',
 
     query: {},
     queries: [],
@@ -63,7 +63,7 @@ export const githubPullrequests = {
     },
   },
   effects: (dispatch: Dispatch) => ({
-    async initView() {
+    async initView(payload: any, rootState: any) {
       const logger = log.noConflict();
       if (process.env.NODE_ENV !== 'production') {
         logger.enableAll();

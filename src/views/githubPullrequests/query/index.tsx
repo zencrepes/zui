@@ -20,7 +20,9 @@ import { Facet, Query } from './types';
 
 const mapState = (state: iRootState) => ({
   query: state.githubPullrequests.query,
+  dataset: state.githubPullrequests.dataset,
   queries: state.githubPullrequests.queries,
+  dexieDb: state.global.dexieDb,
 });
 
 const mapDispatch = (dispatch: any) => ({
@@ -28,6 +30,8 @@ const mapDispatch = (dispatch: any) => ({
   deleteQuery: dispatch.githubPullrequests.deleteQuery,
   updateQuery: dispatch.githubPullrequests.updateQuery,
   setSelectedTab: dispatch.githubPullrequests.setSelectedTab,
+  setQueries: dispatch.githubPullrequests.setQueries,
+  setQuery: dispatch.githubPullrequests.setQuery,
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +50,19 @@ type connectedProps = ReturnType<typeof mapState> &
 
 const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
-  const { query, updateQuery, location, history, setSelectedTab, facets } = props;
+  const {
+    query,
+    updateQuery,
+    location,
+    history,
+    setSelectedTab,
+    facets,
+    dexieDb,
+    dataset,
+    setQueries,
+    queries,
+    setQuery,
+  } = props;
   const [openSaveQueryDialog, setStateOpenSaveQueryDialog] = React.useState(false);
   const [openManageQueryDialog, setStateOpenManageQueryDialog] = React.useState(false);
 
@@ -106,33 +122,47 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     // });
   };
 
-  const loadQuery = () => {
+  const loadQuery = (query: Query) => {
     console.log('Query index - loadQuery()');
+    console.log(query);
+    history.push({
+      pathname: '/githubPullrequests',
+      search: '?q=' + encodeURIComponent(JSON.stringify(query.query)),
+      state: { detail: JSON.stringify(query.query) },
+    });
     setStateOpenManageQueryDialog(false);
   };
 
-  const saveQuery = () => {
-    console.log('Query index - saveQuery()');
+  const saveQuery = async (queryName: string) => {
+    await dexieDb.queries.add({ name: queryName, dataset, query });
+    console.log('Saved current query under name: ' + queryName);
+    const updatedQueries = await dexieDb.queries.where('dataset').equals(dataset).toArray();
+    setQueries(updatedQueries);
     setStateOpenSaveQueryDialog(false);
   };
 
-  const deleteQuery = () => {
-    console.log('Query index - deleteQuery()');
+  const deleteQuery = async (query: Query) => {
+    await dexieDb.queries.where('id').equals(query.id).delete();
+    console.log('Deleted query: ' + query.name);
+    const updatedQueries = await dexieDb.queries.where('dataset').equals(dataset).toArray();
+    setQueries(updatedQueries);
     setStateOpenManageQueryDialog(false);
   };
 
-  const queries: Array<Query> = [
-    {
-      dataset: 'githubPullrequests',
-      name: 'abcd',
-      query: {
-        op: 'and',
-        content: [{ op: 'in', content: { field: 'assignees.edges.node.login', value: ['jgnieuwhof'] } }],
-      },
-    },
-  ];
+  // In case queries equal 0, we check for anything in indexedDB
+  if (queries.length === 0) {
+    dexieDb.queries
+      .where('dataset')
+      .equals(dataset)
+      .toArray()
+      .then((results) => {
+        if (queries.length !== results.length) {
+          setQueries(results);
+        }
+      });
+  }
 
-  console.log(openManageQueryDialog);
+  const availableQueries: Array<Query> = queries;
   return (
     <div className={classes.root}>
       <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
@@ -149,7 +179,8 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
             />
           </Grid>
         )}
-        {queries.filter((currentQuery) => currentQuery.query === Object.keys(query)).length === 0 && (
+        {availableQueries.filter((currentQuery) => JSON.stringify(currentQuery.query) === JSON.stringify(query))
+          .length === 0 && (
           <Grid item>
             {Object.keys(query).length > 0 && <SaveButton onClick={setOpenSaveQueryDialog} />}
             <SaveQuery
@@ -165,9 +196,11 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
         </Grid>
         <Grid item>
           <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={0}>
-            <Grid item>
-              <ClearButton onClick={clearQuery} />
-            </Grid>
+            {Object.keys(query).length > 0 && (
+              <Grid item>
+                <ClearButton onClick={clearQuery} />
+              </Grid>
+            )}
             <Grid item>
               <DisplayRawQuery query={query} />
             </Grid>

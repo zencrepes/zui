@@ -11,6 +11,7 @@ export interface Facet {
 }
 
 export interface Query {
+  id: number;
   dataset: string;
   name: string;
   query: any;
