@@ -40,7 +40,7 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
   const { facets, defaultPoints, query, history } = props;
 
   const addRemoveFacet = (key: Selection, facet: any) => {
-    const modifiedQuery = addRemoveFromQuery(key, facet, query);
+    const modifiedQuery = addRemoveFromQuery(key.key, facet, query);
     history.push({
       pathname: '/githubPullrequests',
       search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const Term: React.FC<Props> = (props: Props) => {
   const { values, facet, updateQuery } = props;
   const classes = useStyles();
-  const [collapsed, setCollapsed] = React.useState(true);
+  const [collapsed, setCollapsed] = React.useState(false);
 
   let facetsValues = values;
   if (collapsed) {
