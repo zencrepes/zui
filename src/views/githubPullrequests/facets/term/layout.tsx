@@ -64,7 +64,7 @@ const TermFacet: React.FC<Props> = (props: Props) => {
                 defaultPoints={defaultPoints}
                 nullValue={facet.nullValue}
                 clickItem={clickedItem}
-                selected={selectedValues.indexOf(bucket.key) !== -1}
+                selected={selectedValues.includes(bucket.key)}
               />
             ))}
           </List>

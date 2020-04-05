@@ -63,7 +63,6 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     dataset,
     setQueries,
     queries,
-    setQuery,
   } = props;
   const [openSaveQueryDialog, setStateOpenSaveQueryDialog] = React.useState(false);
   const [openManageQueryDialog, setStateOpenManageQueryDialog] = React.useState(false);

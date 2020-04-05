@@ -55,7 +55,7 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
           if (facet.facetType === 'term') {
             return (
               <Grid item key={facet.field}>
-                <TermFacet facet={facet} defaultPoints={defaultPoints} addRemoveFacet={addRemoveFacet} />
+                <TermFacet facet={facet} defaultPoints={defaultPoints} addRemoveFacet={addRemoveFacet} query={query} />
               </Grid>
             );
           } else if (facet.facetType === 'date') {
