@@ -1,6 +1,3 @@
-import { createTermFilter, addRemoveValueFromTermFilter } from './index';
-import { Facet } from './types';
-
 export const removeFieldFromQuery = (field: string, query: any) => {
   let updatedQuery: any = {};
   // If query is empty, simply return empty query

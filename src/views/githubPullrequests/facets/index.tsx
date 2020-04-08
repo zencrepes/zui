@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { iRootState } from '../../../store';
 
 import TermFacet from './term';
-import NumberFacet from './number';
+import MetricsFacet from './metrics';
 import { Facet, Metrics } from './types';
 
 import { addRemoveFromQuery, addRemoveMetricsFromQuery } from '../../../utils/query';
@@ -84,7 +84,7 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
           } else if (facet.facetType === 'metrics') {
             return (
               <Grid item key={facet.field}>
-                <NumberFacet
+                <MetricsFacet
                   facet={facet}
                   defaultPoints={defaultPoints}
                   updateMetricsRange={updateMetricsRange}

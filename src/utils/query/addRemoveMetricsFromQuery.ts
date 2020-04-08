@@ -1,5 +1,5 @@
 import { createMetricsFilter, removeFieldFromQuery } from './index';
-import { Facet, Metrics } from './types';
+import { Facet } from './types';
 
 export const addRemoveMetricsFromQuery = (min: number | null, max: number | null, facet: Facet, query: any) => {
   let updatedQuery: any = {};

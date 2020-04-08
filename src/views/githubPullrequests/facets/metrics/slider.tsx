@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
 
@@ -12,13 +11,6 @@ interface Props {
   facet: Facet;
   updateMetricsRange: Function;
 }
-
-const useStyles = makeStyles(() => ({
-  root: {
-    width: '250px',
-    marginTop: '10px',
-  },
-}));
 
 function valueLabelFormat(value: number) {
   return value.toString();

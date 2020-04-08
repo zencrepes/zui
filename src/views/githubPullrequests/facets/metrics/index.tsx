@@ -5,9 +5,7 @@ import { useQuery } from '@apollo/client';
 import Layout from './layout';
 import { Facet } from './types';
 
-import { getFacetKeysInQuery } from '../../../../utils/query';
-
-const TERMFACET_QUERY = loader('./getNumberFacetData.graphql');
+const METRICSFACET_QUERY = loader('./getMetricsFacetData.graphql');
 
 interface Props {
   facet: Facet;
@@ -16,12 +14,12 @@ interface Props {
   query: any;
 }
 
-const NumberFacet: React.FC<Props> = (props: Props) => {
+const MetricsFacet: React.FC<Props> = (props: Props) => {
   const { facet, defaultPoints, updateMetricsRange, query } = props;
 
   //  const selectedValue: string[] = getFacetKeysInQuery(facet, query);
 
-  const { data } = useQuery(TERMFACET_QUERY, {
+  const { data } = useQuery(METRICSFACET_QUERY, {
     variables: {
       field: facet.field,
       query: JSON.stringify(query),
@@ -41,4 +39,4 @@ const NumberFacet: React.FC<Props> = (props: Props) => {
   return null;
 };
 
-export default NumberFacet;
+export default MetricsFacet;
