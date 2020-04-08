@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Facet } from '../types';
 
 import Term from './term';
+import Metrics from './metrics';
 
 interface Props {
   query: any;
@@ -31,10 +32,16 @@ const DisplayQuery: React.FC<Props> = (props: Props) => {
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
           {query.content.map((content: any) => {
             const facet = facets.find((f: Facet) => f.field === content.content.field);
-            if (facet !== undefined) {
+            if (facet !== undefined && facet.facetType === 'term') {
               return (
                 <Grid item key={content.content.field}>
                   <Term values={content.content.value} facet={facet} updateQuery={updateQuery} />
+                </Grid>
+              );
+            } else if (facet !== undefined && facet.facetType === 'metrics') {
+              return (
+                <Grid item key={content.content.field + content.op}>
+                  <Metrics op={content.op} value={content.content.value} facet={facet} updateQuery={updateQuery} />
                 </Grid>
               );
             }

@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { iRootState } from '../../../store';
 
-import { addRemoveFromQuery } from '../../../utils/query';
+import { addRemoveFromQuery, addRemoveMetricsFromQuery } from '../../../utils/query';
 
 import OpenButton from './openButton';
 import ClearButton from './clearButton';
@@ -114,7 +114,12 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     console.log('Update query');
     console.log('Close: ' + value + ' from: ' + facet.field);
 
-    const updatedQuery = addRemoveFromQuery(value, facet, query);
+    let updatedQuery = {};
+    if (facet.facetType === 'term') {
+      updatedQuery = addRemoveFromQuery(value, facet, query);
+    } else if (facet.facetType === 'metrics') {
+      updatedQuery = addRemoveMetricsFromQuery(null, null, facet, query);
+    }
     history.push({
       pathname: '/githubPullrequests',
       search: '?q=' + encodeURIComponent(JSON.stringify(updatedQuery)),

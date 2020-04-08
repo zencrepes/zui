@@ -4,7 +4,7 @@ export interface Bucket {
 }
 
 export interface Facet {
-  type: string;
+  facetType: string;
   field: string;
   name: string;
   nullValue: string;

@@ -88,7 +88,6 @@ const PullrequestWide: React.FC<Props> = (props: Props) => {
   const { item } = props;
   const classes = useStyles();
 
-  console.log(item);
   const pointsExp = XRegExp('SP:[.\\d]');
   return (
     <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>

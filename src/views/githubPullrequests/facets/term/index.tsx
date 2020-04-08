@@ -29,10 +29,11 @@ const TermFacet: React.FC<Props> = (props: Props) => {
   const { data } = useQuery(TERMFACET_QUERY, {
     variables: {
       field: facet.field,
+      query: JSON.stringify(query),
     },
     fetchPolicy: 'cache-and-network',
   });
-  if (data !== undefined) {
+  if (data !== undefined && data.githubPullrequests.data.aggregations.buckets.length > 0) {
     return (
       <Layout
         facet={facet}

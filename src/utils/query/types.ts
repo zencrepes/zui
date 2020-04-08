@@ -18,3 +18,10 @@ export interface Query {
   op?: QueryGroupOp | QueryValueOp;
   content: Array<Query> | QueryField;
 }
+
+export interface Metrics {
+  overallMin: number;
+  overallMax: number;
+  min: number;
+  max: number;
+}

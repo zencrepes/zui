@@ -8,9 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import { iRootState } from '../../../store';
 
 import TermFacet from './term';
-import { Facet } from './types';
+import NumberFacet from './number';
+import { Facet, Metrics } from './types';
 
-import { addRemoveFromQuery } from '../../../utils/query';
+import { addRemoveFromQuery, addRemoveMetricsFromQuery } from '../../../utils/query';
 
 const mapState = (state: iRootState) => ({
   defaultPoints: state.githubPullrequests.defaultPoints,
@@ -48,6 +49,22 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
     });
   };
 
+  const updateMetricsRange = (min: number, max: number, facet: any, metrics: Metrics) => {
+    console.log(min);
+    console.log(max);
+    console.log(metrics);
+    // Only update the URL if one of the two value have changes
+    if (metrics.min !== min || metrics.max !== max) {
+      console.log('updated');
+      const modifiedQuery = addRemoveMetricsFromQuery(min, max, facet, query);
+      history.push({
+        pathname: '/githubPullrequests',
+        search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
+        state: { detail: modifiedQuery },
+      });
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Grid container direction="column" justify="flex-start" alignItems="flex-start">
@@ -62,6 +79,17 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
             return (
               <Grid item key={facet.field}>
                 <div>Date Facet</div>
+              </Grid>
+            );
+          } else if (facet.facetType === 'metrics') {
+            return (
+              <Grid item key={facet.field}>
+                <NumberFacet
+                  facet={facet}
+                  defaultPoints={defaultPoints}
+                  updateMetricsRange={updateMetricsRange}
+                  query={query}
+                />
               </Grid>
             );
           }
