@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +14,7 @@ import NavTabs from './navTabs';
 import Content from './content';
 import Facets from './facets';
 import Query from './query';
+import { iRootState } from '../../store';
 
 const QUERY_GETFACETS = loader('./getFacets.graphql');
 
@@ -20,14 +23,34 @@ interface Props {
   currentDatasetKey?: string;
 }
 
+const mapState = (state: iRootState) => ({});
+
+const mapDispatch = (dispatch: any) => ({
+  updateQueryIfDifferent: dispatch.githubPullrequests.updateQueryIfDifferent,
+});
+
 const useStyles = makeStyles((theme) => ({
   fullWidth: {
     width: '100%',
   },
 }));
 
-const Data: React.FC<Props> = (props: Props) => {
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps & Props;
+
+const Data: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
+  const { updateQueryIfDifferent, location } = props;
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('q') !== null) {
+      const queryRaw = params.get('q');
+      if (queryRaw !== null) {
+        const queryUrl = decodeURIComponent(queryRaw);
+        updateQueryIfDifferent(JSON.parse(queryUrl));
+      }
+    }
+  });
 
   const { data } = useQuery(QUERY_GETFACETS, {
     fetchPolicy: 'cache-and-network',
@@ -62,4 +85,4 @@ const Data: React.FC<Props> = (props: Props) => {
   }
 };
 
-export default Data;
+export default withRouter(connect(mapState, mapDispatch)(Data));

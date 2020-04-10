@@ -81,11 +81,23 @@ export const githubPullrequests = {
       console.log('MODEL DELETE QUERY');
     },
 
-    async updateQuery(query: any) {
-      if (query === null) {
-        dispatch.githubPullrequests.setQuery({});
-      } else {
-        dispatch.githubPullrequests.setQuery(query);
+    async updateQueryIfDifferent(newQuery: any, rootState: any) {
+      const originalQuery = rootState.githubPullrequests.query;
+      // Only update the store if the query is different than store
+      // Might need to replace stringify by Lodash isEqual
+      if (JSON.stringify(originalQuery) !== JSON.stringify(newQuery)) {
+        if (newQuery === null) {
+          dispatch.githubPullrequests.setQuery({});
+        } else {
+          dispatch.githubPullrequests.setQuery(newQuery);
+        }
+      }
+    },
+
+    async updateTabIfDifferent(newTab: any, rootState: any) {
+      const originalTab = rootState.githubPullrequests.selectedTab;
+      if (originalTab !== newTab) {
+        dispatch.githubPullrequests.setSelectedTab(newTab);
       }
     },
   }),

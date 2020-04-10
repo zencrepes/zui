@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ const mapState = (state: iRootState) => ({
 const mapDispatch = (dispatch: any) => ({
   saveQuery: dispatch.githubPullrequests.saveQuery,
   deleteQuery: dispatch.githubPullrequests.deleteQuery,
-  updateQuery: dispatch.githubPullrequests.updateQuery,
+  // updateQuery: dispatch.githubPullrequests.updateQuery,
   setSelectedTab: dispatch.githubPullrequests.setSelectedTab,
   setQueries: dispatch.githubPullrequests.setQueries,
   setQuery: dispatch.githubPullrequests.setQuery,
@@ -52,43 +52,9 @@ type connectedProps = ReturnType<typeof mapState> &
 
 const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
-  const {
-    query,
-    updateQuery,
-    location,
-    history,
-    setSelectedTab,
-    facets,
-    dexieDb,
-    dataset,
-    setQueries,
-    queries,
-  } = props;
+  const { query, history, facets, dexieDb, dataset, setQueries, queries } = props;
   const [openSaveQueryDialog, setStateOpenSaveQueryDialog] = React.useState(false);
   const [openManageQueryDialog, setStateOpenManageQueryDialog] = React.useState(false);
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    if (params.get('q') !== null) {
-      const queryRaw = params.get('q');
-      if (queryRaw !== null) {
-        const queryUrl = decodeURIComponent(queryRaw);
-        // We only update the store if the query is different than store
-        // We might need to replace stringify by Lodash isEqual
-        if (JSON.stringify(query) !== JSON.stringify(JSON.parse(queryUrl))) {
-          updateQuery(JSON.parse(queryUrl));
-        }
-      }
-    }
-    //else {
-    //   if (JSON.stringify(query) !== JSON.stringify(query)) {
-    //     updateQuery({});
-    //   }
-    // }
-    if (params.get('tab') !== undefined && params.get('tab') !== null) {
-      setSelectedTab(params.get('tab'));
-    }
-  });
 
   const setOpenSaveQueryDialog = () => {
     console.log('click Open Save');

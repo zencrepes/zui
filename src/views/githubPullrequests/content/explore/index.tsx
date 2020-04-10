@@ -36,7 +36,7 @@ const Explore: React.FC<connectedProps> = (props: connectedProps) => {
   const openQuery = (newQuery: any) => {
     history.push({
       pathname: '/githubPullrequests',
-      search: '?q=' + encodeURIComponent(JSON.stringify(newQuery)),
+      search: '?q=' + encodeURIComponent(JSON.stringify(newQuery)) + '&tab=' + encodeURIComponent('list'),
       state: { detail: newQuery },
     });
   };
