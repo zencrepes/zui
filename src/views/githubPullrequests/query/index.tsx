@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { iRootState } from '../../../store';
 
-import { addRemoveFromQuery, addRemoveMetricsFromQuery } from '../../../utils/query';
+import { addRemoveFromQuery, addRemoveMetricsFromQuery, addRemoveDateFromQuery } from '../../../utils/query';
 
 import OpenButton from './openButton';
 import ClearButton from './clearButton';
@@ -68,7 +68,6 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
   const [openManageQueryDialog, setStateOpenManageQueryDialog] = React.useState(false);
 
   useEffect(() => {
-    console.log('useEffect in Query index');
     const params = new URLSearchParams(location.search);
     if (params.get('q') !== null) {
       const queryRaw = params.get('q');
@@ -110,7 +109,7 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     });
   };
 
-  const updateViewQuery = (value: string, facet: Facet) => {
+  const updateViewQuery = (value: string, facet: Facet, op?: string) => {
     console.log('Update query');
     console.log('Close: ' + value + ' from: ' + facet.field);
 
@@ -119,6 +118,8 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
       updatedQuery = addRemoveFromQuery(value, facet, query);
     } else if (facet.facetType === 'metrics') {
       updatedQuery = addRemoveMetricsFromQuery(null, null, facet, query);
+    } else if (facet.facetType === 'date' && op !== undefined) {
+      updatedQuery = addRemoveDateFromQuery(facet.field, op, value, query);
     }
     history.push({
       pathname: '/githubPullrequests',

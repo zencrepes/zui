@@ -73,7 +73,7 @@ const Selector: React.FC<Props> = (props: Props) => {
         <ListItemText primary={facetItem} className={classes.listItemText} />
       </Tooltip>
       <ListItemSecondaryAction>
-        <Chip label={defaultPoints ? data.docCount + ' pts' : data.docCount} className={classes.chip} />
+        <Chip label={defaultPoints ? data.docCount + ' pts' : data.docCount + ' PRs'} className={classes.chip} />
       </ListItemSecondaryAction>
     </ListItem>
   );

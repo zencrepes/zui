@@ -9,9 +9,10 @@ import { iRootState } from '../../../store';
 
 import TermFacet from './term';
 import MetricsFacet from './metrics';
+import DateFacet from './date';
 import { Facet, Metrics } from './types';
 
-import { addRemoveFromQuery, addRemoveMetricsFromQuery } from '../../../utils/query';
+import { addRemoveFromQuery, addRemoveMetricsFromQuery, addRemoveDateFromQuery } from '../../../utils/query';
 
 const mapState = (state: iRootState) => ({
   defaultPoints: state.githubPullrequests.defaultPoints,
@@ -49,6 +50,18 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
     });
   };
 
+  const addRemoveDateFilter = (selectedField: string, selectedOp: string, selectedDate: string) => {
+    console.log(selectedField);
+    console.log(selectedOp);
+    console.log(selectedDate);
+    const modifiedQuery = addRemoveDateFromQuery(selectedField, selectedOp, selectedDate, query);
+    history.push({
+      pathname: '/githubPullrequests',
+      search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
+      state: { detail: modifiedQuery },
+    });
+  };
+
   const updateMetricsRange = (min: number, max: number, facet: any, metrics: Metrics) => {
     console.log(min);
     console.log(max);
@@ -65,20 +78,26 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
     }
   };
 
+  // Date facets are always displayed first
+  const dateFacetsfields = facets.filter((facet: any) => facet.facetType === 'date').map((facet: any) => facet.field);
   return (
     <div className={classes.root}>
       <Grid container direction="column" justify="flex-start" alignItems="flex-start">
+        {dateFacetsfields.length > 0 && (
+          <Grid item key={'date'}>
+            <DateFacet
+              facets={facets.filter((facet: any) => facet.facetType === 'date')}
+              addRemoveDateFilter={addRemoveDateFilter}
+              query={query}
+            />
+          </Grid>
+        )}
+
         {facets.map((facet: any) => {
           if (facet.facetType === 'term') {
             return (
               <Grid item key={facet.field}>
                 <TermFacet facet={facet} defaultPoints={defaultPoints} addRemoveFacet={addRemoveFacet} query={query} />
-              </Grid>
-            );
-          } else if (facet.facetType === 'date') {
-            return (
-              <Grid item key={facet.field}>
-                <div>Date Facet</div>
               </Grid>
             );
           } else if (facet.facetType === 'metrics') {

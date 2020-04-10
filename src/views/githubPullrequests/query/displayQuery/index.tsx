@@ -7,6 +7,7 @@ import { Facet } from '../types';
 
 import Term from './term';
 import Metrics from './metrics';
+import DateQuery from './date';
 
 interface Props {
   query: any;
@@ -42,6 +43,12 @@ const DisplayQuery: React.FC<Props> = (props: Props) => {
               return (
                 <Grid item key={content.content.field + content.op}>
                   <Metrics op={content.op} value={content.content.value} facet={facet} updateQuery={updateQuery} />
+                </Grid>
+              );
+            } else if (facet !== undefined && facet.facetType === 'date') {
+              return (
+                <Grid item key={content.content.field + content.op}>
+                  <DateQuery op={content.op} value={content.content.value} facet={facet} updateQuery={updateQuery} />
                 </Grid>
               );
             }

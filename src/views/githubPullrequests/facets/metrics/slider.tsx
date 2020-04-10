@@ -20,8 +20,6 @@ const MetricsSlider: React.FC<Props> = (props: Props) => {
   const { metrics, updateMetricsRange, facet } = props;
   const [value, setValue] = React.useState<number[]>([metrics.min, metrics.max]);
 
-  console.log(facet.name);
-  console.log(metrics);
   const handleChange = (event: any, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };

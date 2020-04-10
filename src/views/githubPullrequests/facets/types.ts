@@ -3,7 +3,7 @@ export interface Facet {
   facetType: string;
   name: string;
   nullValue: string;
-  default: true;
+  default: boolean;
 }
 
 export interface Metrics {

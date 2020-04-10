@@ -5,3 +5,6 @@ export { default as createTermFilter } from './createTermFilter';
 export { default as createMetricsFilter } from './createMetricsFilter';
 export { default as getFacetKeysInQuery } from './getFacetKeysInQuery';
 export { default as removeFieldFromQuery } from './removeFieldFromQuery';
+export { default as createDateFilter } from './createDateFilter';
+export { default as addRemoveDateFromQuery } from './addRemoveDateFromQuery';
+export { default as removeDateFieldFromQuery } from './removeDateFieldFromQuery';

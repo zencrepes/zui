@@ -6,14 +6,13 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
-
+import Typography from '@material-ui/core/Typography';
 import blue from '@material-ui/core/colors/blue';
 
 import Selector from './selector';
 import ExpandButton from './expandButton';
 
 import { Bucket, Facet } from './types';
-import { Typography } from '@material-ui/core';
 
 interface Props {
   facet: Facet;
