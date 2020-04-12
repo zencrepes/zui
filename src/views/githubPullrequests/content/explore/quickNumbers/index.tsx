@@ -75,8 +75,6 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
     fetchPolicy: 'cache-and-network',
   });
 
-  console.log(data);
-
   if (data === undefined) {
     return null;
   }

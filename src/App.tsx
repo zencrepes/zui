@@ -50,7 +50,6 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
   if (data === undefined) {
     return <p>Loading..., please wait</p>;
   } else {
-    console.log(data);
     return (
       <div className="App">
         <Router>

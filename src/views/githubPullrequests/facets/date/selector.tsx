@@ -51,13 +51,11 @@ const Selector: React.FC<Props> = (props: Props) => {
     addRemoveDateFilter(clickedValue.content.field, clickedValue.op, clickedValue.content.value);
   };
 
-  console.log(filter);
-  console.log(facet);
   let facetTitle = facet.name;
   if (filter.op === '>=') {
-    facetTitle = facetTitle + ' after ';
-  } else {
     facetTitle = facetTitle + ' before ';
+  } else {
+    facetTitle = facetTitle + ' after ';
   }
   facetTitle = facetTitle + format(parseISO(filter.content.value), 'LLL do yyyy');
 

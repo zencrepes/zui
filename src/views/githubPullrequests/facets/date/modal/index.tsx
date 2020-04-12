@@ -111,7 +111,7 @@ const DateModal: React.FC<Props> = (props: Props) => {
                   <KeyboardDatePicker
                     margin="normal"
                     id="date-picker-dialog"
-                    label="Date picker dialog"
+                    label="Select a date"
                     format="MM/dd/yyyy"
                     value={selectedDate}
                     onChange={(date: Date | null) => {

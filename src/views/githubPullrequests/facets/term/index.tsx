@@ -20,7 +20,6 @@ const TermFacet: React.FC<Props> = (props: Props) => {
   const { facet, defaultPoints, addRemoveFacet, query } = props;
 
   const clickedFacetItem = (key: string) => {
-    console.log('User clicked on: ', key);
     addRemoveFacet(key, facet);
   };
 

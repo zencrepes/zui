@@ -57,17 +57,14 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
   const [openManageQueryDialog, setStateOpenManageQueryDialog] = React.useState(false);
 
   const setOpenSaveQueryDialog = () => {
-    console.log('click Open Save');
     setStateOpenSaveQueryDialog(true);
   };
 
   const setOpenManageQueryDialog = () => {
-    console.log('click Open Manager');
     setStateOpenManageQueryDialog(true);
   };
 
   const clearQuery = () => {
-    console.log('clear query');
     history.push({
       pathname: '/githubPullrequests',
       search: '?q=' + encodeURIComponent('{}'),
@@ -76,9 +73,6 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   const updateViewQuery = (value: string, facet: Facet, op?: string) => {
-    console.log('Update query');
-    console.log('Close: ' + value + ' from: ' + facet.field);
-
     let updatedQuery = {};
     if (facet.facetType === 'term') {
       updatedQuery = addRemoveFromQuery(value, facet, query);
@@ -95,8 +89,6 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   const loadQuery = (query: Query) => {
-    console.log('Query index - loadQuery()');
-    console.log(query);
     history.push({
       pathname: '/githubPullrequests',
       search: '?q=' + encodeURIComponent(JSON.stringify(query.query)),
@@ -107,7 +99,6 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
 
   const saveQuery = async (queryName: string) => {
     await dexieDb.queries.add({ name: queryName, dataset, query });
-    console.log('Saved current query under name: ' + queryName);
     const updatedQueries = await dexieDb.queries.where('dataset').equals(dataset).toArray();
     setQueries(updatedQueries);
     setStateOpenSaveQueryDialog(false);
@@ -115,7 +106,6 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
 
   const deleteQuery = async (query: Query) => {
     await dexieDb.queries.where('id').equals(query.id).delete();
-    console.log('Deleted query: ' + query.name);
     const updatedQueries = await dexieDb.queries.where('dataset').equals(dataset).toArray();
     setQueries(updatedQueries);
     setStateOpenManageQueryDialog(false);

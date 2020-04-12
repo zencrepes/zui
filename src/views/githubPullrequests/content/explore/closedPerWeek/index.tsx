@@ -13,10 +13,11 @@ const PRWEEK_QUERY = loader('./getPrsClosedPerDay.graphql');
 
 interface Props {
   query: any;
+  openWeek: Function;
 }
 
 const ClosedPerWeek: React.FC<Props> = (props: Props) => {
-  const { query } = props;
+  const { query, openWeek } = props;
 
   const { data } = useQuery(PRWEEK_QUERY, {
     variables: {
@@ -26,7 +27,6 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
     fetchPolicy: 'cache-and-network',
   });
   if (data !== undefined) {
-    console.log(data);
     // Normalize the dataset (x points might not be the same)
     const datapoints: Array<string> = [];
     for (const item of data.githubPullrequests.data.createdAt.buckets) {
@@ -55,6 +55,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
           backgroundColor: 'rgb(54, 162, 235)',
           borderColor: 'rgb(54, 162, 235)',
           pointRadius: 0,
+          pointHitRadius: 5,
           type: 'line',
           fill: false,
         },
@@ -65,16 +66,16 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
           borderColor: 'rgb(255, 99, 132)',
           type: 'line',
           pointRadius: 0,
+          pointHitRadius: 5,
           fill: false,
         },
       ],
       labels: dataseries.map((item: any) => format(parseISO(item.label), 'LLL do yyyy')),
     };
 
-    console.log(chartData);
     return (
       <CustomCard headerTitle="Activity per week" headerFactTitle="" headerFactValue="">
-        <HistoryLine chartData={chartData} />
+        <HistoryLine chartData={chartData} dataset={dataseries} openClick={openWeek} />
       </CustomCard>
     );
   }

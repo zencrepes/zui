@@ -7,7 +7,7 @@ export const addRemoveFromQuery = (value: string, facet: Facet, query: any) => {
   if (Object.keys(query).length === 0) {
     updatedQuery = {
       op: 'and',
-      content: [createTermFilter(facet.field, value)],
+      content: [createTermFilter('in', facet.field, [value])],
     };
     return updatedQuery;
   }
@@ -17,7 +17,7 @@ export const addRemoveFromQuery = (value: string, facet: Facet, query: any) => {
     // The facet doesn't exist, adding it
     updatedQuery = {
       ...query,
-      content: [...query.content, ...[createTermFilter(facet.field, value)]],
+      content: [...query.content, ...[createTermFilter('in', facet.field, [value])]],
     };
     return updatedQuery;
   }

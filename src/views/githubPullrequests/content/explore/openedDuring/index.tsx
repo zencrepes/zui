@@ -82,7 +82,7 @@ const OpenedDuring: React.FC<Props> = (props: Props) => {
       labels: buckets.map((b: any) => b.name),
     };
     return (
-      <CustomCard headerTitle="Have been opened during" headerFactTitle="" headerFactValue="">
+      <CustomCard headerTitle="Have been opened during" headerFactTitle="Currently CLOSED" headerFactValue="">
         <SimpleBar chartData={chartData} />
       </CustomCard>
     );

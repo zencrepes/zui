@@ -26,6 +26,22 @@ class HistoryLine extends Component<any, any> {
     this.allowClick = true;
   };
 
+  clickChart = (event: any) => {
+    const { dataset, openClick } = this.props;
+    const activePoints = this.chart.getElementsAtEvent(event);
+    if (activePoints[0] !== undefined) {
+      const idx = activePoints[0]._index;
+      if (this.allowClick === true) {
+        this.allowClick = false;
+        const clickedBucket = dataset[idx];
+        setTimeout(() => {
+          openClick(clickedBucket);
+          this.resetAllowClick();
+        }, 500);
+      }
+    }
+  };
+
   buildChart = () => {
     const { chartData } = this.props;
     const myChartRef = this.chartRef.current.getContext('2d');
@@ -38,6 +54,7 @@ class HistoryLine extends Component<any, any> {
       data: chartData,
       options: {
         //        responsive: false,
+        onClick: this.clickChart,
         maintainAspectRatio: false,
         scales: {
           yAxes: [

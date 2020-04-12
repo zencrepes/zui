@@ -26,6 +26,22 @@ class SimpleBar extends Component<any, any> {
     this.allowClick = true;
   };
 
+  clickChart = (event: any) => {
+    const { buckets, openQuery } = this.props;
+    const activePoints = this.chart.getElementsAtEvent(event);
+    if (activePoints[0] !== undefined) {
+      const idx = activePoints[0]._index;
+      if (this.allowClick === true) {
+        this.allowClick = false;
+        const clickedBucket = buckets[idx];
+        openQuery(clickedBucket.query);
+        setTimeout(() => {
+          this.resetAllowClick();
+        }, 1000);
+      }
+    }
+  };
+
   buildChart = () => {
     const { chartData } = this.props;
     const myChartRef = this.chartRef.current.getContext('2d');
@@ -37,6 +53,7 @@ class SimpleBar extends Component<any, any> {
       type: 'bar',
       data: chartData,
       options: {
+        onClick: this.clickChart,
         maintainAspectRatio: false,
         scales: {
           yAxes: [

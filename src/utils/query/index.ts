@@ -1,3 +1,4 @@
+export { default as addFilterToQuery } from './addFilterToQuery';
 export { default as addRemoveFromQuery } from './addRemoveFromQuery';
 export { default as addRemoveMetricsFromQuery } from './addRemoveMetricsFromQuery';
 export { default as addRemoveValueFromTermFilter } from './addRemoveValueFromTermFilter';
@@ -8,3 +9,4 @@ export { default as removeFieldFromQuery } from './removeFieldFromQuery';
 export { default as createDateFilter } from './createDateFilter';
 export { default as addRemoveDateFromQuery } from './addRemoveDateFromQuery';
 export { default as removeDateFieldFromQuery } from './removeDateFieldFromQuery';
+export { default as removeFilterFromQuery } from './removeFilterFromQuery';

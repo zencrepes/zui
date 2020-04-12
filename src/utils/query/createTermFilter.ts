@@ -1,9 +1,9 @@
-export const createTermFilter = (field: string, value: string) => {
+export const createTermFilter = (op: string, field: string, value: Array<string> | string) => {
   return {
-    op: 'in',
+    op,
     content: {
       field,
-      value: [value],
+      value,
     },
   };
 };

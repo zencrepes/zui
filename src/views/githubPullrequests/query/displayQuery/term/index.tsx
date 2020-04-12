@@ -26,27 +26,36 @@ const Term: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [collapsed, setCollapsed] = React.useState(false);
 
-  let facetsValues = values;
-  if (collapsed) {
-    facetsValues = values.slice(0, 2);
-  }
+  if (Array.isArray(values)) {
+    let facetsValues = values;
+    if (collapsed) {
+      facetsValues = values.slice(0, 2);
+    }
 
-  return (
-    <div className={classes.root}>
-      <span>{facet.name} </span>
-      {facetsValues.length === 1 && <span>is</span>}
-      {facetsValues.length > 1 && <span> in (</span>}
-      {facetsValues.map((value) => (
-        <Value key={value} facet={facet} value={value} updateQuery={updateQuery} />
-      ))}
-      <ExpandButton collapsed={collapsed} length={values.length} onClick={setCollapsed} />
-      {values.length > 1 && <span> )</span>}
-      {/* {facets.slice(-1)[0].name !== facet.name && (
+    return (
+      <div className={classes.root}>
+        <span>{facet.name} </span>
+        {facetsValues.length === 1 && <span>is</span>}
+        {facetsValues.length > 1 && <span> in (</span>}
+        {facetsValues.map((value) => (
+          <Value key={value} facet={facet} value={value} updateQuery={updateQuery} />
+        ))}
+        <ExpandButton collapsed={collapsed} length={values.length} onClick={setCollapsed} />
+        {values.length > 1 && <span> )</span>}
+        {/* {facets.slice(-1)[0].name !== facet.name && (
         // Do not display "and" if last item of the array
         <span> and </span>
       )} */}
-    </div>
-  );
+      </div>
+    );
+  } else {
+    return (
+      <div className={classes.root}>
+        <span>{facet.name} is </span>
+        <Value facet={facet} value={values} updateQuery={updateQuery} />
+      </div>
+    );
+  }
 };
 
 export default Term;
