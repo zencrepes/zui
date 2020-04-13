@@ -25,7 +25,7 @@ const DateQuery: React.FC<Props> = (props: Props) => {
   const { op, value, facet, updateQuery } = props;
   const classes = useStyles();
 
-  const operator = op === '>=' ? 'before' : 'after';
+  const operator = op === '>=' ? 'after' : 'before';
   return (
     <div className={classes.root}>
       <span>{facet.name} </span>

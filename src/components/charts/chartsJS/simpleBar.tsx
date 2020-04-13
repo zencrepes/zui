@@ -34,10 +34,10 @@ class SimpleBar extends Component<any, any> {
       if (this.allowClick === true) {
         this.allowClick = false;
         const clickedBucket = buckets[idx];
-        openQuery(clickedBucket.query);
         setTimeout(() => {
+          openQuery(clickedBucket.query);
           this.resetAllowClick();
-        }, 1000);
+        }, 500);
       }
     }
   };

@@ -39,7 +39,7 @@ const buildBucketQuery = (from: Date, to: Date | null, query: any) => {
   updatedQuery = addFilterToQuery(filterOpen, updatedQuery);
 
   const filterFrom = createTermFilter('<=', 'createdAt', from.toISOString());
-  updatedQuery = addFilterToQuery(filterFrom, query);
+  updatedQuery = addFilterToQuery(filterFrom, updatedQuery);
 
   if (to !== null) {
     const filterTo = createTermFilter('>=', 'createdAt', to.toISOString());

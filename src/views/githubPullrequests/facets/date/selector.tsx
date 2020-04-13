@@ -53,9 +53,9 @@ const Selector: React.FC<Props> = (props: Props) => {
 
   let facetTitle = facet.name;
   if (filter.op === '>=') {
-    facetTitle = facetTitle + ' before ';
-  } else {
     facetTitle = facetTitle + ' after ';
+  } else {
+    facetTitle = facetTitle + ' before ';
   }
   facetTitle = facetTitle + format(parseISO(filter.content.value), 'LLL do yyyy');
 

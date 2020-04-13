@@ -5,6 +5,8 @@ import { useQuery } from '@apollo/client';
 import CustomCard from '../../../../../components/customCard';
 import SimpleBar from '../../../../../components/charts/chartsJS/simpleBar';
 
+import { createTermFilter, addFilterToQuery } from '../../../../../utils/query';
+
 const OPENEDDURING_QUERY = loader('./getOpenedDuring.graphql');
 
 interface Props {
@@ -14,25 +16,18 @@ interface Props {
 const buildBucketQuery = (from: number, to: number | null, query: any) => {
   let updatedQuery: any = {};
 
-  if (Object.keys(query).length === 0) {
-    updatedQuery = {
-      op: 'and',
-      content: [],
-    };
-  } else {
-    updatedQuery = { ...query };
-  }
-  const content = [
-    { op: '>=', content: { field: 'openedDuring', value: from } },
-    { op: 'in', content: { field: 'state', value: ['CLOSED', 'MERGED'] } },
-  ];
+  const filterOpen = createTermFilter('in', 'state', ['CLOSED', 'MERGED']);
+  updatedQuery = addFilterToQuery(filterOpen, updatedQuery);
+
+  const filterFrom = createTermFilter('>=', 'openedDuring', from);
+  updatedQuery = addFilterToQuery(filterFrom, updatedQuery);
+
   if (to !== null) {
-    content.push({ op: '<=', content: { field: 'openedDuring', value: to } });
+    const filterTo = createTermFilter('<=', 'openedDuring', to);
+    updatedQuery = addFilterToQuery(filterTo, updatedQuery);
   }
-  return {
-    op: 'and',
-    content: [...updatedQuery.content, ...content],
-  };
+
+  return updatedQuery;
 };
 
 const getBucket = (buckets: Array<any>, key: string) => {

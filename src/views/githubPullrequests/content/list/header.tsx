@@ -5,12 +5,15 @@ import TableRow from '@material-ui/core/TableRow/TableRow';
 import TableCell from '@material-ui/core/TableCell/TableCell';
 import Grid from '@material-ui/core/Grid/Grid';
 
+import ExportButton from './exportButton';
+
 interface Props {
   totalCount: number;
+  query: any;
 }
 
 const Header: React.FC<Props> = (props: Props) => {
-  const { totalCount } = props;
+  const { totalCount, query } = props;
   return (
     <TableHead>
       <TableRow>
@@ -20,6 +23,9 @@ const Header: React.FC<Props> = (props: Props) => {
               <span>{totalCount} Pull Requests</span>
             </Grid>
             <Grid item xs={12} sm container></Grid>
+            <Grid item>
+              <ExportButton query={query} totalCount={totalCount} />
+            </Grid>
           </Grid>
         </TableCell>
       </TableRow>

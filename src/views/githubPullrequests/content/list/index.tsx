@@ -70,7 +70,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     return (
       <React.Fragment>
         <Table size="small">
-          <Header totalCount={totalCount} />
+          <Header totalCount={totalCount} query={query} />
           <TableBody>
             {nodes.map((item: any) => {
               return (

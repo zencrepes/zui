@@ -1,4 +1,4 @@
-export const createTermFilter = (op: string, field: string, value: Array<string> | string) => {
+export const createTermFilter = (op: string, field: string, value: Array<string> | string | number) => {
   return {
     op,
     content: {
