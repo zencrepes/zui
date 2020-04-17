@@ -1,0 +1,28 @@
+name: Lint and test
+# This workflow is triggered on pushes to the repository.
+on: [push]
+
+jobs:
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+
+    container:
+      image: node:alpine
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn
+      - run: yarn run lint:ci
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    container:
+      image: node:alpine
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn
+      - run: yarn run test
