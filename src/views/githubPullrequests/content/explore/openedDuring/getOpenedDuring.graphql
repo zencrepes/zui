@@ -1,0 +1,47 @@
+query(
+  $bucketQueryA: String
+  $bucketQueryB: String
+  $bucketQueryC: String
+  $bucketQueryD: String
+  $bucketQueryE: String
+  $bucketQueryF: String
+  $bucketQueryG: String
+) {
+  githubPullrequests {
+    bucketQueryA: data(query: $bucketQueryA) {
+      items {
+        totalCount
+      }
+    }
+    bucketQueryB: data(query: $bucketQueryB) {
+      items {
+        totalCount
+      }
+    }
+    bucketQueryC: data(query: $bucketQueryC) {
+      items {
+        totalCount
+      }
+    }
+    bucketQueryD: data(query: $bucketQueryD) {
+      items {
+        totalCount
+      }
+    }
+    bucketQueryE: data(query: $bucketQueryE) {
+      items {
+        totalCount
+      }
+    }
+    bucketQueryF: data(query: $bucketQueryF) {
+      items {
+        totalCount
+      }
+    }
+    bucketQueryG: data(query: $bucketQueryG) {
+      items {
+        totalCount
+      }
+    }
+  }
+}

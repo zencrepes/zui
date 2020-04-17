@@ -1,0 +1,78 @@
+query($from: Int, $size: Int, $query: String) {
+  githubPullrequests {
+    data(query: $query) {
+      items(from: $from, size: $size) {
+        totalCount
+        nodes {
+          id
+          createdAt
+          closedAt
+          updatedAt
+          assignees {
+            edges {
+              node {
+                login
+                name
+                avatarUrl
+              }
+            }
+            totalCount
+          }
+          reviewRequests {
+            totalCount
+            edges {
+              node {
+                requestedReviewer {
+                  login
+                  avatarUrl
+                  url
+                }
+              }
+            }
+          }
+          reviews {
+            totalCount
+            edges {
+              node {
+                author {
+                  login
+                  url
+                  avatarUrl
+                }
+              }
+            }
+          }
+          author {
+            url
+            avatarUrl
+            login
+          }
+          labels {
+            totalCount
+            edges {
+              node {
+                name
+                color
+              }
+            }
+          }
+          title
+          repository {
+            name
+            url
+            owner {
+              id
+              login
+              url
+            }
+          }
+          milestone {
+            title
+          }
+          state
+          url
+        }
+      }
+    }
+  }
+}

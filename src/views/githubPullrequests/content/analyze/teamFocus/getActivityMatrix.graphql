@@ -1,0 +1,19 @@
+query($query: String, $field: String!, $dateField: String!) {
+  githubPullrequests {
+    data(query: $query) {
+      activity(dateField: $dateField, field: $field) {
+        field
+        fromWeekStart
+        toWeekStart
+        buckets {
+          key
+          docCount
+          weeks {
+            weekStart
+            docCount
+          }
+        }
+      }
+    }
+  }
+}

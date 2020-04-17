@@ -1,0 +1,24 @@
+query($queryPrs: String, $openPrsWithoutReview: String, $openPrsInClosedMilestones: String, $oldPrs: String) {
+  githubPullrequests {
+    queryPrs: data(query: $queryPrs) {
+      items {
+        totalCount
+      }
+    }
+    openPrsWithoutReview: data(query: $openPrsWithoutReview) {
+      items {
+        totalCount
+      }
+    }
+    openPrsInClosedMilestones: data(query: $openPrsInClosedMilestones) {
+      items {
+        totalCount
+      }
+    }
+    oldPrs: data(query: $oldPrs) {
+      items {
+        totalCount
+      }
+    }
+  }
+}
