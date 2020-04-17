@@ -16,6 +16,7 @@ jobs:
       - run: yarn run lint:ci
 
   tests:
+    needs: [lint]
     name: Tests
     runs-on: ubuntu-latest
 
@@ -26,3 +27,17 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn
       - run: yarn run test
+
+  build:
+    needs: [lint, tests]
+    name: Build
+    runs-on: ubuntu-latest
+    # if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+
+    container:
+      image: node:alpine
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn
+      - run: yarn run build
