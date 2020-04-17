@@ -47,7 +47,7 @@ const OpenByRepo: React.FC<Props> = (props: Props) => {
     },
     fetchPolicy: 'no-cache',
   });
-  if (data !== undefined) {
+  if (data !== undefined && data.githubPullrequests.data !== undefined) {
     const buckets = data.githubPullrequests.data.aggregations.buckets;
     return (
       <CustomCard headerTitle="Open PRs by Repository" headerFactTitle="" headerFactValue="">

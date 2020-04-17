@@ -5,6 +5,7 @@ import { iRootState } from '../../../store';
 
 import Explore from './explore';
 import List from './list';
+import Analyze from './analyze';
 
 const mapState = (state: iRootState) => ({
   selectedTab: state.githubPullrequests.selectedTab,
@@ -21,6 +22,8 @@ const Content: React.FC<connectedProps> = (props: connectedProps) => {
   switch (selectedTab) {
     case 'explore':
       return <Explore />;
+    case 'analyze':
+      return <Analyze />;
     case 'list':
       return <List />;
     default:

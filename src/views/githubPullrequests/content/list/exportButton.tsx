@@ -36,7 +36,7 @@ const ExportButton: React.FC<Props> = (props: Props) => {
 
   let dataset: Array<any> = [];
   if (data !== undefined && data.githubPullrequests.data.items.nodes.length > 0) {
-    const header = ['org', 'repo', 'created', 'updated', 'closed', 'Author', 'title', 'state', 'url'];
+    const header = ['Org', 'Repo', 'Created', 'Updated', 'Closed', 'Author', 'Title', 'State', 'Url'];
     dataset = data.githubPullrequests.data.items.nodes.map((i: any) => [
       i.repository.owner.login,
       i.repository.name,

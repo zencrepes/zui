@@ -18,4 +18,6 @@ export interface Pullrequest {
   author: Actor;
   labels: LabelConnection;
   assignees: UserConnection;
+  reviewRequests: any;
+  reviews: any;
 }

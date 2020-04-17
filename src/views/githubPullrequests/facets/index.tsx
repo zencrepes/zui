@@ -86,27 +86,34 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
           </Grid>
         )}
 
-        {facets.map((facet: any) => {
-          if (facet.facetType === 'term') {
-            return (
-              <Grid item key={facet.field}>
-                <TermFacet facet={facet} defaultPoints={defaultPoints} addRemoveFacet={addRemoveFacet} query={query} />
-              </Grid>
-            );
-          } else if (facet.facetType === 'metrics') {
-            return (
-              <Grid item key={facet.field}>
-                <MetricsFacet
-                  facet={facet}
-                  defaultPoints={defaultPoints}
-                  updateMetricsRange={updateMetricsRange}
-                  query={query}
-                />
-              </Grid>
-            );
-          }
-          return null;
-        })}
+        {facets
+          .filter((f: Facet) => f.default === true)
+          .map((facet: any) => {
+            if (facet.facetType === 'term') {
+              return (
+                <Grid item key={facet.field}>
+                  <TermFacet
+                    facet={facet}
+                    defaultPoints={defaultPoints}
+                    addRemoveFacet={addRemoveFacet}
+                    query={query}
+                  />
+                </Grid>
+              );
+            } else if (facet.facetType === 'metrics') {
+              return (
+                <Grid item key={facet.field}>
+                  <MetricsFacet
+                    facet={facet}
+                    defaultPoints={defaultPoints}
+                    updateMetricsRange={updateMetricsRange}
+                    query={query}
+                  />
+                </Grid>
+              );
+            }
+            return null;
+          })}
       </Grid>
     </div>
   );

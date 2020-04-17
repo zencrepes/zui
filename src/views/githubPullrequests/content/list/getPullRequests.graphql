@@ -18,8 +18,33 @@ query($from: Int, $size: Int, $query: String) {
             }
             totalCount
           }
+          reviewRequests {
+            totalCount
+            edges {
+              node {
+                requestedReviewer {
+                  login
+                  avatarUrl
+                  url
+                }
+              }
+            }
+          }
+          reviews {
+            totalCount
+            edges {
+              node {
+                author {
+                  login
+                  url
+                  avatarUrl
+                }
+              }
+            }
+          }
           author {
             url
+            avatarUrl
             login
           }
           labels {

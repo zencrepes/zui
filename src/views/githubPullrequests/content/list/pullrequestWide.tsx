@@ -84,9 +84,67 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getParticipants = (item: Pullrequest) => {
+  let participants: Array<any> = [
+    {
+      title: 'Author: ' + item.author.login,
+      login: item.author.login,
+      avatarUrl: item.author.avatarUrl,
+      url: item.author.url,
+    },
+  ];
+  if (item.assignees.totalCount > 0) {
+    const assignees = item.assignees.edges.map((assignee) => {
+      return {
+        title:
+          'Assignee: ' + assignee.node.name === null || assignee.node.name === ''
+            ? assignee.node.login
+            : assignee.node.name,
+        login: assignee.node.login,
+        avatarUrl: assignee.node.avatarUrl,
+        url: assignee.node.url,
+      };
+    });
+    participants = assignees;
+  }
+  if (item.reviewRequests.totalCount > 0) {
+    const reviewRequests = item.reviewRequests.edges.map((rq: any) => {
+      return {
+        title: 'Requests: ' + rq.node.requestedReviewer.login,
+        login: rq.node.requestedReviewer.login,
+        avatarUrl: rq.node.requestedReviewer.avatarUrl,
+        url: rq.node.requestedReviewer.url,
+      };
+    });
+    participants = [...participants, ...reviewRequests];
+  }
+  if (item.reviews.totalCount > 0) {
+    const reviews = item.reviews.edges.map((rq: any) => {
+      return {
+        title: 'Reviews: ' + rq.node.author.login,
+        login: rq.node.author.login,
+        avatarUrl: rq.node.author.avatarUrl,
+        url: rq.node.author.url,
+      };
+    });
+    participants = [...participants, ...reviews];
+  }
+
+  // Remove duplicates from array
+  const uniqueParticipants: Array<any> = [];
+  for (const participant of participants) {
+    if (uniqueParticipants.find((p: any) => p.login === participant.login) === undefined) {
+      uniqueParticipants.push(participant);
+    }
+  }
+  return uniqueParticipants;
+};
+
 const PullrequestWide: React.FC<Props> = (props: Props) => {
   const { item } = props;
   const classes = useStyles();
+
+  const participants = getParticipants(item);
 
   const pointsExp = XRegExp('SP:[.\\d]');
   return (
@@ -178,19 +236,13 @@ const PullrequestWide: React.FC<Props> = (props: Props) => {
         )}
       </Grid>
       <Grid item>
-        {item.assignees.totalCount > 0 && (
+        {participants.length > 0 && (
           <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
-            {item.assignees.edges.map((assignee) => {
+            {participants.map((participant) => {
               return (
-                <Grid item key={assignee.node.login}>
-                  <Tooltip
-                    title={
-                      assignee.node.name === null || assignee.node.name === ''
-                        ? assignee.node.login
-                        : assignee.node.name
-                    }
-                  >
-                    <Avatar alt={assignee.node.login} src={assignee.node.avatarUrl} className={classes.avatar} />
+                <Grid item key={participant.login}>
+                  <Tooltip title={participant.title}>
+                    <Avatar alt={participant.title} src={participant.avatarUrl} className={classes.avatar} />
                   </Tooltip>
                 </Grid>
               );
