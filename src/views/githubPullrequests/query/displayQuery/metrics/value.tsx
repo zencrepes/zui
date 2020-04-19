@@ -3,12 +3,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 
-import { Facet } from '../../types';
-
 interface Props {
-  value: string;
-  facet: Facet;
-  updateQuery: Function | null;
+  filter: any;
+  removeFilter: Function | null;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -21,19 +18,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Value: React.FC<Props> = (props: Props) => {
-  const { value, facet, updateQuery } = props;
+  const { filter, removeFilter } = props;
   const classes = useStyles();
 
   const handleDelete = () => {
-    if (updateQuery !== null) {
-      updateQuery(null, facet);
+    if (removeFilter !== null) {
+      removeFilter(filter);
     }
   };
 
-  if (updateQuery !== null) {
-    return <Chip onDelete={handleDelete} variant="outlined" label={value} className={classes.root} />;
+  if (removeFilter !== null) {
+    return <Chip onDelete={handleDelete} variant="outlined" label={filter.content.value} className={classes.root} />;
   } else {
-    return <Chip variant="outlined" label={value} className={classes.root} />;
+    return <Chip variant="outlined" label={filter.content.value} className={classes.root} />;
   }
 };
 

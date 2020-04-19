@@ -15,6 +15,7 @@ export const addRemoveDateFromQuery = (selectedField: string, selectedOp: string
   const exactFilterExists = query.content.find(
     (q: any) => q.content.field === selectedField && q.op === selectedOp && q.content.value === selectedDate,
   );
+
   // Next step is to remove the field if already existing
   updatedQuery = removeDateFieldFromQuery(selectedField, selectedOp, query);
   if (exactFilterExists !== undefined) {
@@ -30,10 +31,27 @@ export const addRemoveDateFromQuery = (selectedField: string, selectedOp: string
     return updatedQuery;
   }
 
+  // If it receives the same field, but different Op, then the field simply needs to be removed and added back in with the new Op at the end
+  // A field cannot be present more than once in a query
+  const sameFieldSameOpExists = query.content.find(
+    (q: any) => q.content.field === selectedField && q.op !== selectedOp,
+  );
+  if (sameFieldSameOpExists !== undefined) {
+    updatedQuery = removeDateFieldFromQuery(selectedField, null, query);
+  }
+
+  if (Object.keys(updatedQuery).length === 0) {
+    updatedQuery = {
+      op: 'and',
+      content: [createDateFilter(selectedOp, selectedField, selectedDate)],
+    };
+    return updatedQuery;
+  }
+
   // Finally, we add the filter back
   updatedQuery = {
     ...updatedQuery,
-    content: [...updatedQuery.content, ...[createDateFilter('>=', selectedField, selectedDate)]],
+    content: [...updatedQuery.content, ...[createDateFilter(selectedOp, selectedField, selectedDate)]],
   };
   return updatedQuery;
 };

@@ -1,4 +1,4 @@
-export const removeDateFieldFromQuery = (field: string, operator: string, query: any) => {
+export const removeDateFieldFromQuery = (field: string, operator: string | null, query: any) => {
   let updatedQuery: any = {};
   // If query is empty, simply return empty query
   if (Object.keys(query).length === 0) {
@@ -8,7 +8,7 @@ export const removeDateFieldFromQuery = (field: string, operator: string, query:
   updatedQuery = {
     ...query,
     content: query.content.filter((filter: any) => {
-      if (filter.content.field === field && filter.op === operator) {
+      if (filter.content.field === field && (filter.op === operator || operator === null)) {
         return false;
       }
       return true;

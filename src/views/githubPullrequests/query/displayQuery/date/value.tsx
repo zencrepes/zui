@@ -6,13 +6,9 @@ import Chip from '@material-ui/core/Chip';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
-import { Facet } from '../../types';
-
 interface Props {
-  value: string;
-  facet: Facet;
-  updateQuery: Function | null;
-  op: string;
+  filter: any;
+  removeFilter: Function | null;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -25,26 +21,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Value: React.FC<Props> = (props: Props) => {
-  const { value, facet, op, updateQuery } = props;
+  const { filter, removeFilter } = props;
   const classes = useStyles();
 
   const handleDelete = () => {
-    if (updateQuery !== null) {
-      updateQuery(value, facet, op);
+    if (removeFilter !== null) {
+      removeFilter(filter);
     }
   };
 
-  if (updateQuery !== null) {
+  if (removeFilter !== null) {
     return (
       <Chip
         onDelete={handleDelete}
         variant="outlined"
-        label={format(parseISO(value), 'LLL do yyyy')}
+        label={format(parseISO(filter.content.value), 'LLL do yyyy')}
         className={classes.root}
       />
     );
   } else {
-    return <Chip variant="outlined" label={value} className={classes.root} />;
+    return <Chip variant="outlined" label={filter.content.value} className={classes.root} />;
   }
 };
 

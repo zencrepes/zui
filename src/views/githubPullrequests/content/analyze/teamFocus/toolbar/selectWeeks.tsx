@@ -11,7 +11,7 @@ interface Props {
 
 const useStyles = makeStyles({
   root: {
-    width: 350,
+    width: 200,
   },
 });
 
@@ -19,8 +19,14 @@ const SelectWeeks: React.FC<Props> = (props: Props) => {
   const { maxWeeks, setMaxWeeks, totalWeeks } = props;
   const classes = useStyles();
 
-  const handleChange = (event: any, newValue: number | number[]) => {
+  const [value, setValue] = React.useState<number>(maxWeeks);
+
+  const handleChangeCommit = (event: any, newValue: number | number[]) => {
     setMaxWeeks(newValue as number);
+  };
+
+  const handleChange = (event: any, newValue: number | number[]) => {
+    setValue(newValue as number);
   };
 
   const marks = [
@@ -32,26 +38,29 @@ const SelectWeeks: React.FC<Props> = (props: Props) => {
       value: maxWeeks,
       label: maxWeeks,
     },
-    {
+  ];
+  if (maxWeeks !== totalWeeks) {
+    marks.push({
       value: totalWeeks,
       label: totalWeeks,
-    },
-  ];
+    });
+  }
 
   return (
     <div className={classes.root}>
       <Typography id="discrete-slider" gutterBottom>
-        Number of weeks to display
+        Weeks to display
       </Typography>
       <Slider
-        value={maxWeeks}
+        value={value}
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
         step={10}
         min={0}
         max={totalWeeks}
         marks={marks}
-        onChangeCommitted={handleChange}
+        onChange={handleChange}
+        onChangeCommitted={handleChangeCommit}
       />
     </div>
   );

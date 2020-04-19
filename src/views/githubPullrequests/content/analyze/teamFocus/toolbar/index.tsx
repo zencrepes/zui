@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import SelectField from './selectField';
 import SelectWeeks from './selectWeeks';
 import SelectBuckets from './selectBuckets';
+import CheckEmpty from './checkEmpty';
 
 interface Props {
   setField: Function;
@@ -15,10 +16,23 @@ interface Props {
   maxBuckets: number;
   totalWeeks: number;
   totalBuckets: number;
+  displayEmpty: boolean;
+  setDisplayEmpty: Function;
 }
 
 const Toolbar: React.FC<Props> = (props: Props) => {
-  const { setField, field, setMaxBuckets, setMaxWeeks, maxBuckets, maxWeeks, totalWeeks, totalBuckets } = props;
+  const {
+    setField,
+    field,
+    setMaxBuckets,
+    setMaxWeeks,
+    maxBuckets,
+    maxWeeks,
+    totalWeeks,
+    totalBuckets,
+    displayEmpty,
+    setDisplayEmpty,
+  } = props;
 
   return (
     <Grid container spacing={3} direction="row">
@@ -30,6 +44,9 @@ const Toolbar: React.FC<Props> = (props: Props) => {
       </Grid>
       <Grid item>
         <SelectBuckets maxBuckets={maxBuckets} setMaxBuckets={setMaxBuckets} totalBuckets={totalBuckets} />
+      </Grid>
+      <Grid item>
+        <CheckEmpty displayEmpty={displayEmpty} setDisplayEmpty={setDisplayEmpty} />
       </Grid>
     </Grid>
   );

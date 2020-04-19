@@ -11,7 +11,7 @@ import DateQuery from './date';
 
 interface Props {
   query: any;
-  updateQuery: Function | null;
+  removeFilter: Function | null;
   facets: Array<Facet>;
 }
 
@@ -25,30 +25,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DisplayQuery: React.FC<Props> = (props: Props) => {
-  const { query, facets, updateQuery } = props;
+  const { query, facets, removeFilter } = props;
   const classes = useStyles();
+
   if (Object.keys(query).length > 0) {
     return (
       <div className={classes.root}>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
-          {query.content.map((content: any) => {
-            const facet = facets.find((f: Facet) => f.field === content.content.field);
+          {query.content.map((filter: any) => {
+            const facet = facets.find((f: Facet) => f.field === filter.content.field);
             if (facet !== undefined && facet.facetType === 'term') {
               return (
-                <Grid item key={content.content.field}>
-                  <Term values={content.content.value} facet={facet} updateQuery={updateQuery} />
+                <Grid item key={filter.content.field}>
+                  <Term filter={filter} facet={facet} removeFilter={removeFilter} />
                 </Grid>
               );
             } else if (facet !== undefined && facet.facetType === 'metrics') {
               return (
-                <Grid item key={content.content.field + content.op}>
-                  <Metrics op={content.op} value={content.content.value} facet={facet} updateQuery={updateQuery} />
+                <Grid item key={filter.content.field + filter.op}>
+                  <Metrics filter={filter} facet={facet} removeFilter={removeFilter} />
                 </Grid>
               );
             } else if (facet !== undefined && facet.facetType === 'date') {
               return (
-                <Grid item key={content.content.field + content.op}>
-                  <DateQuery op={content.op} value={content.content.value} facet={facet} updateQuery={updateQuery} />
+                <Grid item key={filter.content.field + filter.op}>
+                  <DateQuery filter={filter} facet={facet} removeFilter={removeFilter} />
                 </Grid>
               );
             }
