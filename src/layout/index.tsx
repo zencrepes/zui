@@ -23,7 +23,7 @@ interface Props {
   children: any[] | any;
 }
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

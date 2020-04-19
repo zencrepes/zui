@@ -13,7 +13,7 @@ const Dashboard: React.FC<Props> = (props) => {
   return (
     <Layout {...props}>
       <Typography paragraph>This is the dashboard section</Typography>
-      <Typography paragraph>blah blah blah</Typography>
+      <Typography paragraph>This has not been implemented yet !</Typography>
     </Layout>
   );
 };

@@ -9,10 +9,7 @@ import Settings from './views/settings';
 import GithubPullrequests from './views/githubPullrequests';
 import Data from './views/data';
 
-interface Dataset {
-  key: string;
-  name: string;
-}
+import { Dataset } from './global';
 
 interface DatasetData {
   nodes: Dataset[];
@@ -38,8 +35,9 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
       config {
         datasets {
           nodes {
-            key
+            id
             name
+            platform
           }
         }
       }
@@ -70,12 +68,12 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
               path="/githubPullrequests"
               render={(props) => <GithubPullrequests {...props} datasets={data.config.datasets.nodes} />}
             />
-            {data.config.datasets.nodes.map(({ key }) => (
+            {data.config.datasets.nodes.map(({ id }) => (
               <Route
-                key={key}
+                key={id}
                 exact
-                path={'/' + key}
-                render={(props) => <Data {...props} datasets={data.config.datasets.nodes} currentDatasetKey={key} />}
+                path={'/' + id}
+                render={(props) => <Data {...props} datasets={data.config.datasets.nodes} currentDatasetKey={id} />}
               />
             ))}
           </Switch>

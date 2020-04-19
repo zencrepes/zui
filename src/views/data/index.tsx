@@ -14,7 +14,7 @@ const Data: React.FC<Props> = (props: Props) => {
   return (
     <Layout {...props}>
       <Typography paragraph>This is the data view section for {props.currentDatasetKey}</Typography>
-      <Typography paragraph>blah blah blah</Typography>
+      <Typography paragraph>This has not been implemented yet !</Typography>
     </Layout>
   );
 };
