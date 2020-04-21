@@ -1,4 +1,8 @@
 import React from 'react';
+
+import { useQuery } from '@apollo/client';
+import { loader } from 'graphql.macro';
+
 import List from '@material-ui/core/List';
 
 import ListItem from '@material-ui/core/ListItem';
@@ -7,13 +11,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
-import AdapterLink from '../../utils/adapterLink';
+import AdapterLink from '../../../utils/adapterLink';
 
-import { Dataset } from '../../global';
+import { Dataset } from '../../../global';
 
-interface Props {
-  datasets?: Dataset[];
-}
+const QUERY_DATASETS = loader('./getDatasets.graphql');
 
 const getPlatformIcon = (platform: string) => {
   if (platform === 'github') {
@@ -22,13 +24,19 @@ const getPlatformIcon = (platform: string) => {
   return <InboxIcon />;
 };
 
-const dynamicMenu: React.FC<Props> = (props: Props) => {
-  if (props === undefined || props.datasets === undefined) {
+const DynamicMenu: React.FC<{}> = (props: {}) => {
+  const { data } = useQuery(QUERY_DATASETS, {
+    fetchPolicy: 'cache-and-network',
+  });
+
+  if (data === undefined) {
     return null;
   }
+
+  const datasets: Array<Dataset> = data.config.datasets.nodes;
   return (
     <List>
-      {props.datasets.map(({ id, name, platform }) => (
+      {datasets.map(({ id, name, platform }) => (
         <ListItem button key={id} component={AdapterLink} to={'/' + id}>
           <ListItemIcon>{getPlatformIcon(platform)}</ListItemIcon>
           <ListItemText primary={name} />
@@ -38,4 +46,4 @@ const dynamicMenu: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default dynamicMenu;
+export default DynamicMenu;

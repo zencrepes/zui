@@ -6,7 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import TuneIcon from '@material-ui/icons/Tune';
 
-import AdapterLink from '../../utils/adapterLink';
+import AdapterLink from '../../../utils/adapterLink';
 
 const SettingsMenu: React.FC<object> = () => {
   return (

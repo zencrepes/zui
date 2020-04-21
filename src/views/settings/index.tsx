@@ -3,15 +3,9 @@ import Typography from '@material-ui/core/Typography';
 
 import Layout from '../../layout';
 
-import { Dataset } from '../../global';
-
-interface Props {
-  datasets?: Dataset[];
-}
-
-const Settings: React.FC<Props> = (props) => {
+const Settings: React.FC<{}> = (props) => {
   return (
-    <Layout {...props}>
+    <Layout>
       <Typography paragraph>This is the settings section</Typography>
       <Typography paragraph>This has not been implemented yet !</Typography>
     </Layout>

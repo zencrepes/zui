@@ -1,6 +1,6 @@
 // https://github.com/pimterry/loglevel
 import * as log from 'loglevel';
-import createAuth0Client from '@auth0/auth0-spa-js';
+import Keycloak from 'keycloak-js';
 
 import { Dispatch } from '../store';
 import Dexie from 'dexie';
@@ -33,7 +33,7 @@ declare global {
     Auth0: any;
   }
 }
-
+/*
 const setAuth0Config = async () => {
   const authConfig = {
     domain: window._env_.AUTH0_DOMAIN,
@@ -50,7 +50,8 @@ const setAuth0Config = async () => {
   });
   return window.Auth0;
 };
-
+*/
+console.log('Load global');
 export const global = {
   state: {
     log: {},
@@ -60,7 +61,14 @@ export const global = {
     defaultPoints: true,
 
     // Authentication module
+    authDisabled: JSON.parse(window._env_.KEYCLOAK_DISABLED), // Is authentication active, if false, then does not check authentication status
     loggedIn: false, // Is the user logged in
+    keycloak: null,
+    userName: '',
+    userAvatarUrl: '',
+    userEmail: null,
+    userId: null,
+
     auth0Initialized: false,
     authUser: null,
     authMessage: '',
@@ -78,8 +86,8 @@ export const global = {
     setLoading(state: any, payload: any) {
       return { ...state, loading: payload };
     },
-    setAuth0Initialized(state: any, payload: any) {
-      return { ...state, auth0Initialized: payload };
+    setKeycloak(state: any, payload: any) {
+      return { ...state, keycloak: payload };
     },
     setAuthMessage(state: any, payload: any) {
       return { ...state, authMessage: payload };
@@ -115,12 +123,37 @@ export const global = {
       return { ...state, loginMenuOpen: payload };
     },
     setCallbackState(state: any, payload: any) {
+      console.log('setCallbackState', payload.loggedIn);
       return {
         ...state,
         loggedIn: payload.loggedIn,
         accessToken: payload.accessToken,
         authUser: payload.authUser,
         auth0Initialized: payload.auth0Initialized,
+      };
+    },
+    setUserSession(state: any, newState: any) {
+      console.log('setUser', true);
+      console.log(state);
+      console.log(newState);
+      return {
+        ...state,
+        keycloak: Keycloak,
+        loggedIn: newState.loggedIn,
+        userName: newState.name,
+        userEmail: newState.Email,
+        userId: newState.id,
+      };
+    },
+
+    logOutUser(state: any, newState: any) {
+      return {
+        ...state,
+        keycloak: null,
+        loggedIn: false,
+        userName: '',
+        userEmail: '',
+        userId: '',
       };
     },
   },
@@ -134,73 +167,64 @@ export const global = {
       }
       logger.info('Logger initialized');
       dispatch.global.setLog(logger);
-    },
 
-    async doLogOut() {
-      if (window.Auth0 !== undefined) {
-        window.Auth0.logout({
-          returnTo: window.location.origin,
+      if (rootState.global.keycloak === null) {
+        // https://stackoverflow.com/questions/41017287/cannot-use-new-with-expression-typescript
+        const keycloak = Keycloak({
+          url: window._env_.KEYCLOAK_AUTH_SERVER_URL,
+          realm: window._env_.KEYCLOAK_REALM,
+          clientId: window._env_.KEYCLOAK_CLIENT_ID,
         });
-        dispatch.global.setLoggedIn(false);
-        dispatch.global.setAuth0Initialized(false);
-        dispatch.global.setAuthMessage('');
-        dispatch.global.setAccessToken('');
-        dispatch.global.setAuthUser(null);
+        keycloak
+          .init({
+            onLoad: 'check-sso',
+            silentCheckSsoRedirectUri: window._env_.KEYCLOAK_AUDIENCE + '/silent-check-sso.html',
+          })
+          .then((authenticated: boolean) => {
+            if (authenticated === true && rootState.global.loggedIn === false && rootState.global.keycloak === null) {
+              keycloak.loadUserInfo().then((userInfo: any) => {
+                dispatch.global.setUserSession({
+                  loggedIn: true,
+                  keycloak: keycloak,
+                  name: userInfo.name,
+                  email: userInfo.email,
+                  id: userInfo.sub,
+                });
+              });
+            } else {
+              dispatch.global.setKeycloak(keycloak);
+            }
+          });
       }
     },
 
-    async initAuth() {
-      if (JSON.parse(window._env_.AUTH0_DISABLED) !== true) {
-        log.info('User not logged in, initializing authentication');
-        if (window.Auth0 !== undefined) {
-          dispatch.global.setAuth0Initialized(true);
-        } else {
-          dispatch.global.setLoading(true);
-          await setAuth0Config();
-          dispatch.global.setAuth0Initialized(true);
-          dispatch.global.setLoading(false);
-          const isLoggedIn = await window.Auth0.isAuthenticated();
-          if (isLoggedIn === true) {
-            const accessToken = await window.Auth0.getTokenSilently();
-            const user = await window.Auth0.getUser();
-            dispatch.global.setCallbackState({
-              loggedIn: isLoggedIn,
-              accessToken,
-              authUser: user,
+    async loginWithRedirect(payload: any, rootState: any) {
+      console.log('loginWithRedirect');
+      const keycloak = Keycloak({
+        url: window._env_.KEYCLOAK_AUTH_SERVER_URL,
+        realm: window._env_.KEYCLOAK_REALM,
+        clientId: window._env_.KEYCLOAK_CLIENT_ID,
+      });
+      keycloak.init({ onLoad: 'login-required' }).then((authenticated) => {
+        console.log(authenticated);
+        if (authenticated === true) {
+          keycloak.loadUserInfo().then((userInfo: any) => {
+            dispatch.global.setUserSession({
+              loggedIn: true,
+              keycloak: keycloak,
+              name: userInfo.name,
+              email: userInfo.email,
+              id: userInfo.sub,
             });
-          }
-          log.info('Authentication initialized');
+          });
         }
-      }
+      });
     },
 
-    async loginCallback(payload: any, rootState: any) {
-      // tslint:disable-next-line:no-shadowed-variable
-      const log = rootState.global.log;
-      dispatch.global.setLoading(true);
-      log.info('Received callback, finalizing logging');
-      const auth0 = window.Auth0 === undefined ? await setAuth0Config() : window.Auth0;
-      if (window.Auth0 !== undefined && rootState.global.loggedIn === false) {
-        await auth0.handleRedirectCallback();
-
-        const isLoggedIn = await auth0.isAuthenticated();
-        if (isLoggedIn === true) {
-          const accessToken = await auth0.getTokenSilently();
-          const user = await auth0.getUser();
-          dispatch.global.setCallbackState({
-            loggedIn: isLoggedIn,
-            accessToken,
-            authUser: user,
-          });
-        } else {
-          dispatch.global.setCallbackState({
-            loggedIn: isLoggedIn,
-            accessToken: '',
-            authUser: null,
-          });
-        }
-      }
-      dispatch.global.setLoading(false);
+    async doLogOut(payload: any, rootState: any) {
+      // Note: This is not a log-out, just a way to force the UI to re-login.
+      // rootState.global.keycloak.logout();
+      dispatch.global.logOutUser();
     },
   }),
 };

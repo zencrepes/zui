@@ -18,6 +18,14 @@ const client = new ApolloClient({
   }),
 });
 
+declare global {
+  interface Window {
+    store: any;
+  }
+}
+
+window.store = store;
+
 ReactDOM.render(
   <Provider store={store}>
     <ApolloProvider client={client}>

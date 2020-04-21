@@ -1,25 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { Dataset } from '../global';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import DynamicMenu from './menu/dynamic';
-import DashboardMenu from './menu/dashboard';
-import SettingsMenu from './menu/settings';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+
+import Navigation from './navigation';
 
 interface Props {
-  datasets?: Dataset[];
   children: any[] | any;
 }
 
@@ -29,33 +17,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-    },
-    appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    hide: {
-      display: 'none',
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-    drawerPaper: {
-      width: drawerWidth,
     },
     drawerHeader: {
       display: 'flex',
@@ -83,69 +44,21 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Layout: React.FC<Props> = (props: Props) => {
-  const { children, datasets } = props;
+type connectedProps = RouteComponentProps & Props;
+
+const Layout: React.FC<connectedProps> = (props: connectedProps) => {
+  const { children } = props;
   const classes = useStyles();
-  const theme = useTheme();
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const [openDrawer, setOpenDrawer] = React.useState<boolean>(false);
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            ZenCrepes
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <DashboardMenu />
-        <Divider />
-        <DynamicMenu datasets={datasets} />
-        <Divider />
-        <SettingsMenu />
-      </Drawer>
+      <Navigation openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: open,
+          [classes.contentShift]: openDrawer,
         })}
       >
         <div className={classes.drawerHeader} />
@@ -155,4 +68,4 @@ const Layout: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default Layout;
+export default withRouter(Layout);

@@ -1,0 +1,11 @@
+query {
+  config {
+    datasets {
+      nodes {
+        id
+        name
+        platform
+      }
+    }
+  }
+}
