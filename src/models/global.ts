@@ -136,7 +136,7 @@ export const global = {
     },
   },
   effects: (dispatch: Dispatch) => ({
-    async initApp(rootState: any) {
+    async initApp(payload: any, rootState: any) {
       const logger = log.noConflict();
       if (process.env.NODE_ENV !== 'production') {
         logger.enableAll();

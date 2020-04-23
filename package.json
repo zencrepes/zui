@@ -85,7 +85,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "tsc --noEmit"
+      "pre-commit": "tsc --noEmit && lint-staged"
     }
   },
   "lint-staged": {

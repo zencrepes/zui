@@ -90,15 +90,14 @@ const getParticipants = (item: Pullrequest) => {
     const assignees = item.assignees.edges.map((assignee) => {
       return {
         title:
-          'Assignee: ' + assignee.node.name === null || assignee.node.name === ''
-            ? assignee.node.login
-            : assignee.node.name,
+          'Assignee: ' +
+          (assignee.node.name === null || assignee.node.name === '' ? assignee.node.login : assignee.node.name),
         login: assignee.node.login,
         avatarUrl: assignee.node.avatarUrl,
         url: assignee.node.url,
       };
     });
-    participants = assignees;
+    participants = [...participants, ...assignees];
   }
   if (item.reviewRequests.totalCount > 0) {
     const reviewRequests = item.reviewRequests.edges.map((rq: any) => {

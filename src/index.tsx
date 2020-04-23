@@ -24,8 +24,6 @@ declare global {
   }
 }
 
-window.store = store;
-
 ReactDOM.render(
   <Provider store={store}>
     <ApolloProvider client={client}>

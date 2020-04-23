@@ -55,8 +55,6 @@ yarn
 yarn run start:dev
 ```
 
--
-
 ## Dev Guidelines
 
 The UI is using Material-UI, considering the resources constraints in developing ZenCrepes, please try avoid any custom styling and stay as close as possible to Material-UI styling.
