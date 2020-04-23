@@ -33,25 +33,7 @@ declare global {
     Auth0: any;
   }
 }
-/*
-const setAuth0Config = async () => {
-  const authConfig = {
-    domain: window._env_.AUTH0_DOMAIN,
-    clientId: window._env_.AUTH0_CLIENT_ID,
-    audience: window._env_.AUTH0_AUDIENCE,
-  };
 
-  // eslint-disable-next-line
-  window.Auth0 = await createAuth0Client({
-    domain: authConfig.domain,
-    // eslint-disable-next-line
-    client_id: authConfig.clientId,
-    audience: authConfig.audience,
-  });
-  return window.Auth0;
-};
-*/
-console.log('Load global');
 export const global = {
   state: {
     log: {},
@@ -123,7 +105,6 @@ export const global = {
       return { ...state, loginMenuOpen: payload };
     },
     setCallbackState(state: any, payload: any) {
-      console.log('setCallbackState', payload.loggedIn);
       return {
         ...state,
         loggedIn: payload.loggedIn,
@@ -133,9 +114,6 @@ export const global = {
       };
     },
     setUserSession(state: any, newState: any) {
-      console.log('setUser', true);
-      console.log(state);
-      console.log(newState);
       return {
         ...state,
         keycloak: Keycloak,
@@ -146,7 +124,7 @@ export const global = {
       };
     },
 
-    logOutUser(state: any, newState: any) {
+    logOutUser(state: any) {
       return {
         ...state,
         keycloak: null,
@@ -158,7 +136,7 @@ export const global = {
     },
   },
   effects: (dispatch: Dispatch) => ({
-    async initApp(payload: any, rootState: any) {
+    async initApp(rootState: any) {
       const logger = log.noConflict();
       if (process.env.NODE_ENV !== 'production') {
         logger.enableAll();
@@ -168,7 +146,7 @@ export const global = {
       logger.info('Logger initialized');
       dispatch.global.setLog(logger);
 
-      if (rootState.global.keycloak === null) {
+      if (rootState.global.authDisabled !== true && rootState.global.keycloak === null) {
         // https://stackoverflow.com/questions/41017287/cannot-use-new-with-expression-typescript
         const keycloak = Keycloak({
           url: window._env_.KEYCLOAK_AUTH_SERVER_URL,
@@ -198,7 +176,7 @@ export const global = {
       }
     },
 
-    async loginWithRedirect(payload: any, rootState: any) {
+    async loginWithRedirect() {
       console.log('loginWithRedirect');
       const keycloak = Keycloak({
         url: window._env_.KEYCLOAK_AUTH_SERVER_URL,
@@ -221,7 +199,7 @@ export const global = {
       });
     },
 
-    async doLogOut(payload: any, rootState: any) {
+    async doLogOut() {
       // Note: This is not a log-out, just a way to force the UI to re-login.
       // rootState.global.keycloak.logout();
       dispatch.global.logOutUser();

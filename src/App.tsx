@@ -19,8 +19,6 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 const App: React.FC<connectedProps> = (props: connectedProps) => {
   const { initApp } = props;
   initApp();
-  console.log('Load App');
-
   return (
     <div className="App">
       <Router>

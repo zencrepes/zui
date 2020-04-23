@@ -18,11 +18,10 @@ import { sub, add } from 'date-fns';
 import { createTermFilter, addFilterToQuery } from '../../../../utils/query';
 
 const mapState = (state: iRootState) => ({
-  defaultPoints: state.githubPullrequests.defaultPoints,
   query: state.githubPullrequests.query,
 });
 
-const mapDispatch = (dispatch: any) => ({});
+const mapDispatch = () => ({});
 
 const useStyles = makeStyles({
   root: {
@@ -30,13 +29,11 @@ const useStyles = makeStyles({
   },
 });
 
-type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
-
 const buildBucketQuery = (from: Date, to: Date | null, query: any) => {
   let updatedQuery: any = {};
 
   const filterOpen = createTermFilter('=', 'state', 'OPEN');
-  updatedQuery = addFilterToQuery(filterOpen, updatedQuery);
+  updatedQuery = addFilterToQuery(filterOpen, query);
 
   const filterFrom = createTermFilter('<=', 'createdAt', from.toISOString());
   updatedQuery = addFilterToQuery(filterFrom, updatedQuery);
@@ -67,6 +64,7 @@ const buildFilterWeek = (weekStart: string, weekEnd: string, query: any) => {
   return updatedQuery;
 };
 
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
 const Explore: React.FC<connectedProps> = (props: connectedProps) => {
   const { query, history } = props;
   const classes = useStyles();
@@ -149,7 +147,7 @@ const Explore: React.FC<connectedProps> = (props: connectedProps) => {
         <ClosedPerWeek query={query} openWeek={openWeek} />
       </Grid>
       <Grid item xs={4}>
-        <OpenedDuring query={query} />
+        <OpenedDuring query={query} openQuery={openQuery} />
       </Grid>
       <Grid item xs={4}>
         <OpenedSince query={query} buckets={openedSinceBuckets} openQuery={openQuery} />

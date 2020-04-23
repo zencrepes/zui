@@ -116,12 +116,11 @@ const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
     setOpenDrawer(false);
   };
 
-  console.log('LOGGED IN: ', loggedIn);
   // The redirect there is only active is auth is not disabled and user not logged in
   // But this should only happen after keycloak has been initiated (otherwise the user gets redirecte right away to login)
   return (
     <React.Fragment>
-      {loggedIn === false && keycloak !== null && authDisabled === false && <Redirect to="/login" />}
+      {loggedIn === false && keycloak !== null && authDisabled !== true && <Redirect to="/login" />}
 
       <AppBar
         position="fixed"
@@ -130,7 +129,7 @@ const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
         })}
       >
         <Toolbar>
-          {loggedIn === true && authDisabled === false && (
+          {(loggedIn === true || authDisabled === true) && (
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -164,7 +163,7 @@ const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
         <Divider />
         <DashboardMenu />
         <Divider />
-        {loggedIn === true && authDisabled === false && (
+        {(loggedIn === true || authDisabled === true) && (
           <React.Fragment>
             <DynamicMenu />
             <Divider />

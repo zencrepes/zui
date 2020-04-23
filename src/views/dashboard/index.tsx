@@ -6,8 +6,8 @@ import Layout from '../../layout';
 const Dashboard: React.FC<{}> = () => {
   return (
     <Layout>
-      <Typography paragraph>This is the dashboard section</Typography>
-      <Typography paragraph>This has not been implemented yet !</Typography>
+      <Typography paragraph>The dashboard has not been implemented yet.</Typography>
+      <Typography paragraph>Please use the burger menu on the top left to select a dataset.</Typography>
     </Layout>
   );
 };

@@ -11,13 +11,14 @@ const OPENEDDURING_QUERY = loader('./getOpenedDuring.graphql');
 
 interface Props {
   query: any;
+  openQuery: Function;
 }
 
 const buildBucketQuery = (from: number, to: number | null, query: any) => {
   let updatedQuery: any = {};
 
   const filterOpen = createTermFilter('in', 'state', ['CLOSED', 'MERGED']);
-  updatedQuery = addFilterToQuery(filterOpen, updatedQuery);
+  updatedQuery = addFilterToQuery(filterOpen, query);
 
   const filterFrom = createTermFilter('>=', 'openedDuring', from);
   updatedQuery = addFilterToQuery(filterFrom, updatedQuery);
@@ -39,7 +40,7 @@ const getBucket = (buckets: Array<any>, key: string) => {
 };
 
 const OpenedDuring: React.FC<Props> = (props: Props) => {
-  const { query } = props;
+  const { query, openQuery } = props;
 
   const buckets = [
     { name: '0 - 1 d', key: 'bucketQueryA', query: buildBucketQuery(0, 1, query), count: 0 },
@@ -78,7 +79,7 @@ const OpenedDuring: React.FC<Props> = (props: Props) => {
     };
     return (
       <CustomCard headerTitle="Have been opened during" headerFactTitle="Currently CLOSED" headerFactValue="">
-        <SimpleBar chartData={chartData} />
+        <SimpleBar chartData={chartData} buckets={buckets} openQuery={openQuery} />
       </CustomCard>
     );
   }
