@@ -7,9 +7,9 @@ import { Facet } from '../../types';
 import ExpandButton from './expandButton';
 import Value from './value';
 interface Props {
-  values: Array<string>;
+  filter: any;
   facet: Facet;
-  updateQuery: Function | null;
+  removeFilter: Function | null;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -22,14 +22,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Term: React.FC<Props> = (props: Props) => {
-  const { values, facet, updateQuery } = props;
+  const { filter, facet, removeFilter } = props;
   const classes = useStyles();
   const [collapsed, setCollapsed] = React.useState(false);
 
-  if (Array.isArray(values)) {
-    let facetsValues = values;
+  if (Array.isArray(filter.content.value)) {
+    let facetsValues = filter.content.value;
     if (collapsed) {
-      facetsValues = values.slice(0, 2);
+      facetsValues = filter.content.value.slice(0, 2);
     }
 
     return (
@@ -37,22 +37,18 @@ const Term: React.FC<Props> = (props: Props) => {
         <span>{facet.name} </span>
         {facetsValues.length === 1 && <span>is</span>}
         {facetsValues.length > 1 && <span> in (</span>}
-        {facetsValues.map((value) => (
-          <Value key={value} facet={facet} value={value} updateQuery={updateQuery} />
+        {facetsValues.map((value: string) => (
+          <Value key={value} value={value} removeFilter={removeFilter} filter={filter} />
         ))}
-        <ExpandButton collapsed={collapsed} length={values.length} onClick={setCollapsed} />
-        {values.length > 1 && <span> )</span>}
-        {/* {facets.slice(-1)[0].name !== facet.name && (
-        // Do not display "and" if last item of the array
-        <span> and </span>
-      )} */}
+        <ExpandButton collapsed={collapsed} length={filter.content.value.length} onClick={setCollapsed} />
+        {filter.content.value.length > 1 && <span> )</span>}
       </div>
     );
   } else {
     return (
       <div className={classes.root}>
         <span>{facet.name} is </span>
-        <Value facet={facet} value={values} updateQuery={updateQuery} />
+        <Value value={filter.content.value} removeFilter={removeFilter} filter={filter} />
       </div>
     );
   }

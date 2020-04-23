@@ -13,7 +13,7 @@ import red from '@material-ui/core/colors/red';
 
 import { StateLabel, Label } from '@primer/components';
 
-import Moment from 'react-moment';
+import { format } from 'date-fns';
 
 import { Pullrequest } from '../../../../types/github/pullrequest';
 
@@ -85,27 +85,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const getParticipants = (item: Pullrequest) => {
-  let participants: Array<any> = [
-    {
-      title: 'Author: ' + item.author.login,
-      login: item.author.login,
-      avatarUrl: item.author.avatarUrl,
-      url: item.author.url,
-    },
-  ];
+  let participants: Array<any> = [];
   if (item.assignees.totalCount > 0) {
     const assignees = item.assignees.edges.map((assignee) => {
       return {
         title:
-          'Assignee: ' + assignee.node.name === null || assignee.node.name === ''
-            ? assignee.node.login
-            : assignee.node.name,
+          'Assignee: ' +
+          (assignee.node.name === null || assignee.node.name === '' ? assignee.node.login : assignee.node.name),
         login: assignee.node.login,
         avatarUrl: assignee.node.avatarUrl,
         url: assignee.node.url,
       };
     });
-    participants = assignees;
+    participants = [...participants, ...assignees];
   }
   if (item.reviewRequests.totalCount > 0) {
     const reviewRequests = item.reviewRequests.edges.map((rq: any) => {
@@ -150,6 +142,15 @@ const PullrequestWide: React.FC<Props> = (props: Props) => {
   return (
     <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
       <Grid item>
+        <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
+          <Grid item>
+            <Tooltip title={'Author: ' + item.author.login}>
+              <Avatar alt={'Author: ' + item.author.login} src={item.author.avatarUrl} className={classes.avatar} />
+            </Tooltip>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item>
         <Tooltip title={item.state}>
           <React.Fragment>
             {item.state === 'OPEN' && <StateLabel status="pullOpened">Open</StateLabel>}
@@ -193,9 +194,7 @@ const PullrequestWide: React.FC<Props> = (props: Props) => {
                 #{item.number}
               </a>{' '}
             </span>
-            <span>
-              opened on <Moment format="ddd MMM D, YYYY">{item.createdAt}</Moment>
-            </span>
+            <span>opened on {format(new Date(item.createdAt), 'eee MMM d, yyyy')}</span>
             {item.author !== null && (
               <span>
                 {' '}
@@ -206,13 +205,9 @@ const PullrequestWide: React.FC<Props> = (props: Props) => {
               </span>
             )}
             {item.closedAt !== null ? (
-              <span>
-                , closed on <Moment format="ddd MMM D, YYYY">{item.closedAt}</Moment>
-              </span>
+              <span>, closed on {format(new Date(item.closedAt), 'eee MMM d, yyyy')}</span>
             ) : (
-              <span>
-                , last updated on <Moment format="ddd MMM D, YYYY">{item.updatedAt}</Moment>
-              </span>
+              <span>, last updated on {format(new Date(item.updatedAt), 'eee MMM d, yyyy')}</span>
             )}
           </Grid>
         </Grid>
@@ -220,18 +215,20 @@ const PullrequestWide: React.FC<Props> = (props: Props) => {
       <Grid item>
         {item.labels.totalCount > 0 && (
           <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
-            {//Filters out labels which are point since points are listed in the last column anyway
-            item.labels.edges
-              .filter((label) => pointsExp.test(label.node.name) !== true)
-              .map((label) => {
-                return (
-                  <Grid item key={label.node.name}>
-                    <Label variant="large" m={1} style={{ background: '#' + label.node.color }}>
-                      {label.node.name}
-                    </Label>
-                  </Grid>
-                );
-              })}
+            {
+              //Filters out labels which are point since points are listed in the last column anyway
+              item.labels.edges
+                .filter((label) => pointsExp.test(label.node.name) !== true)
+                .map((label) => {
+                  return (
+                    <Grid item key={label.node.name}>
+                      <Label variant="large" m={1} style={{ background: '#' + label.node.color }}>
+                        {label.node.name}
+                      </Label>
+                    </Grid>
+                  );
+                })
+            }
           </Grid>
         )}
       </Grid>

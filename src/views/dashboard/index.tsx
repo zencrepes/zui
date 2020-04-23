@@ -3,17 +3,11 @@ import Typography from '@material-ui/core/Typography';
 
 import Layout from '../../layout';
 
-import { Dataset } from '../../global';
-
-interface Props {
-  datasets?: Dataset[];
-}
-
-const Dashboard: React.FC<Props> = (props) => {
+const Dashboard: React.FC<{}> = () => {
   return (
-    <Layout {...props}>
-      <Typography paragraph>This is the dashboard section</Typography>
-      <Typography paragraph>blah blah blah</Typography>
+    <Layout>
+      <Typography paragraph>The dashboard has not been implemented yet.</Typography>
+      <Typography paragraph>Please use the burger menu on the top left to select a dataset.</Typography>
     </Layout>
   );
 };

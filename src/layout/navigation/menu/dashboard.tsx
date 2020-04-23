@@ -6,7 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 
-import AdapterLink from '../../utils/adapterLink';
+import AdapterLink from '../../../utils/adapterLink';
 
 const DashboardMenu: React.FC<object> = () => {
   return (

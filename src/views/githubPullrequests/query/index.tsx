@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { iRootState } from '../../../store';
 
-import { addRemoveFromQuery, addRemoveMetricsFromQuery, addRemoveDateFromQuery } from '../../../utils/query';
+import { removeFilterFromQuery } from '../../../utils/query';
 
 import OpenButton from './openButton';
 import ClearButton from './clearButton';
@@ -30,7 +30,6 @@ const mapState = (state: iRootState) => ({
 const mapDispatch = (dispatch: any) => ({
   saveQuery: dispatch.githubPullrequests.saveQuery,
   deleteQuery: dispatch.githubPullrequests.deleteQuery,
-  // updateQuery: dispatch.githubPullrequests.updateQuery,
   setSelectedTab: dispatch.githubPullrequests.setSelectedTab,
   setQueries: dispatch.githubPullrequests.setQueries,
   setQuery: dispatch.githubPullrequests.setQuery,
@@ -64,36 +63,27 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     setStateOpenManageQueryDialog(true);
   };
 
-  const clearQuery = () => {
-    history.push({
-      pathname: '/githubPullrequests',
-      search: '?q=' + encodeURIComponent('{}'),
-      state: { detail: null },
-    });
+  const openQuery = (newQuery: any) => {
+    if (JSON.stringify(query) !== JSON.stringify(newQuery)) {
+      history.push({
+        pathname: '/githubPullrequests',
+        search: '?q=' + encodeURIComponent(JSON.stringify(newQuery)),
+        state: { detail: newQuery },
+      });
+    }
   };
 
-  const updateViewQuery = (value: string, facet: Facet, op?: string) => {
-    let updatedQuery = {};
-    if (facet.facetType === 'term') {
-      updatedQuery = addRemoveFromQuery(value, facet, query);
-    } else if (facet.facetType === 'metrics') {
-      updatedQuery = addRemoveMetricsFromQuery(null, null, facet, query);
-    } else if (facet.facetType === 'date' && op !== undefined) {
-      updatedQuery = addRemoveDateFromQuery(facet.field, op, value, query);
-    }
-    history.push({
-      pathname: '/githubPullrequests',
-      search: '?q=' + encodeURIComponent(JSON.stringify(updatedQuery)),
-      state: { detail: updatedQuery },
-    });
+  const clearQuery = () => {
+    openQuery({});
+  };
+
+  const removeFilter = (filter: any) => {
+    const updatedQuery = removeFilterFromQuery(filter, query);
+    openQuery(updatedQuery);
   };
 
   const loadQuery = (query: Query) => {
-    history.push({
-      pathname: '/githubPullrequests',
-      search: '?q=' + encodeURIComponent(JSON.stringify(query.query)),
-      state: { detail: JSON.stringify(query.query) },
-    });
+    openQuery(query.query);
     setStateOpenManageQueryDialog(false);
   };
 
@@ -154,7 +144,7 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
           </Grid>
         )}
         <Grid item xs={12} sm container>
-          <DisplayQuery query={query} facets={facets} updateQuery={updateViewQuery} />
+          <DisplayQuery query={query} facets={facets} removeFilter={removeFilter} />
         </Grid>
         <Grid item>
           <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={0}>

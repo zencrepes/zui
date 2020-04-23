@@ -30,6 +30,24 @@ test('Remove filter by re-submitting it', () => {
   expect(JSON.stringify(response)).toEqual(JSON.stringify(expectedResponse));
 });
 
+test('Submitting filter with a different operator on the same field', () => {
+  const sourceSelectedField = 'createdAt';
+  const sourceSelectedOp = '<=';
+  const sourceSelectedDate = new Date().toISOString();
+  const sourceQuery = {
+    op: 'and',
+    content: [{ op: '>=', content: { field: 'createdAt', value: sourceSelectedDate } }],
+  };
+
+  const response = addRemoveDateFromQuery(sourceSelectedField, sourceSelectedOp, sourceSelectedDate, sourceQuery);
+
+  const expectedResponse = {
+    op: 'and',
+    content: [{ op: '<=', content: { field: 'createdAt', value: sourceSelectedDate } }],
+  };
+  expect(JSON.stringify(response)).toEqual(JSON.stringify(expectedResponse));
+});
+
 test('Replace the only existing filter by the same one with a different date', () => {
   const sourceSelectedField = 'createdAt';
   const sourceSelectedOp = '>=';

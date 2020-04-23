@@ -11,10 +11,11 @@ const ACTIVITYMATRIX_QUERY = loader('./getActivityMatrix.graphql');
 
 interface Props {
   query: any;
+  openMatrixClick: Function;
 }
 
 const TeamFocus: React.FC<Props> = (props: Props) => {
-  const { query } = props;
+  const { query, openMatrixClick } = props;
   const [field, setField] = React.useState<string>('repository.name.keyword');
 
   const { data } = useQuery(ACTIVITYMATRIX_QUERY, {
@@ -33,7 +34,13 @@ const TeamFocus: React.FC<Props> = (props: Props) => {
         headerFactTitle="Number of PRs closed per aggregation field and per week"
         headerFactValue=""
       >
-        <Chart dataset={dataset} field={dataset.field} query={query} setField={setField} />
+        <Chart
+          dataset={dataset}
+          field={dataset.field}
+          query={query}
+          setField={setField}
+          openMatrixClick={openMatrixClick}
+        />
       </CustomCard>
     );
   }

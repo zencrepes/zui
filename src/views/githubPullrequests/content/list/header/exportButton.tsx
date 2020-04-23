@@ -9,28 +9,31 @@ import { loader } from 'graphql.macro';
 
 import { useLazyQuery } from '@apollo/client';
 
-const PRS_QUERY = loader('./getPullRequests.graphql');
+const PRS_QUERY = loader('../getPullRequests.graphql');
 
 interface Props {
   query: any;
+  sortField: string;
+  sortDirection: string;
   totalCount: number;
 }
 
 // Harcoding and limiting to 500 records only for the time being
 const ExportButton: React.FC<Props> = (props: Props) => {
-  const { query, totalCount } = props;
+  const { query, totalCount, sortField, sortDirection } = props;
 
   const [getItems, { loading, data }] = useLazyQuery(PRS_QUERY, {
     variables: {
       from: 0,
       size: 500,
       query: JSON.stringify(query),
+      sortField: sortField,
+      sortDirection: sortDirection,
     },
     fetchPolicy: 'cache-and-network',
   });
 
   const clickButton = async () => {
-    console.log('click');
     getItems();
   };
 
@@ -56,14 +59,14 @@ const ExportButton: React.FC<Props> = (props: Props) => {
   }
   return (
     <React.Fragment>
-      {totalCount > 500 && (
-        <span>
-          <i>(limited to first 500)</i>{' '}
-        </span>
-      )}
       <Button variant="contained" color="primary" size="small" startIcon={<GetAppIcon />} onClick={clickButton}>
         TSV
       </Button>
+      {totalCount > 500 && (
+        <span>
+          <i>(first 500)</i>{' '}
+        </span>
+      )}
       {dataset.length > 0 && <CSVDownload data={dataset} target="_blank" />}
     </React.Fragment>
   );

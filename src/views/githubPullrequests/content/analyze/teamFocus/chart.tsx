@@ -12,7 +12,22 @@ interface Props {
   dataset: any;
   field: any;
   setField: Function;
+  openMatrixClick: Function;
 }
+
+const getEmptyWeekFromData = (data: any) => {
+  const weekCalendar: Array<string> = [];
+
+  for (const bucket of data.buckets) {
+    for (const week of bucket.weeks) {
+      if (!weekCalendar.includes(week.weekStart)) {
+        weekCalendar.push(week.weekStart);
+      }
+    }
+  }
+  weekCalendar.sort();
+  return weekCalendar;
+};
 
 const getEmptyWeekCalendar = (firstWeek: Date, lastWeek: Date) => {
   const weekCalendar: Array<string> = [];
@@ -35,7 +50,9 @@ const buildDataset = (data: any, emptyCalendar: Array<string>) => {
 
   for (const bucket of data.buckets) {
     const formattedBucket: any = {};
-    formattedBucket[data.field] = bucket.key;
+    formattedBucket[data.field] = bucket.key + ' (' + bucket.docCount + ')';
+    formattedBucket.value = bucket.key;
+
     for (const week of emptyCalendar) {
       const weekExist = bucket.weeks.find((w: any) => w.weekStart === week);
       formattedBucket[week] = weekExist === undefined ? 0 : weekExist.docCount;
@@ -47,12 +64,26 @@ const buildDataset = (data: any, emptyCalendar: Array<string>) => {
 };
 
 const Chart: React.FC<Props> = (props: Props) => {
-  const { dataset, field, setField } = props;
+  const { dataset, field, setField, openMatrixClick } = props;
 
-  const [maxWeeks, setMaxWeeks] = React.useState<number>(50);
-  const [maxBuckets, setMaxBuckets] = React.useState<number>(30);
+  const initMaxBuckets = dataset.buckets.length <= 30 ? dataset.buckets.length : 30;
+  const [maxBuckets, setMaxBuckets] = React.useState<number>(initMaxBuckets);
+  const [displayEmpty, setDisplayEmpty] = React.useState<boolean>(false);
 
-  const emptyCalendar = getEmptyWeekCalendar(new Date(dataset.fromWeekStart), new Date(dataset.toWeekStart));
+  if (maxBuckets <= 5 && initMaxBuckets > 5) {
+    setMaxBuckets(initMaxBuckets);
+  }
+
+  let emptyCalendar: Array<string> = [];
+  if (displayEmpty === true) {
+    emptyCalendar = getEmptyWeekCalendar(new Date(dataset.fromWeekStart), new Date(dataset.toWeekStart));
+  } else {
+    emptyCalendar = getEmptyWeekFromData(dataset);
+  }
+
+  const initWeeks = emptyCalendar.length <= 50 ? emptyCalendar.length : 50;
+  const [maxWeeks, setMaxWeeks] = React.useState<number>(initWeeks);
+
   const emptyCalendarSliced = emptyCalendar.slice(emptyCalendar.length - maxWeeks, emptyCalendar.length);
   let updatedDataset = buildDataset(dataset, emptyCalendarSliced);
 
@@ -70,10 +101,21 @@ const Chart: React.FC<Props> = (props: Props) => {
           maxBuckets={maxBuckets}
           setMaxBuckets={setMaxBuckets}
           totalBuckets={dataset.buckets.length}
+          displayEmpty={displayEmpty}
+          setDisplayEmpty={setDisplayEmpty}
         />
       </Grid>
       <Grid item xs={12}>
-        <MatrixDateChart dataset={updatedDataset} weeks={emptyCalendarSliced} field={field} />
+        {updatedDataset.length > 5 ? (
+          <MatrixDateChart
+            dataset={updatedDataset}
+            weeks={emptyCalendarSliced}
+            field={field}
+            openMatrixClick={openMatrixClick}
+          />
+        ) : (
+          <span>Dataset too small (less than 5 buckets), please make a different selection</span>
+        )}
       </Grid>
     </Grid>
   );
