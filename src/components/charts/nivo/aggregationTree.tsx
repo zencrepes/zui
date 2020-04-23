@@ -26,7 +26,8 @@ class AggregationTree extends Component<any, any> {
   buildDataset() {
     const { buckets } = this.props;
     const chartData = {
-      name: '',
+      name: 'dataset',
+      count: 10,
       color: 'hsl(67, 70%, 50%)',
       children: buckets.map((v: any) => {
         return { name: v.key, count: v.docCount };

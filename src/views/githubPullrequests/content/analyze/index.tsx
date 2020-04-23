@@ -4,10 +4,12 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { add } from 'date-fns';
 
 import TeamFocus from './teamFocus';
 
 import { iRootState } from '../../../../store';
+import { createTermFilter, addFilterToQuery } from '../../../../utils/query';
 
 const mapState = (state: iRootState) => ({
   defaultPoints: state.githubPullrequests.defaultPoints,
@@ -25,13 +27,34 @@ const useStyles = makeStyles({
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
 
 const Analyze: React.FC<connectedProps> = (props: connectedProps) => {
-  const { query } = props;
+  const { query, history } = props;
   const classes = useStyles();
+
+  const openQuery = (newQuery: any) => {
+    history.push({
+      pathname: '/githubPullrequests',
+      search: '?q=' + encodeURIComponent(JSON.stringify(newQuery)) + '&tab=' + encodeURIComponent('list'),
+      state: { detail: newQuery },
+    });
+  };
+
+  const openMatrixClick = (field: string, fieldValue: string, startWeek: string) => {
+    const termFilter = createTermFilter('=', field, fieldValue);
+    let updatedQuery = addFilterToQuery(termFilter, query);
+
+    const filterFrom = createTermFilter('>=', 'closedAt', startWeek);
+    updatedQuery = addFilterToQuery(filterFrom, updatedQuery);
+
+    const filterTo = createTermFilter('<=', 'closedAt', add(new Date(startWeek), { days: 7 }).toISOString());
+    updatedQuery = addFilterToQuery(filterTo, updatedQuery);
+
+    openQuery(updatedQuery);
+  };
 
   return (
     <Grid container spacing={3} className={classes.root}>
       <Grid item xs={12}>
-        <TeamFocus query={query} />
+        <TeamFocus query={query} openMatrixClick={openMatrixClick} />
       </Grid>
     </Grid>
   );

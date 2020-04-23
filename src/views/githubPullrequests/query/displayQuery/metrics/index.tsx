@@ -6,10 +6,9 @@ import { Facet } from '../../types';
 
 import Value from './value';
 interface Props {
-  op: string;
-  value: string;
+  filter: any;
   facet: Facet;
-  updateQuery: Function | null;
+  removeFilter: Function | null;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -22,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Metrics: React.FC<Props> = (props: Props) => {
-  const { op, value, facet, updateQuery } = props;
+  const { filter, facet, removeFilter } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <span>{facet.name} </span>
-      <span>{op} </span>
-      <Value key={value} facet={facet} value={value} updateQuery={updateQuery} />
+      <span>{filter.op} </span>
+      <Value filter={filter} removeFilter={removeFilter} />
     </div>
   );
 };

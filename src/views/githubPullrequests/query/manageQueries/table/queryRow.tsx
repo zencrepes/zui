@@ -35,7 +35,7 @@ const QueryRow: React.FC<Props> = (props: Props) => {
       </TableCell>
       <TableCell scope="row">{query.name}</TableCell>
       <TableCell>
-        <DisplayQuery query={query.query} facets={facets} updateQuery={null} />
+        <DisplayQuery query={query.query} facets={facets} removeFilter={null} />
       </TableCell>
       <TableCell padding="none">
         <DeleteButton onClick={removeQuery} />

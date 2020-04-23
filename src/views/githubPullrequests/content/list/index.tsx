@@ -47,6 +47,20 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     query,
   } = props;
 
+  const availableSortFields = [
+    { display: 'Created', value: 'createdAt' },
+    { display: 'Updated', value: 'updatedAt' },
+    { display: 'Closed', value: 'closedAt' },
+    { display: 'Title', value: 'title.keyword' },
+    { display: 'Author', value: 'author.login' },
+    { display: 'Milestone', value: 'milestone.title.keyword' },
+    { display: 'Repository', value: 'repository.name.keyword' },
+    { display: 'Organization', value: 'repository.owner.login' },
+  ];
+
+  const [sortField, setSortField] = React.useState<string>('createdAt');
+  const [sortDirection, setSortDirection] = React.useState<string>('desc');
+
   const changeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTablePaginationLimit(parseInt(event.target.value, 10));
   };
@@ -60,6 +74,8 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
       from: tablePaginationOffset,
       size: tablePaginationLimit,
       query: JSON.stringify(query),
+      sortField: sortField,
+      sortDirection: sortDirection,
     },
     fetchPolicy: 'cache-and-network',
   });
@@ -70,7 +86,15 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     return (
       <React.Fragment>
         <Table size="small">
-          <Header totalCount={totalCount} query={query} />
+          <Header
+            totalCount={totalCount}
+            query={query}
+            sortField={sortField}
+            setSortField={setSortField}
+            availableSortFields={availableSortFields}
+            sortDirection={sortDirection}
+            setSortDirection={setSortDirection}
+          />
           <TableBody>
             {nodes.map((item: any) => {
               return (

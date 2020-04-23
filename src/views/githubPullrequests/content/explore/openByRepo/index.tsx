@@ -48,9 +48,20 @@ const OpenByRepo: React.FC<Props> = (props: Props) => {
     fetchPolicy: 'no-cache',
   });
   if (data !== undefined && data.githubPullrequests.data !== undefined) {
-    const buckets = data.githubPullrequests.data.aggregations.buckets;
+    let buckets = data.githubPullrequests.data.aggregations.buckets;
+    const srcBucketsSize = buckets.length;
+    const maxBucketsToDisplay = 75;
+    if (buckets.length > maxBucketsToDisplay) {
+      buckets = buckets.slice(0, maxBucketsToDisplay);
+    }
     return (
-      <CustomCard headerTitle="Open PRs by Repository" headerFactTitle="" headerFactValue="">
+      <CustomCard
+        headerTitle={
+          'Open PRs by Repository' + (srcBucketsSize > maxBucketsToDisplay ? ' (top ' + maxBucketsToDisplay + ')' : '')
+        }
+        headerFactTitle=""
+        headerFactValue=""
+      >
         <AggregationTree buckets={buckets} onAggClick={onAggClick} />
       </CustomCard>
     );

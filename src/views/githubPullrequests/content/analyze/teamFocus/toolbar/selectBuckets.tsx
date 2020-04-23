@@ -11,7 +11,7 @@ interface Props {
 
 const useStyles = makeStyles({
   root: {
-    width: 350,
+    width: 200,
   },
 });
 
@@ -19,39 +19,61 @@ const SelectBuckets: React.FC<Props> = (props: Props) => {
   const { maxBuckets, setMaxBuckets, totalBuckets } = props;
   const classes = useStyles();
 
-  const handleChange = (event: any, newValue: number | number[]) => {
+  const [value, setValue] = React.useState<number>(maxBuckets);
+
+  const handleChangeCommit = (event: any, newValue: number | number[]) => {
     setMaxBuckets(newValue as number);
   };
 
-  const marks = [
-    {
-      value: 0,
-      label: 0,
-    },
-    {
-      value: maxBuckets,
-      label: maxBuckets,
-    },
-    {
+  const handleChange = (event: any, newValue: number | number[]) => {
+    setValue(newValue as number);
+  };
+
+  const marks: Array<any> = [];
+
+  if (value !== 5) {
+    marks.push({
+      value: 5,
+      label: 5,
+    });
+  } else {
+    marks.push({
+      value: value,
+      label: value,
+    });
+  }
+
+  marks.push({
+    value: maxBuckets,
+    label: maxBuckets,
+  });
+
+  if (maxBuckets !== totalBuckets) {
+    marks.push({
       value: totalBuckets,
       label: totalBuckets,
-    },
-  ];
+    });
+  }
+
+  if (totalBuckets < 5) {
+    return null;
+  }
 
   return (
     <div className={classes.root}>
       <Typography id="discrete-slider" gutterBottom>
-        Number of buckets to display
+        Buckets to display
       </Typography>
       <Slider
-        value={maxBuckets}
+        value={value}
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
         step={10}
         marks={marks}
-        min={0}
+        min={5}
         max={totalBuckets}
-        onChangeCommitted={handleChange}
+        onChange={handleChange}
+        onChangeCommitted={handleChangeCommit}
       />
     </div>
   );

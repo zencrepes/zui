@@ -26,7 +26,7 @@ const SelectField: React.FC<Props> = (props: Props) => {
       options={aggregationFields}
       getOptionLabel={(option) => option.display}
       value={aggregationFields.find((v: any) => v.value === field)}
-      style={{ width: 300 }}
+      style={{ width: 200 }}
       onChange={(event: any, newValue: any | null) => {
         if (newValue !== null) {
           setField(newValue.value);

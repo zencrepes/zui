@@ -1,4 +1,5 @@
 export interface Dataset {
-  key: string;
+  id: string;
   name: string;
+  platform: string;
 }

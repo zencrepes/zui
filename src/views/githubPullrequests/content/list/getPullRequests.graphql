@@ -1,7 +1,7 @@
-query($from: Int, $size: Int, $query: String) {
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
   githubPullrequests {
     data(query: $query) {
-      items(from: $from, size: $size) {
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
         totalCount
         nodes {
           id
