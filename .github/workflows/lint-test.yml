@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: yarn
-      - run: yarn run lint:ci
+      - run: yarn run lint:ci --max-warnings 1
 
   tests:
     needs: [lint]
