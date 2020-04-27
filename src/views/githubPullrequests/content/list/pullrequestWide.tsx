@@ -28,7 +28,7 @@ interface Props {
   key: string;
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   repoName: {
     color: '#586069!important',
     fontSize: '16px',
