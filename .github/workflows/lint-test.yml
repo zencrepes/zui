@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: node:alpine
+      image: node:lts-alpine
 
     steps:
       - uses: actions/checkout@v2
@@ -35,7 +35,7 @@ jobs:
     # if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
     container:
-      image: node:alpine
+      image: node:lts-alpine
 
     steps:
       - uses: actions/checkout@v2
