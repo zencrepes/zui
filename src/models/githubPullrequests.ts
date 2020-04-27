@@ -63,7 +63,7 @@ export const githubPullrequests = {
     },
   },
   effects: (dispatch: Dispatch) => ({
-    async initView(payload: any, rootState: any) {
+    async initView() {
       const logger = log.noConflict();
       if (process.env.NODE_ENV !== 'production') {
         logger.enableAll();

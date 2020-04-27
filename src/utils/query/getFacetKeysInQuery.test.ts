@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { getFacetKeysInQuery } from './getFacetKeysInQuery';
 
 test('isFacetKeyInQuery - Receives an empty query', () => {

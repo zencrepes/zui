@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { createDateFilter } from './index';
 
 test('createMetricsFilter - Creates a metrics filter', () => {

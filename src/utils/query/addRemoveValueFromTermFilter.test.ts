@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { addRemoveValueFromTermFilter } from './index';
 
 test('addRemoveValueFromTermFilter - Remove the only value from the filter', () => {

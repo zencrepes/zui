@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { removeDateFieldFromQuery } from './index';
 
 test('Remove field from an empty query', () => {

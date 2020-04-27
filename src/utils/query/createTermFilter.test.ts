@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { createTermFilter } from './index';
 
 test('Creates a term filter (sending value as array)', () => {
