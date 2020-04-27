@@ -15,7 +15,7 @@ interface Props {
   facets: Array<Facet>;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     margin: '10px',
   },

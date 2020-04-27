@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { iRootState } from '../../../store';
-
-const mapState = (state: iRootState) => ({});
+const mapState = () => ({});
 
 const mapDispatch = (dispatch: any) => ({
   updateTabIfDifferent: dispatch.githubPullrequests.updateTabIfDifferent,

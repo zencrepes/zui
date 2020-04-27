@@ -9,7 +9,7 @@ interface Props {
   removeFilter: Function | null;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     marginLeft: '5px',
   },

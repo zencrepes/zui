@@ -67,7 +67,6 @@ test('Remove field from a query with two filters', () => {
 
 test('Remove field from a query with one single filter with a different operator', () => {
   const sourceField = 'createdAt';
-  const sourceOperator = '<=';
   const sourceDate = new Date();
   const sourceQuery = {
     op: 'and',

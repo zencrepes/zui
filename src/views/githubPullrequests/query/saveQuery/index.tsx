@@ -17,7 +17,7 @@ interface Props {
   queries: Array<Query>;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   textField: {
     width: 400,
   },

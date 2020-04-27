@@ -19,9 +19,9 @@ const mapState = (state: iRootState) => ({
   query: state.githubPullrequests.query,
 });
 
-const mapDispatch = (dispatch: any) => ({});
+const mapDispatch = () => ({});
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '250px',
     marginTop: '0px',

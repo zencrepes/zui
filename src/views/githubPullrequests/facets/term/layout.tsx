@@ -22,7 +22,7 @@ interface Props {
   defaultPoints: boolean;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '250px',
     marginTop: '10px',

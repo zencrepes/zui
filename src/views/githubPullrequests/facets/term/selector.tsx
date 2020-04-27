@@ -24,7 +24,7 @@ interface Props {
   clickItem: Function;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   listItem: {
     marginLeft: '5px',
     padding: '0px',
