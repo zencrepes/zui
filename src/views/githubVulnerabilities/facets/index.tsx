@@ -23,9 +23,9 @@ interface Props {
 }
 
 const mapState = (state: iRootState) => ({
-  defaultPoints: state.githubPullrequests.defaultPoints,
-  dataset: state.githubPullrequests.dataset,
-  query: state.githubPullrequests.query,
+  defaultPoints: state.githubVulnerabilities.defaultPoints,
+  dataset: state.githubVulnerabilities.dataset,
+  query: state.githubVulnerabilities.query,
 });
 
 const mapDispatch = () => ({});
@@ -43,7 +43,7 @@ const FacetsHoc: React.FC<connectedProps> = (props: connectedProps) => {
       query={query}
       gqlTermFacet={gqlTermFacet}
       gqlMetricsFacet={gqlMetricsFacet}
-      unit={'PRs'}
+      unit={'Vulns'}
     />
   );
 };

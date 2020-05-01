@@ -22,6 +22,7 @@ interface Props {
   defaultPoints: boolean;
   nullValue: string;
   clickItem: Function;
+  unit: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -48,7 +49,7 @@ const useStyles = makeStyles(() => ({
 
 const Selector: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
-  const { data, selected, defaultPoints, nullValue, clickItem } = props;
+  const { data, selected, defaultPoints, nullValue, clickItem, unit } = props;
 
   const handleToggle = (clickedValue: Bucket) => () => {
     if (nullValue !== data.key) {
@@ -73,7 +74,7 @@ const Selector: React.FC<Props> = (props: Props) => {
         <ListItemText primary={facetItem} className={classes.listItemText} />
       </Tooltip>
       <ListItemSecondaryAction>
-        <Chip label={defaultPoints ? data.docCount + ' pts' : data.docCount + ' PRs'} className={classes.chip} />
+        <Chip label={defaultPoints ? data.docCount + ' pts' : data.docCount + ' ' + unit} className={classes.chip} />
       </ListItemSecondaryAction>
     </ListItem>
   );

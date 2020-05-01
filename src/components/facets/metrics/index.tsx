@@ -1,25 +1,22 @@
 import React from 'react';
-import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 
 import Layout from './layout';
 import { Facet } from './types';
-
-const METRICSFACET_QUERY = loader('./getMetricsFacetData.graphql');
 
 interface Props {
   facet: Facet;
   defaultPoints: boolean;
   updateMetricsRange: Function;
   query: any;
+  gqlMetricsFacet: any;
+  dataset: string;
 }
 
 const MetricsFacet: React.FC<Props> = (props: Props) => {
-  const { facet, defaultPoints, updateMetricsRange, query } = props;
+  const { facet, defaultPoints, updateMetricsRange, query, gqlMetricsFacet, dataset } = props;
 
-  //  const selectedValue: string[] = getFacetKeysInQuery(facet, query);
-
-  const { data } = useQuery(METRICSFACET_QUERY, {
+  const { data } = useQuery(gqlMetricsFacet, {
     variables: {
       field: facet.field,
       query: JSON.stringify(query),
@@ -30,7 +27,7 @@ const MetricsFacet: React.FC<Props> = (props: Props) => {
     return (
       <Layout
         facet={facet}
-        metrics={data.githubPullrequests.data.metrics}
+        metrics={data[dataset].data.metrics}
         updateMetricsRange={updateMetricsRange}
         defaultPoints={defaultPoints}
       />

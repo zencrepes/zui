@@ -1,0 +1,15 @@
+query {
+  githubVulnerabilities {
+    config {
+      aggregations {
+        totalCount
+        nodes {
+          name
+          field
+          facetType
+          default
+        }
+      }
+    }
+  }
+}

@@ -5,18 +5,18 @@ import { iRootState } from '../../../store';
 import Query from '../../../components/query';
 
 const mapState = (state: iRootState) => ({
-  query: state.githubPullrequests.query,
-  dataset: state.githubPullrequests.dataset,
-  queries: state.githubPullrequests.queries,
+  query: state.githubVulnerabilities.query,
+  dataset: state.githubVulnerabilities.dataset,
+  queries: state.githubVulnerabilities.queries,
   dexieDb: state.global.dexieDb,
 });
 
 const mapDispatch = (dispatch: any) => ({
-  saveQuery: dispatch.githubPullrequests.saveQuery,
-  deleteQuery: dispatch.githubPullrequests.deleteQuery,
-  setSelectedTab: dispatch.githubPullrequests.setSelectedTab,
-  setQueries: dispatch.githubPullrequests.setQueries,
-  setQuery: dispatch.githubPullrequests.setQuery,
+  saveQuery: dispatch.githubVulnerabilities.saveQuery,
+  deleteQuery: dispatch.githubVulnerabilities.deleteQuery,
+  setSelectedTab: dispatch.githubVulnerabilities.setSelectedTab,
+  setQueries: dispatch.githubVulnerabilities.setQueries,
+  setQuery: dispatch.githubVulnerabilities.setQuery,
 });
 
 interface Props {

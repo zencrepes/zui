@@ -1,0 +1,125 @@
+import React from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+
+import TermFacet from './term';
+import MetricsFacet from './metrics';
+import DateFacet from './date';
+import { Facet, Metrics } from './types';
+
+import { addRemoveFromQuery, addRemoveMetricsFromQuery, addRemoveDateFromQuery } from '../../utils/query';
+
+const useStyles = makeStyles(() => ({
+  root: {
+    width: '250px',
+    marginTop: '0px',
+  },
+}));
+
+interface Selection {
+  key: string;
+  docCount: number;
+}
+
+interface Props {
+  facets: Array<Facet>;
+  defaultPoints: boolean;
+  query: any;
+  dataset: string;
+  unit: string;
+  gqlTermFacet: any;
+  gqlMetricsFacet: any;
+}
+
+type connectedProps = RouteComponentProps & Props;
+
+const Facets: React.FC<connectedProps> = (props: connectedProps) => {
+  const classes = useStyles();
+  const { facets, defaultPoints, query, dataset, history, gqlTermFacet, gqlMetricsFacet, unit } = props;
+
+  const addRemoveFacet = (key: Selection, facet: any) => {
+    const modifiedQuery = addRemoveFromQuery(key.key, facet, query);
+    history.push({
+      pathname: '/' + dataset,
+      search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
+      state: { detail: modifiedQuery },
+    });
+  };
+
+  const addRemoveDateFilter = (selectedField: string, selectedOp: string, selectedDate: string) => {
+    const modifiedQuery = addRemoveDateFromQuery(selectedField, selectedOp, selectedDate, query);
+    history.push({
+      pathname: '/' + dataset,
+      search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
+      state: { detail: modifiedQuery },
+    });
+  };
+
+  const updateMetricsRange = (min: number, max: number, facet: any, metrics: Metrics) => {
+    // Only update the URL if one of the two value have changes
+    if (metrics.min !== min || metrics.max !== max) {
+      const modifiedQuery = addRemoveMetricsFromQuery(min, max, facet, query);
+      history.push({
+        pathname: '/' + dataset,
+        search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
+        state: { detail: modifiedQuery },
+      });
+    }
+  };
+
+  // Date facets are always displayed first
+  const dateFacetsfields = facets.filter((facet: any) => facet.facetType === 'date').map((facet: any) => facet.field);
+  return (
+    <div className={classes.root}>
+      <Grid container direction="column" justify="flex-start" alignItems="flex-start">
+        {dateFacetsfields.length > 0 && (
+          <Grid item key={'date'}>
+            <DateFacet
+              facets={facets.filter((facet: any) => facet.facetType === 'date')}
+              addRemoveDateFilter={addRemoveDateFilter}
+              query={query}
+            />
+          </Grid>
+        )}
+
+        {facets
+          .filter((f: Facet) => f.default === true)
+          .map((facet: any) => {
+            if (facet.facetType === 'term') {
+              return (
+                <Grid item key={facet.field}>
+                  <TermFacet
+                    facet={facet}
+                    defaultPoints={defaultPoints}
+                    addRemoveFacet={addRemoveFacet}
+                    query={query}
+                    gqlTermFacet={gqlTermFacet}
+                    dataset={dataset}
+                    unit={unit}
+                  />
+                </Grid>
+              );
+            } else if (facet.facetType === 'metrics') {
+              return (
+                <Grid item key={facet.field}>
+                  <MetricsFacet
+                    facet={facet}
+                    defaultPoints={defaultPoints}
+                    updateMetricsRange={updateMetricsRange}
+                    query={query}
+                    gqlMetricsFacet={gqlMetricsFacet}
+                    dataset={dataset}
+                  />
+                </Grid>
+              );
+            }
+            return null;
+          })}
+      </Grid>
+    </div>
+  );
+};
+
+export default withRouter(Facets);

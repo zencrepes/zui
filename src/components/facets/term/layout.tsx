@@ -20,6 +20,7 @@ interface Props {
   clickedItem: Function;
   selectedValues: string[];
   defaultPoints: boolean;
+  unit: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -41,7 +42,7 @@ const cardContentStyle = {
 };
 
 const TermFacet: React.FC<Props> = (props: Props) => {
-  const { facet, buckets, clickedItem, selectedValues, defaultPoints } = props;
+  const { facet, buckets, clickedItem, selectedValues, defaultPoints, unit } = props;
 
   const classes = useStyles();
   const [collapsed, setCollapsed] = React.useState(true);
@@ -64,6 +65,7 @@ const TermFacet: React.FC<Props> = (props: Props) => {
                 nullValue={facet.nullValue}
                 clickItem={clickedItem}
                 selected={selectedValues.includes(bucket.key)}
+                unit={unit}
               />
             ))}
           </List>
