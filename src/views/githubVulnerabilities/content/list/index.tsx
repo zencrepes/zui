@@ -95,6 +95,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   const changeCurrentPage = (event: unknown, newPage: number) => {
+    console.log(newPage);
     setTablePaginationCurrentPage(newPage);
   };
 

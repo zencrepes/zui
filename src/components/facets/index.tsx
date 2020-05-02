@@ -70,7 +70,9 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   // Date facets are always displayed first
-  const dateFacetsfields = facets.filter((facet: any) => facet.facetType === 'date').map((facet: any) => facet.field);
+  const dateFacetsfields = facets
+    .filter((facet: any) => facet.facetType === 'date' && facet.default !== false)
+    .map((facet: any) => facet.field);
   return (
     <div className={classes.root}>
       <Grid container direction="column" justify="flex-start" alignItems="flex-start">
