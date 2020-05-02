@@ -9,20 +9,32 @@ import { loader } from 'graphql.macro';
 
 import { useLazyQuery } from '@apollo/client';
 
-const PRS_QUERY = loader('../getPullRequests.graphql');
+const GQL_QUERY = loader('../getVulnerabilities.graphql');
 
 interface Props {
   query: any;
   sortField: string;
-  sortDirection: string;
+  sortDirection: false | 'desc' | 'asc' | undefined;
   totalCount: number;
+  tableColumns: any[];
 }
+
+//https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_get
+const get = (obj: any, path: string, defaultValue = undefined) => {
+  const travel = (regexp: any) =>
+    String.prototype.split
+      .call(path, regexp)
+      .filter(Boolean)
+      .reduce((res, key) => (res !== null && res !== undefined ? res[key] : res), obj);
+  const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/);
+  return result === undefined || result === obj ? defaultValue : result;
+};
 
 // Harcoding and limiting to 500 records only for the time being
 const ExportButton: React.FC<Props> = (props: Props) => {
-  const { query, totalCount, sortField, sortDirection } = props;
+  const { query, totalCount, sortField, sortDirection, tableColumns } = props;
 
-  const [getItems, { loading, data }] = useLazyQuery(PRS_QUERY, {
+  const [getItems, { loading, data }] = useLazyQuery(GQL_QUERY, {
     variables: {
       from: 0,
       size: 500,
@@ -39,18 +51,12 @@ const ExportButton: React.FC<Props> = (props: Props) => {
 
   let dataset: Array<any> = [];
   if (data !== undefined && data.githubVulnerabilities.data.items.nodes.length > 0) {
-    const header = ['Org', 'Repo', 'Created', 'Updated', 'Closed', 'Author', 'Title', 'State', 'Url'];
-    dataset = data.githubVulnerabilities.data.items.nodes.map((i: any) => [
-      i.repository.owner.login,
-      i.repository.name,
-      i.createdAt,
-      i.updatedAt,
-      i.closedAt,
-      i.author.login,
-      i.title,
-      i.state,
-      i.url,
-    ]);
+    const header = tableColumns.map((c: any) => c.name);
+    dataset = data.githubVulnerabilities.data.items.nodes.map((i: any) => {
+      return tableColumns.map((c: any) => {
+        return get(i, c.sortKey);
+      });
+    });
     dataset.unshift(header);
   }
 

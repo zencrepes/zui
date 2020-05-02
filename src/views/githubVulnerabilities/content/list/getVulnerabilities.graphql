@@ -1,0 +1,54 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  githubVulnerabilities {
+    data(query: $query) {
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          createdAt
+          dismissedAt
+          dismisser {
+            login
+            avatarUrl
+            url
+          }
+          vulnerableManifestPath
+          vulnerableManifestFilename
+          vulnerableRequirements
+          securityVulnerability {
+            advisory {
+              id
+              publishedAt
+              origin
+              summary
+              description
+              severity
+              ghsaId
+              permalink
+            }
+            package {
+              name
+              ecosystem
+            }
+            severity
+            vulnerableVersionRange
+            firstPatchedVersion {
+              identifier
+            }
+          }
+          repository {
+            id
+            name
+            url
+            databaseId
+            owner {
+              id
+              login
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
