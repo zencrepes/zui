@@ -40,7 +40,15 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 
 const GithubPullrequests: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
-  const { updateQueryIfDifferent, location } = props;
+  const { updateQueryIfDifferent, location, history } = props;
+
+  const pushNewQuery = (modifiedQuery: any) => {
+    history.push({
+      pathname: '/githubPullrequests',
+      search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
+      state: { detail: modifiedQuery },
+    });
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -65,7 +73,7 @@ const GithubPullrequests: React.FC<connectedProps> = (props: connectedProps) => 
       <Layout>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={2}>
           <Grid item>
-            <FacetsHoc facets={facets} />
+            <FacetsHoc facets={facets} pushNewQuery={pushNewQuery} />
           </Grid>
           <Grid item xs={12} sm container>
             <Grid container direction="column" justify="flex-start" alignItems="flex-start">

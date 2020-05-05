@@ -25,7 +25,7 @@ interface Props {
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '250px',
+    width: '300px',
     marginTop: '10px',
   },
 }));

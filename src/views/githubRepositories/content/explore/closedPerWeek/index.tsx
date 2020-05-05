@@ -29,7 +29,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
   if (data !== undefined) {
     // Normalize the dataset (x points might not be the same)
     const datapoints: Array<string> = [];
-    for (const item of data.githubVulnerabilities.data.createdAt.buckets) {
+    for (const item of data.githubRepositories.data.createdAt.buckets) {
       if (!datapoints.includes(item.keyAsString)) {
         datapoints.push(item.keyAsString);
       }
@@ -38,7 +38,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
     const dataseries: Array<any> = [];
     // Prep the data
     for (const x of datapoints) {
-      const createdAt = data.githubVulnerabilities.data.createdAt.buckets.find((item: any) => item.keyAsString === x);
+      const createdAt = data.githubRepositories.data.createdAt.buckets.find((item: any) => item.keyAsString === x);
       dataseries.push({
         label: x,
         createdAt: createdAt !== undefined ? createdAt.docCount : 0,
@@ -48,7 +48,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
     const chartData = {
       datasets: [
         {
-          label: 'New Vulnerabilities',
+          label: 'New Repositories',
           data: dataseries.map((item: any) => item.createdAt),
           backgroundColor: 'rgb(54, 162, 235)',
           borderColor: 'rgb(54, 162, 235)',

@@ -1,7 +1,8 @@
 import { createTermFilter, addRemoveValueFromTermFilter } from './index';
 import { Facet } from './types';
 
-export const addRemoveFromQuery = (value: string, facet: Facet, query: any) => {
+export const addRemoveFromQuery = (value: string, facet: Facet, query: any, forceUnique = false) => {
+  // Force unique ensure there's only one facet of the same field in the query
   let updatedQuery: any = {};
   // If query is empty, populate it with the facet content
   if (Object.keys(query).length === 0) {
@@ -22,7 +23,7 @@ export const addRemoveFromQuery = (value: string, facet: Facet, query: any) => {
     return updatedQuery;
   }
 
-  const updatedFilter = addRemoveValueFromTermFilter(identifiedFilter, value);
+  const updatedFilter = addRemoveValueFromTermFilter(identifiedFilter, value, forceUnique);
   updatedQuery = {
     ...query,
     content: query.content

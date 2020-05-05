@@ -11,13 +11,13 @@ interface Props {
   defaultPoints: boolean;
   addRemoveFacet: Function;
   query: any;
-  gqlTermFacet: any;
+  gqlAggregationData: any;
   dataset: string;
   unit: string;
 }
 
 const TermFacet: React.FC<Props> = (props: Props) => {
-  const { facet, defaultPoints, addRemoveFacet, query, gqlTermFacet, dataset, unit } = props;
+  const { facet, defaultPoints, addRemoveFacet, query, gqlAggregationData, dataset, unit } = props;
 
   const clickedFacetItem = (key: string) => {
     addRemoveFacet(key, facet);
@@ -25,7 +25,7 @@ const TermFacet: React.FC<Props> = (props: Props) => {
 
   const selectedValue: string[] = getFacetKeysInQuery(facet, query);
 
-  const { data } = useQuery(gqlTermFacet, {
+  const { data } = useQuery(gqlAggregationData, {
     variables: {
       field: facet.field,
       query: JSON.stringify(query),

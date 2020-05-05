@@ -7,7 +7,7 @@ import { iRootState } from '../../../store';
 
 import Facets from '../../../components/facets';
 
-const gqlTermFacet = loader('./getTermFacetData.graphql');
+const gqlAggregationData = loader('./getTermFacetData.graphql');
 const gqlMetricsFacet = loader('./getMetricsFacetData.graphql');
 
 interface Facet {
@@ -20,6 +20,7 @@ interface Facet {
 
 interface Props {
   facets: Facet[];
+  pushNewQuery: Function;
 }
 
 const mapState = (state: iRootState) => ({
@@ -33,7 +34,7 @@ const mapDispatch = () => ({});
 type connectedProps = Props & ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
 const FacetsHoc: React.FC<connectedProps> = (props: connectedProps) => {
-  const { facets, defaultPoints, dataset, query } = props;
+  const { facets, defaultPoints, dataset, query, pushNewQuery } = props;
 
   return (
     <Facets
@@ -41,9 +42,10 @@ const FacetsHoc: React.FC<connectedProps> = (props: connectedProps) => {
       defaultPoints={defaultPoints}
       dataset={dataset}
       query={query}
-      gqlTermFacet={gqlTermFacet}
+      gqlAggregationData={gqlAggregationData}
       gqlMetricsFacet={gqlMetricsFacet}
       unit={'PRs'}
+      pushNewQuery={pushNewQuery}
     />
   );
 };

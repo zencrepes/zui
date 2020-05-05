@@ -7,7 +7,7 @@ import { iRootState } from '../../../store';
 
 import Facets from '../../../components/facets';
 
-const gqlAggregationData = loader('./getTermFacetData.graphql');
+const gqlAggregationData = loader('./getAggregationData.graphql');
 const gqlMetricsFacet = loader('./getMetricsFacetData.graphql');
 
 interface Facet {
@@ -24,9 +24,9 @@ interface Props {
 }
 
 const mapState = (state: iRootState) => ({
-  defaultPoints: state.githubVulnerabilities.defaultPoints,
-  dataset: state.githubVulnerabilities.dataset,
-  query: state.githubVulnerabilities.query,
+  defaultPoints: state.githubRepositories.defaultPoints,
+  dataset: state.githubRepositories.dataset,
+  query: state.githubRepositories.query,
 });
 
 const mapDispatch = () => ({});
@@ -35,7 +35,6 @@ type connectedProps = Props & ReturnType<typeof mapState> & ReturnType<typeof ma
 
 const FacetsHoc: React.FC<connectedProps> = (props: connectedProps) => {
   const { facets, defaultPoints, dataset, query, pushNewQuery } = props;
-
   return (
     <Facets
       facets={facets}
@@ -44,7 +43,7 @@ const FacetsHoc: React.FC<connectedProps> = (props: connectedProps) => {
       query={query}
       gqlAggregationData={gqlAggregationData}
       gqlMetricsFacet={gqlMetricsFacet}
-      unit={'Vulns'}
+      unit={'Repos'}
       pushNewQuery={pushNewQuery}
     />
   );

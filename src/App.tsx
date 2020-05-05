@@ -7,6 +7,7 @@ import Dashboard from './views/dashboard';
 import Settings from './views/settings';
 import GithubPullrequests from './views/githubPullrequests';
 import GithubVulnerabilities from './views/githubVulnerabilities';
+import GithubRepositories from './views/githubRepositories';
 import Login from './views/login';
 
 const mapState = () => ({});
@@ -30,6 +31,7 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
           <Route exact path="/settings" render={() => <Settings />} />
           <Route exact path="/githubPullrequests" render={() => <GithubPullrequests />} />
           <Route exact path="/githubVulnerabilities" render={() => <GithubVulnerabilities />} />
+          <Route exact path="/githubRepositories" render={() => <GithubRepositories />} />
         </Switch>
       </Router>
     </div>

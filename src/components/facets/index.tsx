@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -7,13 +6,14 @@ import Grid from '@material-ui/core/Grid';
 import TermFacet from './term';
 import MetricsFacet from './metrics';
 import DateFacet from './date';
+import BooleanFacet from './boolean';
 import { Facet, Metrics } from './types';
 
 import { addRemoveFromQuery, addRemoveMetricsFromQuery, addRemoveDateFromQuery } from '../../utils/query';
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '250px',
+    width: '300px',
     marginTop: '0px',
   },
 }));
@@ -29,49 +29,46 @@ interface Props {
   query: any;
   dataset: string;
   unit: string;
-  gqlTermFacet: any;
+  gqlAggregationData: any;
   gqlMetricsFacet: any;
+  pushNewQuery: Function;
 }
 
-type connectedProps = RouteComponentProps & Props;
-
-const Facets: React.FC<connectedProps> = (props: connectedProps) => {
+const Facets: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
-  const { facets, defaultPoints, query, dataset, history, gqlTermFacet, gqlMetricsFacet, unit } = props;
+  const { facets, defaultPoints, query, dataset, gqlAggregationData, gqlMetricsFacet, unit, pushNewQuery } = props;
 
   const addRemoveFacet = (key: Selection, facet: any) => {
     const modifiedQuery = addRemoveFromQuery(key.key, facet, query);
-    history.push({
-      pathname: '/' + dataset,
-      search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
-      state: { detail: modifiedQuery },
-    });
+    pushNewQuery(modifiedQuery);
   };
 
   const addRemoveDateFilter = (selectedField: string, selectedOp: string, selectedDate: string) => {
     const modifiedQuery = addRemoveDateFromQuery(selectedField, selectedOp, selectedDate, query);
-    history.push({
-      pathname: '/' + dataset,
-      search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
-      state: { detail: modifiedQuery },
-    });
+    pushNewQuery(modifiedQuery);
+  };
+
+  const addRemoveBooleanFilter = (key: Selection, facet: any) => {
+    const modifiedQuery = addRemoveFromQuery(key.key, facet, query, true);
+    pushNewQuery(modifiedQuery);
   };
 
   const updateMetricsRange = (min: number, max: number, facet: any, metrics: Metrics) => {
     // Only update the URL if one of the two value have changes
     if (metrics.min !== min || metrics.max !== max) {
       const modifiedQuery = addRemoveMetricsFromQuery(min, max, facet, query);
-      history.push({
-        pathname: '/' + dataset,
-        search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
-        state: { detail: modifiedQuery },
-      });
+      pushNewQuery(modifiedQuery);
     }
   };
 
   // Date facets are always displayed first
   const dateFacetsfields = facets
     .filter((facet: any) => facet.facetType === 'date' && facet.default !== false)
+    .map((facet: any) => facet.field);
+
+  // Boolean facets are always displayed first
+  const booleanFacetsfields = facets
+    .filter((facet: any) => facet.facetType === 'boolean' && facet.default !== false)
     .map((facet: any) => facet.field);
   return (
     <div className={classes.root}>
@@ -81,6 +78,17 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
             <DateFacet
               facets={facets.filter((facet: any) => facet.facetType === 'date')}
               addRemoveDateFilter={addRemoveDateFilter}
+              query={query}
+            />
+          </Grid>
+        )}
+        {booleanFacetsfields.length > 0 && (
+          <Grid item key={'boolean'}>
+            <BooleanFacet
+              facets={facets.filter((facet: any) => facet.facetType === 'boolean')}
+              addRemoveBooleanFilter={addRemoveBooleanFilter}
+              gqlAggregationData={gqlAggregationData}
+              dataset={dataset}
               query={query}
             />
           </Grid>
@@ -97,7 +105,7 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
                     defaultPoints={defaultPoints}
                     addRemoveFacet={addRemoveFacet}
                     query={query}
-                    gqlTermFacet={gqlTermFacet}
+                    gqlAggregationData={gqlAggregationData}
                     dataset={dataset}
                     unit={unit}
                   />
@@ -124,4 +132,4 @@ const Facets: React.FC<connectedProps> = (props: connectedProps) => {
   );
 };
 
-export default withRouter(Facets);
+export default Facets;

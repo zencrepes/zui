@@ -72,7 +72,7 @@ const OpenedDuring: React.FC<Props> = (props: Props) => {
           backgroundColor: '#64b5f6',
           borderColor: '#64b5f6',
           borderWidth: 2,
-          data: buckets.map((b: any) => data.githubVulnerabilities[b.key].items.totalCount),
+          data: buckets.map((b: any) => data.githubPullrequests[b.key].items.totalCount),
         },
       ],
       labels: buckets.map((b: any) => b.name),

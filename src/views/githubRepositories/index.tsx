@@ -19,7 +19,7 @@ const QUERY_GETFACETS = loader('./getFacets.graphql');
 const mapState = () => ({});
 
 const mapDispatch = (dispatch: any) => ({
-  updateQueryIfDifferent: dispatch.githubVulnerabilities.updateQueryIfDifferent,
+  updateQueryIfDifferent: dispatch.githubRepositories.updateQueryIfDifferent,
 });
 
 const useStyles = makeStyles(() => ({
@@ -38,13 +38,13 @@ interface Facet {
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
 
-const GithubVulneratbilities: React.FC<connectedProps> = (props: connectedProps) => {
+const GithubRepositories: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
   const { updateQueryIfDifferent, location, history } = props;
 
   const pushNewQuery = (modifiedQuery: any) => {
     history.push({
-      pathname: '/githubVulnerabilities',
+      pathname: '/githubRepositories',
       search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
       state: { detail: modifiedQuery },
     });
@@ -68,7 +68,7 @@ const GithubVulneratbilities: React.FC<connectedProps> = (props: connectedProps)
   if (data === undefined) {
     return <p>Loading..., please wait</p>;
   } else {
-    const facets: Facet[] = data.githubVulnerabilities.config.aggregations.nodes;
+    const facets: Facet[] = data.githubRepositories.config.aggregations.nodes;
     return (
       <Layout>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={2}>
@@ -94,4 +94,4 @@ const GithubVulneratbilities: React.FC<connectedProps> = (props: connectedProps)
   }
 };
 
-export default withRouter(connect(mapState, mapDispatch)(GithubVulneratbilities));
+export default withRouter(connect(mapState, mapDispatch)(GithubRepositories));

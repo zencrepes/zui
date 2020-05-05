@@ -8,13 +8,6 @@ query($query: String, $aggOptions: String) {
           docCount
         }
       }
-      closedAt: aggregations(field: "closedAt", aggType: "date_histogram", aggOptions: $aggOptions) {
-        buckets {
-          keyAsString
-          key
-          docCount
-        }
-      }
     }
   }
 }
