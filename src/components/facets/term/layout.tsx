@@ -66,6 +66,7 @@ const TermFacet: React.FC<Props> = (props: Props) => {
                 clickItem={clickedItem}
                 selected={selectedValues.includes(bucket.key)}
                 unit={unit}
+                facet={facet}
               />
             ))}
           </List>

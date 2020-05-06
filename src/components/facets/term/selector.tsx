@@ -23,6 +23,7 @@ interface Props {
   nullValue: string;
   clickItem: Function;
   unit: string;
+  facet: any;
 }
 
 const useStyles = makeStyles(() => ({
@@ -49,7 +50,7 @@ const useStyles = makeStyles(() => ({
 
 const Selector: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
-  const { data, selected, defaultPoints, nullValue, clickItem, unit } = props;
+  const { facet, data, selected, defaultPoints, nullValue, clickItem, unit } = props;
 
   const handleToggle = (clickedValue: Bucket) => () => {
     if (nullValue !== data.key) {
@@ -71,7 +72,11 @@ const Selector: React.FC<Props> = (props: Props) => {
         disabled={disabledCheckbox}
       />
       <Tooltip title={data.key + notSupportedText}>
-        <ListItemText primary={facetItem} className={classes.listItemText} />
+        {data.key === '_EMPTY_' ? (
+          <ListItemText primary={facet.nullValue} className={classes.listItemText} />
+        ) : (
+          <ListItemText primary={facetItem} className={classes.listItemText} />
+        )}
       </Tooltip>
       <ListItemSecondaryAction>
         <Chip label={defaultPoints ? data.docCount + ' pts' : data.docCount + ' ' + unit} className={classes.chip} />

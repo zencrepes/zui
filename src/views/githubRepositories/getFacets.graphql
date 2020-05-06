@@ -8,6 +8,8 @@ query {
           field
           facetType
           default
+          nullValue
+          nullFilter
         }
       }
     }
