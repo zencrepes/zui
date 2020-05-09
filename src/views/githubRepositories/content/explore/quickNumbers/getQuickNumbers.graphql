@@ -1,16 +1,16 @@
-query($queryVulns: String, $dismissedVulns: String, $oldVulns: String) {
+query($currentQuery: String, $thirtyDays: String, $inactive: String) {
   githubRepositories {
-    queryVulns: data(query: $queryVulns) {
+    currentQuery: data(query: $currentQuery) {
       items {
         totalCount
       }
     }
-    dismissedVulns: data(query: $dismissedVulns) {
+    thirtyDays: data(query: $thirtyDays) {
       items {
         totalCount
       }
     }
-    oldVulns: data(query: $oldVulns) {
+    inactive: data(query: $inactive) {
       items {
         totalCount
       }

@@ -38,7 +38,15 @@ const Term: React.FC<Props> = (props: Props) => {
         {facetsValues.length === 1 && <span>is</span>}
         {facetsValues.length > 1 && <span> in (</span>}
         {facetsValues.map((value: string) => (
-          <Value key={value} value={value} removeFilter={removeFilter} filter={filter} />
+          <Value
+            key={value}
+            value={value}
+            displayValue={
+              value === '__missing__' || JSON.stringify(filter) === facet.nullFilter ? facet.nullValue : value
+            }
+            removeFilter={removeFilter}
+            filter={filter}
+          />
         ))}
         <ExpandButton collapsed={collapsed} length={filter.content.value.length} onClick={setCollapsed} />
         {filter.content.value.length > 1 && <span> )</span>}
@@ -48,7 +56,16 @@ const Term: React.FC<Props> = (props: Props) => {
     return (
       <div className={classes.root}>
         <span>{facet.name} is </span>
-        <Value value={filter.content.value} removeFilter={removeFilter} filter={filter} />
+        <Value
+          value={filter.content.value}
+          displayValue={
+            filter.content.value === '__missing__' || JSON.stringify(filter) === facet.nullFilter
+              ? facet.nullValue
+              : filter.content.value
+          }
+          removeFilter={removeFilter}
+          filter={filter}
+        />
       </div>
     );
   }

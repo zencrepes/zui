@@ -8,7 +8,11 @@ export const addRemoveFromQuery = (value: string, facet: Facet, query: any, forc
   if (Object.keys(query).length === 0) {
     updatedQuery = {
       op: 'and',
-      content: [createTermFilter('in', facet.field, [value])],
+      content: [
+        value === '__missing__'
+          ? JSON.parse(facet.nullFilter !== undefined ? facet.nullFilter : '{}')
+          : createTermFilter('in', facet.field, [value]),
+      ],
     };
     return updatedQuery;
   }
@@ -18,7 +22,14 @@ export const addRemoveFromQuery = (value: string, facet: Facet, query: any, forc
     // The facet doesn't exist, adding it
     updatedQuery = {
       ...query,
-      content: [...query.content, ...[createTermFilter('in', facet.field, [value])]],
+      content: [
+        ...query.content,
+        ...[
+          value === '__missing__'
+            ? JSON.parse(facet.nullFilter !== undefined ? facet.nullFilter : '{}')
+            : createTermFilter('in', facet.field, [value]),
+        ],
+      ],
     };
     return updatedQuery;
   }

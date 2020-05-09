@@ -1,11 +1,12 @@
 query($query: String, $aggOptions: String) {
   githubRepositories {
     data(query: $query) {
-      createdAt: aggregations(field: "createdAt", aggType: "date_histogram", aggOptions: $aggOptions) {
+      createdAt: aggregations(field: "createdAt", aggType: "date_histogram_rolling", aggOptions: $aggOptions) {
         buckets {
           keyAsString
           key
           docCount
+          docCountMovingAvg
         }
       }
     }

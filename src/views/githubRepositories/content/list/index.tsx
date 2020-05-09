@@ -121,6 +121,16 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
         name: 'Repository',
       },
       {
+        sortKey: 'isPrivate',
+        sortable: true,
+        name: 'Private',
+      },
+      {
+        sortKey: 'isArchived',
+        sortable: true,
+        name: 'Archived',
+      },
+      {
         sortKey: 'createdAt',
         sortable: true,
         name: 'Created',
@@ -169,6 +179,20 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
                       <a href={item.url} className={classes.repoName} target="_blank" rel="noopener noreferrer">
                         {item.name}
                       </a>
+                    </TableCell>
+                    <TableCell component="td" scope="row" padding="none" className={classes.dateCell}>
+                      {item.isPrivate === true ? (
+                        <React.Fragment>YES</React.Fragment>
+                      ) : (
+                        <React.Fragment>NO</React.Fragment>
+                      )}
+                    </TableCell>
+                    <TableCell component="td" scope="row" padding="none" className={classes.dateCell}>
+                      {item.isArchived === true ? (
+                        <React.Fragment>YES</React.Fragment>
+                      ) : (
+                        <React.Fragment>NO</React.Fragment>
+                      )}
                     </TableCell>
                     <TableCell component="td" scope="row" padding="none" className={classes.dateCell}>
                       {format(new Date(item.createdAt), 'eee MMM d, yyyy')}

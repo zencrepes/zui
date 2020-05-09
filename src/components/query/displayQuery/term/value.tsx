@@ -5,6 +5,7 @@ import Chip from '@material-ui/core/Chip';
 
 interface Props {
   value: string;
+  displayValue: string;
   filter: any;
   removeFilter: Function | null;
 }
@@ -19,7 +20,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Value: React.FC<Props> = (props: Props) => {
-  const { value, removeFilter, filter } = props;
+  const { value, displayValue, removeFilter, filter } = props;
   const classes = useStyles();
 
   const handleDelete = () => {
@@ -45,9 +46,9 @@ const Value: React.FC<Props> = (props: Props) => {
   };
 
   if (removeFilter !== null) {
-    return <Chip onDelete={handleDelete} variant="outlined" label={value} className={classes.root} />;
+    return <Chip onDelete={handleDelete} variant="outlined" label={displayValue} className={classes.root} />;
   } else {
-    return <Chip variant="outlined" label={value} className={classes.root} />;
+    return <Chip variant="outlined" label={displayValue} className={classes.root} />;
   }
 };
 

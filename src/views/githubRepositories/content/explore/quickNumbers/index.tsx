@@ -11,7 +11,8 @@ const QUICKNUMBERS_QUERY = loader('./getQuickNumbers.graphql');
 
 interface Props {
   query: any;
-  thirtyDaysPrior: any;
+  thirtyDaysPrior: string;
+  ninetyDaysPrior: string;
   openQuery: Function;
 }
 
@@ -47,18 +48,21 @@ const buildQuery = (sourceQuery: any, additionalData: any) => {
 };
 
 const QuickNumbers: React.FC<Props> = (props: Props) => {
-  const { query, thirtyDaysPrior, openQuery } = props;
+  const { query, thirtyDaysPrior, ninetyDaysPrior, openQuery } = props;
   const classes = useStyles();
 
-  const oldVulns = [{ op: '<=', content: { field: 'createdAt', value: thirtyDaysPrior } }];
+  const thirtyDays = [{ op: '>=', content: { field: 'createdAt', value: thirtyDaysPrior } }];
 
-  const dismissedVulns = [{ op: '<=', content: { field: 'dismissedAt', value: thirtyDaysPrior } }];
+  const inactive = [
+    { op: '<=', content: { field: 'pushedAt', value: ninetyDaysPrior } },
+    { op: 'in', content: { field: 'isArchived', value: ['false'] } },
+  ];
 
   const { data } = useQuery(QUICKNUMBERS_QUERY, {
     variables: {
-      queryVulns: JSON.stringify(query),
-      oldVulns: JSON.stringify(buildQuery(query, oldVulns)),
-      dismissedVulns: JSON.stringify(buildQuery(query, dismissedVulns)),
+      currentQuery: JSON.stringify(query),
+      thirtyDays: JSON.stringify(buildQuery(query, thirtyDays)),
+      inactive: JSON.stringify(buildQuery(query, inactive)),
     },
     fetchPolicy: 'cache-and-network',
   });
@@ -69,21 +73,21 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
   const cards = [
     {
       key: 1,
-      count: data.githubRepositories.queryVulns.items.totalCount,
+      count: data.githubRepositories.currentQuery.items.totalCount,
       query: query,
       title: 'In current query',
     },
     {
       key: 2,
-      count: data.githubRepositories.oldVulns.items.totalCount,
-      query: buildQuery(query, oldVulns),
-      title: 'Older than 30 days',
+      count: data.githubRepositories.thirtyDays.items.totalCount,
+      query: buildQuery(query, thirtyDays),
+      title: 'Created in the last 30 days',
     },
     {
       key: 3,
-      count: data.githubRepositories.dismissedVulns.items.totalCount,
-      query: buildQuery(query, dismissedVulns),
-      title: 'Dismissed alerts',
+      count: data.githubRepositories.inactive.items.totalCount,
+      query: buildQuery(query, inactive),
+      title: 'Inactive (not archived with no code update for 90 days)',
     },
   ];
 

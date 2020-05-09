@@ -53,6 +53,14 @@ const DisplayQuery: React.FC<Props> = (props: Props) => {
                 </Grid>
               );
             }
+            const emptyFacet = facets.find((f: Facet) => f.nullFilter === JSON.stringify(filter));
+            if (emptyFacet !== undefined && (emptyFacet.facetType === 'term' || emptyFacet.facetType === 'boolean')) {
+              return (
+                <Grid item key={filter.content.field}>
+                  <Term filter={filter} facet={emptyFacet} removeFilter={removeFilter} />
+                </Grid>
+              );
+            }
             return null;
           })}
         </Grid>

@@ -7,6 +7,8 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
           id
           createdAt
           pushedAt
+          isPrivate
+          isArchived
           name
           url
           owner {

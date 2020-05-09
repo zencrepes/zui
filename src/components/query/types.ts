@@ -8,6 +8,7 @@ export interface Facet {
   field: string;
   name: string;
   nullValue: string;
+  nullFilter: string;
 }
 
 export interface Query {

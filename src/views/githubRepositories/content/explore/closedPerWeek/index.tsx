@@ -22,7 +22,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
   const { data } = useQuery(GQL_QUERY, {
     variables: {
       query: JSON.stringify(query),
-      aggsOptions: JSON.stringify({ calendar_interval: 'week' }), // eslint-disable-line @typescript-eslint/camelcase
+      aggsOptions: JSON.stringify({ calendar_interval: 'week', moving_window: 4 }), // eslint-disable-line @typescript-eslint/camelcase
     },
     fetchPolicy: 'cache-and-network',
   });
@@ -42,19 +42,30 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
       dataseries.push({
         label: x,
         createdAt: createdAt !== undefined ? createdAt.docCount : 0,
+        createdAtAvg: createdAt !== undefined ? createdAt.docCountMovingAvg : 0,
       });
     }
 
     const chartData = {
       datasets: [
         {
-          label: 'New Repositories',
+          label: 'New Repositories (count)',
           data: dataseries.map((item: any) => item.createdAt),
           backgroundColor: 'rgb(54, 162, 235)',
           borderColor: 'rgb(54, 162, 235)',
           pointRadius: 0,
           pointHitRadius: 5,
           type: 'line',
+          fill: false,
+        },
+        {
+          label: 'New Repositories (rolling average)',
+          data: dataseries.map((item: any) => item.createdAtAvg),
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          type: 'line',
+          pointRadius: 0,
+          pointHitRadius: 5,
           fill: false,
         },
       ],

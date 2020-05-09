@@ -6,7 +6,7 @@ import CustomCard from '../../../../../components/customCard';
 
 import SimpleBar from '../../../../../components/charts/chartsJS/simpleBar';
 
-const OPENEDSINCE_QUERY = loader('./getOpenedSince.graphql');
+const GQL_QUERY = loader('./getQuery.graphql');
 
 interface Props {
   query: any;
@@ -25,7 +25,7 @@ const getBucket = (buckets: Array<any>, key: string) => {
 const OpenedSince: React.FC<Props> = (props: Props) => {
   const { buckets, openQuery } = props;
 
-  const { data } = useQuery(OPENEDSINCE_QUERY, {
+  const { data } = useQuery(GQL_QUERY, {
     variables: {
       bucketOpenSinceA: JSON.stringify(getBucket(buckets, 'bucketOpenSinceA')),
       bucketOpenSinceB: JSON.stringify(getBucket(buckets, 'bucketOpenSinceB')),
@@ -53,7 +53,7 @@ const OpenedSince: React.FC<Props> = (props: Props) => {
       labels: buckets.filter((b: any) => data.githubRepositories[b.key] !== undefined).map((b: any) => b.name),
     };
     return (
-      <CustomCard headerTitle="Have been active for" headerFactTitle="Currently ACTIVE" headerFactValue="">
+      <CustomCard headerTitle="Last received commits" headerFactTitle="" headerFactValue="">
         <SimpleBar chartData={chartData} buckets={buckets} openQuery={openQuery} />
       </CustomCard>
     );

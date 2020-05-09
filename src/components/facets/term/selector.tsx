@@ -72,7 +72,7 @@ const Selector: React.FC<Props> = (props: Props) => {
         disabled={disabledCheckbox}
       />
       <Tooltip title={data.key + notSupportedText}>
-        {data.key === '_EMPTY_' ? (
+        {data.key === '__missing__' ? (
           <ListItemText primary={facet.nullValue} className={classes.listItemText} />
         ) : (
           <ListItemText primary={facetItem} className={classes.listItemText} />

@@ -15,6 +15,7 @@ interface Facet {
   facetType: string;
   name: string;
   nullValue: string;
+  nullFilter: string;
   default: boolean;
 }
 
