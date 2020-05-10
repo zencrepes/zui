@@ -1,0 +1,31 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  githubWatchers {
+    data(query: $query) {
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          dataType
+          createdAt
+          lastStarredAt
+          login
+          company
+          url
+          repositories {
+            totalCount
+          }
+          organizations {
+            totalCount
+            edges {
+              node {
+                login
+                url
+                avatarUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

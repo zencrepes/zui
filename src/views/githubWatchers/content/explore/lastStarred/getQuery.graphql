@@ -1,0 +1,47 @@
+query(
+  $bucketOpenSinceA: String
+  $bucketOpenSinceB: String
+  $bucketOpenSinceC: String
+  $bucketOpenSinceD: String
+  $bucketOpenSinceE: String
+  $bucketOpenSinceF: String
+  $bucketOpenSinceG: String
+) {
+  githubWatchers {
+    bucketOpenSinceA: data(query: $bucketOpenSinceA) {
+      items {
+        totalCount
+      }
+    }
+    bucketOpenSinceB: data(query: $bucketOpenSinceB) {
+      items {
+        totalCount
+      }
+    }
+    bucketOpenSinceC: data(query: $bucketOpenSinceC) {
+      items {
+        totalCount
+      }
+    }
+    bucketOpenSinceD: data(query: $bucketOpenSinceD) {
+      items {
+        totalCount
+      }
+    }
+    bucketOpenSinceE: data(query: $bucketOpenSinceE) {
+      items {
+        totalCount
+      }
+    }
+    bucketOpenSinceF: data(query: $bucketOpenSinceF) {
+      items {
+        totalCount
+      }
+    }
+    bucketOpenSinceG: data(query: $bucketOpenSinceG) {
+      items {
+        totalCount
+      }
+    }
+  }
+}
