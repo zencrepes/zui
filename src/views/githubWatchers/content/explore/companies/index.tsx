@@ -4,7 +4,6 @@ import { useQuery } from '@apollo/client';
 import { TagCloud } from 'react-tagcloud';
 
 import CustomCard from '../../../../../components/customCard';
-import AggregationBubble from '../../../../../components/charts/nivo/aggregationBubble';
 
 const GQL_QUERY = loader('./gqlQuery.graphql');
 
