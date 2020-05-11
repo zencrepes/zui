@@ -1,0 +1,14 @@
+query($query: String, $aggOptions: String) {
+  githubWatchers {
+    data(query: $query) {
+      starredAt: aggregations(field: "lastStarredAt", aggType: "date_histogram_rolling", aggOptions: $aggOptions) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          docCountMovingAvg
+        }
+      }
+    }
+  }
+}

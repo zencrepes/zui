@@ -1,5 +1,6 @@
 export interface Facet {
   field: string;
+  nullFilter?: string;
 }
 
 export interface Selection {

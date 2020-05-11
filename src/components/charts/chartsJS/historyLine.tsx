@@ -1,8 +1,8 @@
 import React, { Component } from 'react'; // let's also import Component
-import { Theme, createStyles, withStyles } from '@material-ui/core/styles';
+import { createStyles, withStyles } from '@material-ui/core/styles';
 import Chart from 'chart.js';
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     root: {
       minWidth: '400',

@@ -1,0 +1,17 @@
+query {
+  githubRepositories {
+    config {
+      aggregations {
+        totalCount
+        nodes {
+          name
+          field
+          facetType
+          default
+          nullValue
+          nullFilter
+        }
+      }
+    }
+  }
+}

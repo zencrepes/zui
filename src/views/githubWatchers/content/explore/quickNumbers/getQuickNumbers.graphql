@@ -1,0 +1,19 @@
+query($currentQuery: String, $thirtyDays: String, $inactive: String) {
+  githubWatchers {
+    currentQuery: data(query: $currentQuery) {
+      items {
+        totalCount
+      }
+    }
+    thirtyDays: data(query: $thirtyDays) {
+      items {
+        totalCount
+      }
+    }
+    inactive: data(query: $inactive) {
+      items {
+        totalCount
+      }
+    }
+  }
+}

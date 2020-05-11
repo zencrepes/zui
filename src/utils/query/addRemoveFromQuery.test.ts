@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { addRemoveFromQuery } from './index';
 
 test('addRemoveFromQuery - Add term filter to empty query', () => {

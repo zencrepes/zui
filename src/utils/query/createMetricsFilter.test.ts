@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { createMetricsFilter } from './index';
 
 test('createMetricsFilter - Creates a metrics filter', () => {

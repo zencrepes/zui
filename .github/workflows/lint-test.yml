@@ -1,6 +1,9 @@
 name: Lint and test
 # This workflow is triggered on pushes to the repository.
-on: [push]
+on:
+  push:
+    branches:
+      - '**'
 
 jobs:
   lint:
@@ -8,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: node:alpine
+      image: node:lts-alpine
 
     steps:
       - uses: actions/checkout@v2
       - run: yarn
-      - run: yarn run lint:ci
+      - run: yarn run lint:ci --max-warnings 1
 
   tests:
     needs: [lint]
@@ -35,7 +38,7 @@ jobs:
     # if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
     container:
-      image: node:alpine
+      image: node:lts-alpine
 
     steps:
       - uses: actions/checkout@v2

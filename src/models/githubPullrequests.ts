@@ -45,15 +45,19 @@ export const githubPullrequests = {
         tablePaginationCurrentPage: 0,
       };
     },
-    setTablePaginationCurrentPage(state: any, payload: any) {
-      const updatedOffset = (payload + 1) * state.tablePaginationRowsPerPage;
-      return { ...state, tablePaginationCurrentPage: payload, tablePaginationOffset: updatedOffset };
+    // setTablePaginationCurrentPage(state: any, payload: any) {
+    //   const updatedOffset = (payload + 1) * state.tablePaginationRowsPerPage;
+    //   return { ...state, tablePaginationCurrentPage: payload, tablePaginationOffset: updatedOffset };
+    // },
+    setTablePaginationCurrentPage(state: any, newPageNb: number) {
+      const updatedOffset = newPageNb * state.tablePaginationLimit;
+      return { ...state, tablePaginationCurrentPage: newPageNb, tablePaginationOffset: updatedOffset };
     },
     setTablePaginationOffset(state: any, payload: any) {
       return { ...state, tablePaginationOffset: payload };
     },
     setTablePaginationLimit(state: any, payload: any) {
-      return { ...state, tablePaginationLimit: payload };
+      return { ...state, tablePaginationLimit: payload, tablePaginationCurrentPage: 0, tablePaginationOffset: 0 };
     },
     setQuery(state: any, payload: any) {
       return { ...state, query: payload };
@@ -63,7 +67,7 @@ export const githubPullrequests = {
     },
   },
   effects: (dispatch: Dispatch) => ({
-    async initView(payload: any, rootState: any) {
+    async initView() {
       const logger = log.noConflict();
       if (process.env.NODE_ENV !== 'production') {
         logger.enableAll();

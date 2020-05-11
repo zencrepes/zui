@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { addFilterToQuery, createTermFilter } from './index';
 
 test('Add a term filter to an empty query', () => {

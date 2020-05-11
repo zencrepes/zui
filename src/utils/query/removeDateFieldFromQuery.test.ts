@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { removeDateFieldFromQuery } from './index';
 
 test('Remove field from an empty query', () => {
@@ -69,7 +67,6 @@ test('Remove field from a query with two filters', () => {
 
 test('Remove field from a query with one single filter with a different operator', () => {
   const sourceField = 'createdAt';
-  const sourceOperator = '<=';
   const sourceDate = new Date();
   const sourceQuery = {
     op: 'and',

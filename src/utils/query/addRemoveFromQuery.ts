@@ -1,13 +1,18 @@
 import { createTermFilter, addRemoveValueFromTermFilter } from './index';
 import { Facet } from './types';
 
-export const addRemoveFromQuery = (value: string, facet: Facet, query: any) => {
+export const addRemoveFromQuery = (value: string, facet: Facet, query: any, forceUnique = false) => {
+  // Force unique ensure there's only one facet of the same field in the query
   let updatedQuery: any = {};
   // If query is empty, populate it with the facet content
   if (Object.keys(query).length === 0) {
     updatedQuery = {
       op: 'and',
-      content: [createTermFilter('in', facet.field, [value])],
+      content: [
+        value === '__missing__'
+          ? JSON.parse(facet.nullFilter !== undefined ? facet.nullFilter : '{}')
+          : createTermFilter('in', facet.field, [value]),
+      ],
     };
     return updatedQuery;
   }
@@ -17,12 +22,19 @@ export const addRemoveFromQuery = (value: string, facet: Facet, query: any) => {
     // The facet doesn't exist, adding it
     updatedQuery = {
       ...query,
-      content: [...query.content, ...[createTermFilter('in', facet.field, [value])]],
+      content: [
+        ...query.content,
+        ...[
+          value === '__missing__'
+            ? JSON.parse(facet.nullFilter !== undefined ? facet.nullFilter : '{}')
+            : createTermFilter('in', facet.field, [value]),
+        ],
+      ],
     };
     return updatedQuery;
   }
 
-  const updatedFilter = addRemoveValueFromTermFilter(identifiedFilter, value);
+  const updatedFilter = addRemoveValueFromTermFilter(identifiedFilter, value, forceUnique);
   updatedQuery = {
     ...query,
     content: query.content

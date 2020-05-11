@@ -1,122 +1,54 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { loader } from 'graphql.macro';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
 
 import { iRootState } from '../../../store';
 
-import TermFacet from './term';
-import MetricsFacet from './metrics';
-import DateFacet from './date';
-import { Facet, Metrics } from './types';
+import Facets from '../../../components/facets';
 
-import { addRemoveFromQuery, addRemoveMetricsFromQuery, addRemoveDateFromQuery } from '../../../utils/query';
+const gqlAggregationData = loader('./getTermFacetData.graphql');
+const gqlMetricsFacet = loader('./getMetricsFacetData.graphql');
+
+interface Facet {
+  field: string;
+  facetType: string;
+  name: string;
+  nullValue: string;
+  nullFilter: string;
+  default: boolean;
+}
+
+interface Props {
+  facets: Facet[];
+  pushNewQuery: Function;
+}
 
 const mapState = (state: iRootState) => ({
   defaultPoints: state.githubPullrequests.defaultPoints,
+  dataset: state.githubPullrequests.dataset,
   query: state.githubPullrequests.query,
 });
 
-const mapDispatch = (dispatch: any) => ({});
+const mapDispatch = () => ({});
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '250px',
-    marginTop: '0px',
-  },
-}));
+type connectedProps = Props & ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
-interface Selection {
-  key: string;
-  docCount: number;
-}
+const FacetsHoc: React.FC<connectedProps> = (props: connectedProps) => {
+  const { facets, defaultPoints, dataset, query, pushNewQuery } = props;
 
-type connectedProps = ReturnType<typeof mapState> &
-  ReturnType<typeof mapDispatch> &
-  RouteComponentProps & { facets: Array<Facet> };
-
-const Facets: React.FC<connectedProps> = (props: connectedProps) => {
-  const classes = useStyles();
-  const { facets, defaultPoints, query, history } = props;
-
-  const addRemoveFacet = (key: Selection, facet: any) => {
-    const modifiedQuery = addRemoveFromQuery(key.key, facet, query);
-    history.push({
-      pathname: '/githubPullrequests',
-      search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
-      state: { detail: modifiedQuery },
-    });
-  };
-
-  const addRemoveDateFilter = (selectedField: string, selectedOp: string, selectedDate: string) => {
-    const modifiedQuery = addRemoveDateFromQuery(selectedField, selectedOp, selectedDate, query);
-    history.push({
-      pathname: '/githubPullrequests',
-      search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
-      state: { detail: modifiedQuery },
-    });
-  };
-
-  const updateMetricsRange = (min: number, max: number, facet: any, metrics: Metrics) => {
-    // Only update the URL if one of the two value have changes
-    if (metrics.min !== min || metrics.max !== max) {
-      const modifiedQuery = addRemoveMetricsFromQuery(min, max, facet, query);
-      history.push({
-        pathname: '/githubPullrequests',
-        search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
-        state: { detail: modifiedQuery },
-      });
-    }
-  };
-
-  // Date facets are always displayed first
-  const dateFacetsfields = facets.filter((facet: any) => facet.facetType === 'date').map((facet: any) => facet.field);
   return (
-    <div className={classes.root}>
-      <Grid container direction="column" justify="flex-start" alignItems="flex-start">
-        {dateFacetsfields.length > 0 && (
-          <Grid item key={'date'}>
-            <DateFacet
-              facets={facets.filter((facet: any) => facet.facetType === 'date')}
-              addRemoveDateFilter={addRemoveDateFilter}
-              query={query}
-            />
-          </Grid>
-        )}
-
-        {facets
-          .filter((f: Facet) => f.default === true)
-          .map((facet: any) => {
-            if (facet.facetType === 'term') {
-              return (
-                <Grid item key={facet.field}>
-                  <TermFacet
-                    facet={facet}
-                    defaultPoints={defaultPoints}
-                    addRemoveFacet={addRemoveFacet}
-                    query={query}
-                  />
-                </Grid>
-              );
-            } else if (facet.facetType === 'metrics') {
-              return (
-                <Grid item key={facet.field}>
-                  <MetricsFacet
-                    facet={facet}
-                    defaultPoints={defaultPoints}
-                    updateMetricsRange={updateMetricsRange}
-                    query={query}
-                  />
-                </Grid>
-              );
-            }
-            return null;
-          })}
-      </Grid>
-    </div>
+    <Facets
+      facets={facets}
+      defaultPoints={defaultPoints}
+      dataset={dataset}
+      query={query}
+      gqlAggregationData={gqlAggregationData}
+      gqlMetricsFacet={gqlMetricsFacet}
+      unit={'PRs'}
+      pushNewQuery={pushNewQuery}
+    />
   );
 };
 
-export default withRouter(connect(mapState, mapDispatch)(Facets));
+export default connect(mapState, mapDispatch)(FacetsHoc);

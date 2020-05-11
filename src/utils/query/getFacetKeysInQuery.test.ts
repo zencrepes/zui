@@ -1,11 +1,6 @@
-import React from 'react';
-
 import { getFacetKeysInQuery } from './getFacetKeysInQuery';
 
-test('isFacetKeyInQuery - Receives an empty query', () => {
-  /*
-    Receives a filter containing only one value, adding another one
-  */
+test('getFacetKeysInQuery - Receives an empty query', () => {
   const sourceFacet = { name: 'My Facet A', field: 'myA.field', facetType: 'term' };
   const sourceQuery = {};
 
@@ -15,10 +10,7 @@ test('isFacetKeyInQuery - Receives an empty query', () => {
   expect(response).toEqual(expectedResponse);
 });
 
-test('isFacetKeyInQuery - Contains facets elements but not that value', () => {
-  /*
-    Receives a filter containing only one value, adding another one
-  */
+test('getFacetKeysInQuery - Contains facets elements but not that value', () => {
   const sourceFacet = { name: 'My Facet A', field: 'myA.field', facetType: 'term' };
   const sourceQuery = {
     op: 'and',
@@ -40,10 +32,7 @@ test('isFacetKeyInQuery - Contains facets elements but not that value', () => {
   expect(response).toEqual(expectedResponse);
 });
 
-test('isFacetKeyInQuery - Does not contain facet', () => {
-  /*
-    Receives a filter containing only one value, adding another one
-  */
+test('getFacetKeysInQuery - Does not contain facet', () => {
   const sourceFacet = { name: 'My Facet B', field: 'myB.field', facetType: 'term' };
   const sourceQuery = {
     op: 'and',

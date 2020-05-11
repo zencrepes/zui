@@ -11,7 +11,7 @@ import Layout from '../../layout';
 import NavTabs from './navTabs';
 
 import Content from './content';
-import Facets from './facets';
+import FacetsHoc from './facets';
 import Query from './query';
 
 const QUERY_GETFACETS = loader('./getFacets.graphql');
@@ -28,11 +28,28 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+interface Facet {
+  field: string;
+  facetType: string;
+  name: string;
+  nullValue: string;
+  nullFilter: string;
+  default: boolean;
+}
+
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
 
-const Data: React.FC<connectedProps> = (props: connectedProps) => {
+const GithubPullrequests: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
-  const { updateQueryIfDifferent, location } = props;
+  const { updateQueryIfDifferent, location, history } = props;
+
+  const pushNewQuery = (modifiedQuery: any) => {
+    history.push({
+      pathname: '/githubPullrequests',
+      search: '?q=' + encodeURIComponent(JSON.stringify(modifiedQuery)),
+      state: { detail: modifiedQuery },
+    });
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -52,12 +69,12 @@ const Data: React.FC<connectedProps> = (props: connectedProps) => {
   if (data === undefined) {
     return <p>Loading..., please wait</p>;
   } else {
-    const facets = data.githubPullrequests.config.aggregations.nodes;
+    const facets: Facet[] = data.githubPullrequests.config.aggregations.nodes;
     return (
       <Layout>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={2}>
           <Grid item>
-            <Facets facets={facets} />
+            <FacetsHoc facets={facets} pushNewQuery={pushNewQuery} />
           </Grid>
           <Grid item xs={12} sm container>
             <Grid container direction="column" justify="flex-start" alignItems="flex-start">
@@ -78,4 +95,4 @@ const Data: React.FC<connectedProps> = (props: connectedProps) => {
   }
 };
 
-export default withRouter(connect(mapState, mapDispatch)(Data));
+export default withRouter(connect(mapState, mapDispatch)(GithubPullrequests));

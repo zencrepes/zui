@@ -1,0 +1,14 @@
+query($field: String!, $query: String, $aggOptions: String!) {
+  githubWatchers {
+    data(query: $query) {
+      aggregations(field: $field, aggOptions: $aggOptions) {
+        field
+        buckets {
+          docCount
+          key
+          metadata
+        }
+      }
+    }
+  }
+}
