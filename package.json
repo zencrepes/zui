@@ -10,7 +10,6 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.49",
     "@material-ui/pickers": "^3.2.10",
-    "@nivo/circle-packing": "^0.61.0",
     "@nivo/heatmap": "^0.59.0",
     "@nivo/stream": "0.59.0",
     "@nivo/treemap": "^0.59.0",
