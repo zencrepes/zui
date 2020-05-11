@@ -144,7 +144,7 @@ const Explore: React.FC<connectedProps> = (props: connectedProps) => {
       <Grid item xs={3}>
         <PushedSince query={query} buckets={openedSinceBuckets} openQuery={openQuery} />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={9}>
         <Companies query={query} openQuery={openQuery} />
       </Grid>
       <Grid item xs={12}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
+import { TagCloud } from 'react-tagcloud';
 
 import CustomCard from '../../../../../components/customCard';
 import AggregationBubble from '../../../../../components/charts/nivo/aggregationBubble';
@@ -55,7 +56,22 @@ const Company: React.FC<Props> = (props: Props) => {
     const buckets = data.githubWatchers.data.aggregations.buckets.filter((b: any) => b.key !== '__missing__');
     return (
       <CustomCard headerTitle={'Companies'} headerFactTitle="" headerFactValue="">
-        <AggregationBubble buckets={buckets} onAggClick={onAggClick} />
+        {/* <AggregationBubble buckets={buckets} onAggClick={onAggClick} /> */}
+        <TagCloud
+          minSize={14}
+          maxSize={35}
+          tags={buckets.map((b: any) => {
+            return { value: b.key, count: b.docCount };
+          })}
+          onClick={(key: string) => {
+            onAggClick(key);
+          }}
+          colorOptions={{
+            luminosity: 'dark',
+            format: 'rgba',
+            alpha: 0.5,
+          }}
+        />
       </CustomCard>
     );
   }
