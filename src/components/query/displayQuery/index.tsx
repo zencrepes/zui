@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Facet } from '../types';
+import { Facet } from '../../../global';
 
 import Term from './term';
 import Metrics from './metrics';

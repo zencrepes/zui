@@ -14,7 +14,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 import blue from '@material-ui/core/colors/blue';
 
-import { Facet } from './types';
+import { Facet } from '../../../global';
 
 import Selector from './selector';
 

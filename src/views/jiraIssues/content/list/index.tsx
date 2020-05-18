@@ -50,8 +50,6 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     tableConfig,
   } = props;
 
-  console.log(tableConfig);
-
   const [sortField, setSortField] = React.useState<string>('createdAt');
   const [sortDirection, setSortDirection] = React.useState<'desc' | 'asc'>('desc');
 

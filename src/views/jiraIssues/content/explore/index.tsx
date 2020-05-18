@@ -72,15 +72,6 @@ const Explore: React.FC<connectedProps> = (props: connectedProps) => {
       <Grid item xs={12}>
         <ClosedPerWeek query={query} openWeek={openWeek} />
       </Grid>
-      {/* <Grid item xs={3}>
-        <PushedSince query={query} buckets={openedSinceBuckets} openQuery={openQuery} />
-      </Grid>
-      <Grid item xs={9}>
-        <Companies query={query} openQuery={openQuery} />
-      </Grid>
-      <Grid item xs={12}>
-        <OrganizationsLogos query={query} openQuery={openQuery} />
-      </Grid> */}
     </Grid>
   );
 };

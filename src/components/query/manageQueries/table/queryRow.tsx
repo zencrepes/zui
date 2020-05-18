@@ -3,7 +3,7 @@ import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import { Query, Facet } from '../../types';
+import { SavedQuery, Facet } from '../../../../global';
 
 import OpenButton from './openButton';
 import DeleteButton from './deleteButton';
@@ -11,7 +11,7 @@ import DeleteButton from './deleteButton';
 import DisplayQuery from '../../displayQuery';
 
 interface Props {
-  query: Query;
+  query: SavedQuery;
   facets: Array<Facet>;
   loadQuery: Function;
   deleteQuery: Function;

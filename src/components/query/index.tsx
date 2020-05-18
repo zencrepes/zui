@@ -15,7 +15,7 @@ import DisplayQuery from './displayQuery/index';
 import ManageQueries from './manageQueries';
 import SaveQuery from './saveQuery';
 
-import { Facet, Query } from './types';
+import { Facet, SavedQuery } from '../../global';
 
 interface QueryHandlingType {
   query: any;
@@ -71,7 +71,7 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     openQuery(updatedQuery);
   };
 
-  const loadQuery = (query: Query) => {
+  const loadQuery = (query: SavedQuery) => {
     openQuery(query.query);
     setStateOpenManageQueryDialog(false);
   };
@@ -83,7 +83,7 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     setStateOpenSaveQueryDialog(false);
   };
 
-  const deleteQuery = async (query: Query) => {
+  const deleteQuery = async (query: SavedQuery) => {
     await dexieDb.queries.where('id').equals(query.id).delete();
     const updatedQueries = await dexieDb.queries.where('dataset').equals(dataset).toArray();
     setQueries(updatedQueries);
@@ -103,7 +103,7 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
       });
   }
 
-  const availableQueries: Array<Query> = queries;
+  const availableQueries: Array<SavedQuery> = queries;
   return (
     <div className={classes.root}>
       <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>

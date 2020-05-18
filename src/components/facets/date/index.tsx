@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import blue from '@material-ui/core/colors/blue';
 
-import { Facet } from './types';
+import { Facet } from '../../../global';
 
 import DateModal from './modal';
 import Selector from './selector';

@@ -7,7 +7,7 @@ import TermFacet from './term';
 import MetricsFacet from './metrics';
 import DateFacet from './date';
 import BooleanFacet from './boolean';
-import { Facet, Metrics } from './types';
+import { Facet, FacetAggBucket, FacetAggMetrics } from '../../global';
 
 import { addRemoveFromQuery, addRemoveMetricsFromQuery, addRemoveDateFromQuery } from '../../utils/query';
 
@@ -17,11 +17,6 @@ const useStyles = makeStyles(() => ({
     marginTop: '0px',
   },
 }));
-
-interface Selection {
-  key: string;
-  docCount: number;
-}
 
 interface Props {
   facets: Array<Facet>;
@@ -38,7 +33,7 @@ const Facets: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const { facets, defaultPoints, query, dataset, gqlAggregationData, gqlMetricsFacet, unit, pushNewQuery } = props;
 
-  const addRemoveFacet = (key: Selection, facet: any) => {
+  const addRemoveFacet = (key: FacetAggBucket, facet: any) => {
     const modifiedQuery = addRemoveFromQuery(key.key, facet, query);
     pushNewQuery(modifiedQuery);
   };
@@ -48,12 +43,12 @@ const Facets: React.FC<Props> = (props: Props) => {
     pushNewQuery(modifiedQuery);
   };
 
-  const addRemoveBooleanFilter = (key: Selection, facet: any) => {
+  const addRemoveBooleanFilter = (key: FacetAggBucket, facet: any) => {
     const modifiedQuery = addRemoveFromQuery(key.key, facet, query, true);
     pushNewQuery(modifiedQuery);
   };
 
-  const updateMetricsRange = (min: number, max: number, facet: any, metrics: Metrics) => {
+  const updateMetricsRange = (min: number, max: number, facet: any, metrics: FacetAggMetrics) => {
     // Only update the URL if one of the two value have changes
     if (metrics.min !== min || metrics.max !== max) {
       const modifiedQuery = addRemoveMetricsFromQuery(min, max, facet, query);

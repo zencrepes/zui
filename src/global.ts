@@ -29,3 +29,31 @@ export interface TablePaginationType {
   changeCurrentPage: any;
   changeRowsPerPage: any;
 }
+
+export interface Facet {
+  field: string;
+  facetType: string;
+  name: string;
+  nullValue: string;
+  nullFilter: string;
+  default: boolean;
+}
+
+export interface FacetAggBucket {
+  key: string;
+  docCount: number;
+}
+
+export interface FacetAggMetrics {
+  overallMin: number;
+  overallMax: number;
+  min: number;
+  max: number;
+}
+
+export interface SavedQuery {
+  id: number;
+  dataset: string;
+  name: string;
+  query: any;
+}

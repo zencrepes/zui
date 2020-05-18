@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { iRootState } from '../../../store';
+import { Facet } from '../../../global';
 import Query from '../../../components/query';
 
 const mapState = (state: iRootState) => ({
@@ -21,15 +22,6 @@ const mapDispatch = (dispatch: any) => ({
 
 interface Props {
   facets: Array<Facet>;
-}
-
-interface Facet {
-  field: string;
-  facetType: string;
-  name: string;
-  nullValue: string;
-  nullFilter: string;
-  default: boolean;
 }
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;

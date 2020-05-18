@@ -12,7 +12,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import blue from '@material-ui/core/colors/blue';
 
-import { Facet } from '../types';
+import { Facet } from '../../../global';
 
 import { getFacetKeysInQuery } from '../../../utils/query';
 

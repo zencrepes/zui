@@ -12,11 +12,11 @@ import blue from '@material-ui/core/colors/blue';
 import Selector from './selector';
 import ExpandButton from './expandButton';
 
-import { Bucket, Facet } from './types';
+import { FacetAggBucket, Facet } from '../../../global';
 
 interface Props {
   facet: Facet;
-  buckets: Bucket[];
+  buckets: FacetAggBucket[];
   clickedItem: Function;
   selectedValues: string[];
   defaultPoints: boolean;
@@ -57,7 +57,7 @@ const TermFacet: React.FC<Props> = (props: Props) => {
         </CardContent>
         <CardContent style={cardContentStyle}>
           <List dense={true}>
-            {facetData.map((bucket: Bucket) => (
+            {facetData.map((bucket: FacetAggBucket) => (
               <Selector
                 data={bucket}
                 key={bucket.key}

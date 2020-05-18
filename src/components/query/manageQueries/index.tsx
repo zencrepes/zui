@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 
-import { Query, Facet } from '../types';
+import { SavedQuery, Facet } from '../../../global';
 
 import QueriesTable from './table';
 
@@ -15,7 +15,7 @@ interface Props {
   setStateOpenManageQueryDialog: Function;
   loadQuery: Function;
   deleteQuery: Function;
-  queries: Array<Query>;
+  queries: Array<SavedQuery>;
   facets: Array<Facet>;
 }
 

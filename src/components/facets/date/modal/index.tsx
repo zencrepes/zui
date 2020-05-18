@@ -17,7 +17,7 @@ import Select from '@material-ui/core/Select';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
-import { Facet } from '../types';
+import { Facet } from '../../../../global';
 
 interface Props {
   facets: Array<Facet>;

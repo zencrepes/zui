@@ -6,14 +6,14 @@ import CardContent from '@material-ui/core/CardContent';
 
 import blue from '@material-ui/core/colors/blue';
 
-import { Metrics, Facet } from './types';
+import { FacetAggMetrics, Facet } from '../../../global';
 import { Typography } from '@material-ui/core';
 
 import MetricsSlider from './slider';
 
 interface Props {
   facet: Facet;
-  metrics: Metrics;
+  metrics: FacetAggMetrics;
   updateMetricsRange: Function;
   defaultPoints: boolean;
 }

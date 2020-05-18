@@ -6,12 +6,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import { Query, Facet } from '../../types';
+import { SavedQuery, Facet } from '../../../../global';
 
 import QueryRow from './queryRow';
 
 interface Props {
-  queries: Array<Query>;
+  queries: Array<SavedQuery>;
   facets: Array<Facet>;
   loadQuery: Function;
   deleteQuery: Function;

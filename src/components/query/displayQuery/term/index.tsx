@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Facet } from '../../types';
+import { Facet } from '../../../../global';
 
 import ExpandButton from './expandButton';
 import Value from './value';

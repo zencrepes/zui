@@ -11,13 +11,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import blue from '@material-ui/core/colors/blue';
 
-interface Bucket {
-  key: string;
-  docCount: string;
-}
+import { FacetAggBucket } from '../../../global';
 
 interface Props {
-  data: Bucket;
+  data: FacetAggBucket;
   selected: boolean;
   defaultPoints: boolean;
   nullValue: string;
@@ -52,7 +49,7 @@ const Selector: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const { facet, data, selected, defaultPoints, nullValue, clickItem, unit } = props;
 
-  const handleToggle = (clickedValue: Bucket) => () => {
+  const handleToggle = (clickedValue: FacetAggBucket) => () => {
     if (nullValue !== data.key) {
       clickItem(clickedValue);
     }

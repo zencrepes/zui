@@ -12,7 +12,7 @@ import blue from '@material-ui/core/colors/blue';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
-import { Facet } from '../types';
+import { Facet } from '../../../global';
 
 interface Props {
   filter: any;

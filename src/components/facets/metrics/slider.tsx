@@ -3,11 +3,11 @@ import React from 'react';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
 
-import { Metrics, Facet } from './types';
+import { FacetAggMetrics, Facet } from '../../../global';
 import { Typography } from '@material-ui/core';
 
 interface Props {
-  metrics: Metrics;
+  metrics: FacetAggMetrics;
   facet: Facet;
   updateMetricsRange: Function;
 }

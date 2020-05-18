@@ -8,13 +8,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { Query } from '../types';
+import { SavedQuery } from '../../../global';
 
 interface Props {
   openSaveQueryDialog: boolean;
   setStateOpenSaveQueryDialog: Function;
   saveQuery: Function;
-  queries: Array<Query>;
+  queries: Array<SavedQuery>;
 }
 
 const useStyles = makeStyles(() => ({

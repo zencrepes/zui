@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 
 import Layout from './layout';
-import { Facet } from './types';
+import { Facet } from '../../../global';
 
 interface Props {
   facet: Facet;
