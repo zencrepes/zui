@@ -10,6 +10,7 @@ import GithubVulnerabilities from './views/githubVulnerabilities';
 import GithubRepositories from './views/githubRepositories';
 import GithubWatchers from './views/githubWatchers';
 import JiraIssues from './views/jiraIssues';
+import CircleciEnvvars from './views/circleciEnvvars';
 import Login from './views/login';
 
 const mapState = () => ({});
@@ -36,6 +37,7 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
           <Route exact path="/githubRepositories" render={() => <GithubRepositories />} />
           <Route exact path="/githubWatchers" render={() => <GithubWatchers />} />
           <Route exact path="/jiraIssues" render={() => <JiraIssues />} />
+          <Route exact path="/circleciEnvvars" render={() => <CircleciEnvvars />} />
         </Switch>
       </Router>
     </div>

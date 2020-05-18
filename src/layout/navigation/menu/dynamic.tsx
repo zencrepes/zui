@@ -11,6 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import BugReportIcon from '@material-ui/icons/BugReport';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 
 import AdapterLink from '../../../utils/adapterLink';
 
@@ -23,6 +24,8 @@ const getPlatformIcon = (platform: string) => {
     return <GitHubIcon />;
   } else if (platform === 'jira') {
     return <BugReportIcon />;
+  } else if (platform === 'circleci') {
+    return <FitnessCenterIcon />;
   }
   return <InboxIcon />;
 };

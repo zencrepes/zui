@@ -9,10 +9,13 @@ export interface TableConfigColumn {
   field: string;
   sortField: string;
   sortable: boolean;
+  linkField: string;
+  default: boolean;
 }
 
 export interface TableConfig {
   itemsType: string;
+  defaultSortField: string;
   columns: TableConfigColumn[];
 }
 
@@ -20,7 +23,7 @@ export interface TableSort {
   setSortField: Function;
   sortField: string;
   setSortDirection: Function;
-  sortDirection: string;
+  sortDirection: 'asc' | 'desc';
 }
 
 export interface TablePaginationType {

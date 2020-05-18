@@ -4,6 +4,7 @@ import { githubVulnerabilities } from './githubVulnerabilities';
 import { githubRepositories } from './githubRepositories';
 import { githubWatchers } from './githubWatchers';
 import { jiraIssues } from './jiraIssues';
+import { circleciEnvvars } from './circleciEnvvars';
 
 export interface RootModel {
   global: typeof global;
@@ -12,6 +13,7 @@ export interface RootModel {
   githubRepositories: typeof githubRepositories;
   githubWatchers: typeof githubWatchers;
   jiraIssues: typeof jiraIssues;
+  circleciEnvvars: typeof circleciEnvvars;
 }
 
 //export { global, githubPullrequests };
@@ -22,4 +24,5 @@ export const models: RootModel = {
   githubRepositories,
   githubWatchers,
   jiraIssues,
+  circleciEnvvars,
 };
