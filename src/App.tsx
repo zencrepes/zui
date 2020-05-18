@@ -9,6 +9,7 @@ import GithubPullrequests from './views/githubPullrequests';
 import GithubVulnerabilities from './views/githubVulnerabilities';
 import GithubRepositories from './views/githubRepositories';
 import GithubWatchers from './views/githubWatchers';
+import JiraIssues from './views/jiraIssues';
 import Login from './views/login';
 
 const mapState = () => ({});
@@ -34,6 +35,7 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
           <Route exact path="/githubVulnerabilities" render={() => <GithubVulnerabilities />} />
           <Route exact path="/githubRepositories" render={() => <GithubRepositories />} />
           <Route exact path="/githubWatchers" render={() => <GithubWatchers />} />
+          <Route exact path="/jiraIssues" render={() => <JiraIssues />} />
         </Switch>
       </Router>
     </div>

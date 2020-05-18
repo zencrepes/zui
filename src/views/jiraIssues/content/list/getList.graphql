@@ -1,0 +1,74 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: jiraIssues {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          key
+          summary
+          createdAt
+          updatedAt
+          closedAt
+          points
+          originalPoints
+          type {
+            iconUrl
+            name
+          }
+          project {
+            key
+            name
+          }
+          server {
+            name
+            host
+          }
+          reporter {
+            name
+            displayName
+            avatarUrls {
+              medium
+            }
+          }
+          assignee {
+            name
+            displayName
+            avatarUrls {
+              medium
+            }
+          }
+          status {
+            name
+            statusCategory {
+              key
+              name
+            }
+          }
+          resolution {
+            name
+          }
+          fixVersions {
+            totalCount
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+          versions {
+            totalCount
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

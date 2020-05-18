@@ -1,0 +1,47 @@
+query(
+  $bucketA: String
+  $bucketB: String
+  $bucketC: String
+  $bucketD: String
+  $bucketE: String
+  $bucketF: String
+  $bucketG: String
+) {
+  jiraIssues {
+    bucketA: data(query: $bucketA) {
+      items {
+        totalCount
+      }
+    }
+    bucketB: data(query: $bucketB) {
+      items {
+        totalCount
+      }
+    }
+    bucketC: data(query: $bucketC) {
+      items {
+        totalCount
+      }
+    }
+    bucketD: data(query: $bucketD) {
+      items {
+        totalCount
+      }
+    }
+    bucketE: data(query: $bucketE) {
+      items {
+        totalCount
+      }
+    }
+    bucketF: data(query: $bucketF) {
+      items {
+        totalCount
+      }
+    }
+    bucketG: data(query: $bucketG) {
+      items {
+        totalCount
+      }
+    }
+  }
+}

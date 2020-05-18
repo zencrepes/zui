@@ -10,6 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import BugReportIcon from '@material-ui/icons/BugReport';
 
 import AdapterLink from '../../../utils/adapterLink';
 
@@ -20,6 +21,8 @@ const QUERY_DATASETS = loader('./getDatasets.graphql');
 const getPlatformIcon = (platform: string) => {
   if (platform === 'github') {
     return <GitHubIcon />;
+  } else if (platform === 'jira') {
+    return <BugReportIcon />;
   }
   return <InboxIcon />;
 };
