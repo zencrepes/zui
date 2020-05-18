@@ -1,0 +1,39 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: circleciPipelines {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          number
+          triggeredAt
+          source {
+            repository {
+              name
+              url
+              owner {
+                login
+                url
+              }
+            }
+          }
+          trigger {
+            actor {
+              login
+              avatar_url
+            }
+          }
+          vcs {
+            revision
+            commit {
+              subject
+            }
+            branch
+          }
+          state
+        }
+      }
+    }
+  }
+}

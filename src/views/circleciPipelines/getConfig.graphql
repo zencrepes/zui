@@ -1,0 +1,26 @@
+query {
+  circleciPipelines {
+    config {
+      table {
+        itemsType
+        columns {
+          name
+          field
+          sortField
+          sortable
+        }
+      }
+      aggregations {
+        totalCount
+        nodes {
+          name
+          field
+          facetType
+          default
+          nullValue
+          nullFilter
+        }
+      }
+    }
+  }
+}

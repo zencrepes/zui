@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
@@ -21,6 +22,13 @@ interface Props {
   exportTsv: any;
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  link: {
+    color: '#586069!important',
+    textDecoration: 'none',
+  },
+}));
+
 const getObjectValue = (obj: any, path: string, defaultValue = undefined) => {
   const travel = (regexp: any) =>
     String.prototype.split
@@ -32,6 +40,7 @@ const getObjectValue = (obj: any, path: string, defaultValue = undefined) => {
 };
 
 const SimpleTable: React.FC<Props> = (props: Props) => {
+  const classes = useStyles();
   const { items, totalCount, tableConfig, tableSort, tablePagination, exportTsv } = props;
 
   return (
@@ -48,6 +57,16 @@ const SimpleTable: React.FC<Props> = (props: Props) => {
                     .filter((col) => col.default === true)
                     .map((col) => {
                       const value = getObjectValue(item, col.field, undefined);
+                      if (col.linkField !== null) {
+                        const link = getObjectValue(item, col.linkField, undefined);
+                        return (
+                          <TableCell component="td" scope="row" padding="none" key={col.field}>
+                            <a href={link} className={classes.link} target="_blank" rel="noopener noreferrer">
+                              {value}
+                            </a>
+                          </TableCell>
+                        );
+                      }
                       return (
                         <TableCell component="td" scope="row" padding="none" key={col.field}>
                           {value}
@@ -62,7 +81,7 @@ const SimpleTable: React.FC<Props> = (props: Props) => {
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 25, 50, 100, 150]}
-                colSpan={3}
+                colSpan={tableConfig.columns.filter((col) => col.default === true).length}
                 count={totalCount}
                 rowsPerPage={tablePagination.tablePaginationLimit}
                 page={tablePagination.tablePaginationCurrentPage}

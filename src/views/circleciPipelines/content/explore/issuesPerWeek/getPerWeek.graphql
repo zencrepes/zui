@@ -1,0 +1,14 @@
+query($query: String, $aggOptions: String) {
+  circleciPipelines {
+    data(query: $query) {
+      closedAt: aggregations(field: "triggeredAt", aggType: "date_histogram_rolling", aggOptions: $aggOptions) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          docCountMovingAvg
+        }
+      }
+    }
+  }
+}
