@@ -1,0 +1,14 @@
+query($query: String, $aggOptions: String) {
+  circleciInsights {
+    data(query: $query) {
+      aggregations(field: "started_at", aggType: "date_histogram", aggOptions: $aggOptions) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          sum
+        }
+      }
+    }
+  }
+}

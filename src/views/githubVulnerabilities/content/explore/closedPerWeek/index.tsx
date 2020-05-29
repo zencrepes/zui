@@ -22,7 +22,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
   const { data } = useQuery(GQL_QUERY, {
     variables: {
       query: JSON.stringify(query),
-      aggsOptions: JSON.stringify({ calendar_interval: 'week' }), // eslint-disable-line @typescript-eslint/camelcase
+      aggsOptions: JSON.stringify({ calendarInterval: 'week' }), // eslint-disable-line @typescript-eslint/camelcase
     },
     fetchPolicy: 'cache-and-network',
   });

@@ -1,6 +1,15 @@
 query {
-  githubRepositories {
+  dataset: circleciInsights {
     config {
+      table {
+        itemsType
+        columns {
+          name
+          field
+          sortField
+          sortable
+        }
+      }
       aggregations {
         totalCount
         nodes {

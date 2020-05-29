@@ -1,0 +1,29 @@
+query {
+  dataset: githubRepositories {
+    config {
+      table {
+        itemsType
+        defaultSortField
+        columns {
+          name
+          field
+          sortField
+          linkField
+          sortable
+          default
+        }
+      }
+      aggregations {
+        totalCount
+        nodes {
+          name
+          field
+          facetType
+          default
+          nullValue
+          nullFilter
+        }
+      }
+    }
+  }
+}

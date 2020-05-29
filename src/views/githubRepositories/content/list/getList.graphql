@@ -1,6 +1,7 @@
 query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
-  githubRepositories {
+  dataset: githubRepositories {
     data(query: $query) {
+      count
       items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
         totalCount
         nodes {
@@ -12,10 +13,19 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
           name
           url
           owner {
-            id
             login
             url
           }
+          defaultBranchRef {
+            name
+          }
+          diskUsage
+          forkCount
+          hasIssuesEnabled
+          hasProjectsEnabled
+          hasWikiEnabled
+          isArchived
+          isPrivate
         }
       }
     }

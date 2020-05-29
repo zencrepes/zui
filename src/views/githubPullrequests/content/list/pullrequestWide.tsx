@@ -25,7 +25,6 @@ interface ItemEl {
 
 interface Props {
   item: Pullrequest;
-  key: string;
 }
 
 const useStyles = makeStyles((theme) => ({

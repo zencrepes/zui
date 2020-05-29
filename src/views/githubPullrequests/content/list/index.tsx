@@ -4,19 +4,17 @@ import { loader } from 'graphql.macro';
 
 import { useQuery } from '@apollo/client';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
 
 import { iRootState } from '../../../../store';
+import { TableConfig, TableSort, TablePaginationType } from '../../../../global';
 
-import Header from './header';
+import ComplexTable from '../../../../components/tables/complex';
+import ExportTsv from '../../../../components/tables/exportTsv';
 import PullrequestWide from './pullrequestWide';
 
-const PRS_QUERY = loader('./getPullRequests.graphql');
+const GQL_QUERY = loader('./getList.graphql');
 
 //https://www.apollographql.com/docs/react/data/pagination/
 
@@ -35,7 +33,11 @@ const mapDispatch = (dispatch: any) => ({
   setTablePaginationLimit: dispatch.githubPullrequests.setTablePaginationLimit,
 });
 
-type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
+interface Props {
+  tableConfig: TableConfig;
+}
+
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;
 
 const List: React.FC<connectedProps> = (props: connectedProps) => {
   const {
@@ -45,21 +47,11 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     tablePaginationCurrentPage,
     setTablePaginationCurrentPage,
     query,
+    tableConfig,
   } = props;
 
-  const availableSortFields = [
-    { display: 'Created', value: 'createdAt' },
-    { display: 'Updated', value: 'updatedAt' },
-    { display: 'Closed', value: 'closedAt' },
-    { display: 'Title', value: 'title.keyword' },
-    { display: 'Author', value: 'author.login' },
-    { display: 'Milestone', value: 'milestone.title.keyword' },
-    { display: 'Repository', value: 'repository.name.keyword' },
-    { display: 'Organization', value: 'repository.owner.login' },
-  ];
-
   const [sortField, setSortField] = React.useState<string>('createdAt');
-  const [sortDirection, setSortDirection] = React.useState<string>('desc');
+  const [sortDirection, setSortDirection] = React.useState<'desc' | 'asc'>('desc');
 
   const changeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTablePaginationLimit(parseInt(event.target.value, 10));
@@ -69,7 +61,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     setTablePaginationCurrentPage(newPage);
   };
 
-  const { data } = useQuery(PRS_QUERY, {
+  const { data } = useQuery(GQL_QUERY, {
     variables: {
       from: tablePaginationOffset,
       size: tablePaginationLimit,
@@ -80,46 +72,50 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     fetchPolicy: 'cache-and-network',
   });
   if (data !== undefined) {
-    const totalCount = data.githubPullrequests.data.items.totalCount;
-    const nodes = data.githubPullrequests.data.items.nodes;
+    const totalCount = data.dataset.data.count;
+    const nodes = data.dataset.data.items.nodes;
+
+    const tableSort: TableSort = {
+      setSortField: setSortField,
+      sortField: sortField,
+      sortDirection: sortDirection,
+      setSortDirection: setSortDirection,
+    };
+
+    const tablePagination: TablePaginationType = {
+      tablePaginationLimit: tablePaginationLimit,
+      tablePaginationCurrentPage: tablePaginationCurrentPage,
+      changeCurrentPage: changeCurrentPage,
+      changeRowsPerPage: changeRowsPerPage,
+    };
 
     return (
       <React.Fragment>
-        <Table size="small">
-          <Header
-            totalCount={totalCount}
-            query={query}
-            sortField={sortField}
-            setSortField={setSortField}
-            availableSortFields={availableSortFields}
-            sortDirection={sortDirection}
-            setSortDirection={setSortDirection}
-          />
-          <TableBody>
-            {nodes.map((item: any) => {
-              return (
-                <TableRow key={item.id}>
-                  <TableCell component="th" scope="row">
-                    <PullrequestWide item={item} key={item.id} />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 25, 50, 100, 150]}
-                colSpan={3}
-                count={totalCount}
-                rowsPerPage={tablePaginationLimit}
-                page={tablePaginationCurrentPage}
-                onChangePage={changeCurrentPage}
-                onChangeRowsPerPage={changeRowsPerPage}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
+        <ComplexTable
+          totalCount={totalCount}
+          tableConfig={tableConfig}
+          tableSort={tableSort}
+          tablePagination={tablePagination}
+          exportTsv={
+            <ExportTsv
+              gqlQuery={GQL_QUERY}
+              query={query}
+              tableConfig={tableConfig}
+              totalCount={totalCount}
+              tableSort={tableSort}
+            />
+          }
+        >
+          {nodes.map((item: any) => {
+            return (
+              <TableRow key={item.id}>
+                <TableCell component="th" scope="row">
+                  <PullrequestWide item={item} />
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </ComplexTable>
       </React.Fragment>
     );
   }

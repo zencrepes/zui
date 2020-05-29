@@ -1,0 +1,33 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: circleciInsights {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          status
+          started_at
+          duration
+          credits_used
+          job {
+            name
+            workflow {
+              name
+              source {
+                repository {
+                  name
+                  url
+                  owner {
+                    login
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

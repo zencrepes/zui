@@ -1,0 +1,22 @@
+query($querySuccess: String, $queryFailed: String, $aggOptions: String) {
+  circleciInsights {
+    success: data(query: $querySuccess) {
+      aggregations(field: "started_at", aggType: "date_histogram", aggOptions: $aggOptions) {
+        buckets {
+          keyAsString
+          key
+          docCount
+        }
+      }
+    }
+    failed: data(query: $queryFailed) {
+      aggregations(field: "started_at", aggType: "date_histogram", aggOptions: $aggOptions) {
+        buckets {
+          keyAsString
+          key
+          docCount
+        }
+      }
+    }
+  }
+}

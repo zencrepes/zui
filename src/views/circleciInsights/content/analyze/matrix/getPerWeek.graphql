@@ -1,0 +1,24 @@
+query($query: String, $compareField: String!, $aggOptions: String) {
+  circleciInsights {
+    data(query: $query) {
+      matrixAggregations(
+        field: "started_at"
+        compareField: $compareField
+        aggType: "date_histogram"
+        aggOptions: $aggOptions
+      ) {
+        nodes {
+          compareField
+          compareValue
+          buckets {
+            keyAsString
+            key
+            docCount
+            sum
+            avg
+          }
+        }
+      }
+    }
+  }
+}

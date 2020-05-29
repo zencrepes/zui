@@ -1,6 +1,7 @@
 query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
-  githubPullrequests {
+  dataset: githubPullrequests {
     data(query: $query) {
+      count
       items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
         totalCount
         nodes {

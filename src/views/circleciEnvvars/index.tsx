@@ -69,8 +69,8 @@ const GithubWatchers: React.FC<connectedProps> = (props: connectedProps) => {
   if (data === undefined) {
     return <p>Loading..., please wait</p>;
   } else {
-    const facets: Facet[] = data.circleciEnvvars.config.aggregations.nodes;
-    const tableConfig: TableConfig = data.circleciEnvvars.config.table;
+    const facets: Facet[] = data.dataset.config.aggregations.nodes;
+    const tableConfig: TableConfig = data.dataset.config.table;
     return (
       <Layout>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={2}>

@@ -22,7 +22,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
   const { data } = useQuery(GQL_QUERY, {
     variables: {
       query: JSON.stringify(query),
-      aggsOptions: JSON.stringify({ calendar_interval: 'week', moving_window: 4 }), // eslint-disable-line @typescript-eslint/camelcase
+      aggsOptions: JSON.stringify({ calendarInterval: 'week', movingWindow: 4 }), // eslint-disable-line @typescript-eslint/camelcase
     },
     fetchPolicy: 'cache-and-network',
   });
@@ -42,7 +42,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
       dataseries.push({
         label: x,
         createdAt: createdAt !== undefined ? createdAt.docCount : 0,
-        createdAtAvg: createdAt !== undefined ? createdAt.docCountMovingAvg : 0,
+        createdAtAvg: createdAt !== undefined ? createdAt.moving : 0,
       });
     }
 

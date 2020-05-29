@@ -1,0 +1,13 @@
+query($currentQuery: String, $sevenDaysCreated: String, $sevenDaysClosed: String) {
+  circleciInsights {
+    currentQuery: data(query: $currentQuery) {
+      count
+    }
+    sevenDaysCreated: data(query: $sevenDaysCreated) {
+      count
+    }
+    sevenDaysClosed: data(query: $sevenDaysClosed) {
+      count
+    }
+  }
+}
