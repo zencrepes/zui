@@ -1,5 +1,5 @@
 query {
-  dataset: githubRepositories {
+  dataset: githubVulnerabilities {
     config {
       table {
         itemsType

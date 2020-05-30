@@ -9,6 +9,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableCell from '@material-ui/core/TableCell';
 
+import { format } from 'date-fns';
+
 import { TableConfig, TableSort, TablePaginationType } from '../../../global';
 import Header from './header';
 import TableToolbar from './toolbar';
@@ -57,19 +59,24 @@ const SimpleTable: React.FC<Props> = (props: Props) => {
                     .filter((col) => col.default === true)
                     .map((col) => {
                       const value = getObjectValue(item, col.field, undefined);
+                      let cellValue;
                       if (col.linkField !== null) {
                         const link = getObjectValue(item, col.linkField, undefined);
-                        return (
-                          <TableCell component="td" scope="row" padding="none" key={col.field}>
-                            <a href={link} className={classes.link} target="_blank" rel="noopener noreferrer">
-                              {value}
-                            </a>
-                          </TableCell>
+                        cellValue = (
+                          <a href={link} className={classes.link} target="_blank" rel="noopener noreferrer">
+                            {value}
+                          </a>
                         );
+                      } else if (col.fieldType === 'boolean') {
+                        cellValue = <span>{JSON.stringify(value)}</span>;
+                      } else if (col.fieldType === 'date' && value !== null) {
+                        cellValue = <span>{format(new Date(value), 'eee MMM d, yyyy')}</span>;
+                      } else {
+                        cellValue = <span>{value}</span>;
                       }
                       return (
                         <TableCell component="td" scope="row" padding="none" key={col.field}>
-                          {value}
+                          {cellValue}
                         </TableCell>
                       );
                     })}

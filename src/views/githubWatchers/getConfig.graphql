@@ -1,5 +1,5 @@
 query {
-  dataset: githubRepositories {
+  dataset: githubWatchers {
     config {
       table {
         itemsType

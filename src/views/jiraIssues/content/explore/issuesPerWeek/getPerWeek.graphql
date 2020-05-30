@@ -1,7 +1,7 @@
-query($query: String, $aggOptions: String) {
+query($query: String, $aggOptions: String!) {
   jiraIssues {
     data(query: $query) {
-      closedAt: aggregations(field: "closedAt", aggType: "date_histogram_rolling", aggOptions: $aggOptions) {
+      closedAt: aggregations(field: "closedAt", aggType: "date_histogram", aggOptions: $aggOptions) {
         buckets {
           keyAsString
           key

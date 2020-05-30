@@ -8,13 +8,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 import Layout from '../../layout';
+import { TableConfig } from '../../global';
+
 import NavTabs from './navTabs';
 
 import Content from './content';
 import FacetsHoc from './facets';
 import Query from './query';
 
-const QUERY_GETFACETS = loader('./getFacets.graphql');
+const GQL_GETCONFIG = loader('./getConfig.graphql');
 
 const mapState = () => ({});
 
@@ -62,14 +64,15 @@ const GithubWatchers: React.FC<connectedProps> = (props: connectedProps) => {
     }
   });
 
-  const { data } = useQuery(QUERY_GETFACETS, {
+  const { data } = useQuery(GQL_GETCONFIG, {
     fetchPolicy: 'cache-and-network',
   });
 
   if (data === undefined) {
     return <p>Loading..., please wait</p>;
   } else {
-    const facets: Facet[] = data.githubWatchers.config.aggregations.nodes;
+    const facets: Facet[] = data.dataset.config.aggregations.nodes;
+    const tableConfig: TableConfig = data.dataset.config.table;
     return (
       <Layout>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={2}>
@@ -85,7 +88,7 @@ const GithubWatchers: React.FC<connectedProps> = (props: connectedProps) => {
                 <NavTabs />
               </Grid>
               <Grid item xs={12} sm className={classes.fullWidth}>
-                <Content />
+                <Content tableConfig={tableConfig} />
               </Grid>
             </Grid>
           </Grid>

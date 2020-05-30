@@ -7,6 +7,7 @@ export interface Dataset {
 export interface TableConfigColumn {
   name: string;
   field: string;
+  fieldType: string;
   sortField: string;
   sortable: boolean;
   linkField: string;
