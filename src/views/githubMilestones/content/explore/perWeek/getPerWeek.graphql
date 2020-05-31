@@ -1,0 +1,14 @@
+query($query: String, $aggOptions: String) {
+  githubMilestones {
+    data(query: $query) {
+      createdAt: aggregations(field: "createdAt", aggType: "date_histogram", aggOptions: $aggOptions) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          moving
+        }
+      }
+    }
+  }
+}

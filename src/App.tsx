@@ -9,6 +9,11 @@ import GithubPullrequests from './views/githubPullrequests';
 import GithubVulnerabilities from './views/githubVulnerabilities';
 import GithubRepositories from './views/githubRepositories';
 import GithubWatchers from './views/githubWatchers';
+import GithubLabels from './views/githubLabels';
+import GithubMilestones from './views/githubMilestones';
+import GithubProjects from './views/githubProjects';
+import GithubReleases from './views/githubReleases';
+import GithubIssues from './views/githubIssues';
 import JiraIssues from './views/jiraIssues';
 import CircleciEnvvars from './views/circleciEnvvars';
 import CircleciPipelines from './views/circleciPipelines';
@@ -38,6 +43,11 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
           <Route exact path="/githubVulnerabilities" render={() => <GithubVulnerabilities />} />
           <Route exact path="/githubRepositories" render={() => <GithubRepositories />} />
           <Route exact path="/githubWatchers" render={() => <GithubWatchers />} />
+          <Route exact path="/githubLabels" render={() => <GithubLabels />} />
+          <Route exact path="/githubMilestones" render={() => <GithubMilestones />} />
+          <Route exact path="/githubProjects" render={() => <GithubProjects />} />
+          <Route exact path="/githubReleases" render={() => <GithubReleases />} />
+          <Route exact path="/githubIssues" render={() => <GithubIssues />} />
           <Route exact path="/jiraIssues" render={() => <JiraIssues />} />
           <Route exact path="/circleciEnvvars" render={() => <CircleciEnvvars />} />
           <Route exact path="/circleciPipelines" render={() => <CircleciPipelines />} />

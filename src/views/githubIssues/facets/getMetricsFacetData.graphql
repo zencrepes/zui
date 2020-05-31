@@ -1,0 +1,13 @@
+query($field: String!, $query: String) {
+  githubIssues {
+    data(query: $query) {
+      metrics(field: $field) {
+        field
+        overallMin
+        overallMax
+        min
+        max
+      }
+    }
+  }
+}

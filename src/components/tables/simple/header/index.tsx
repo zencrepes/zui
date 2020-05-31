@@ -11,6 +11,7 @@ import { TableConfig, TableSort } from '../../../../global';
 interface Props {
   tableConfig: TableConfig;
   tableSort: TableSort;
+  hasRowArray: boolean;
 }
 
 const useStyles = makeStyles(() => ({
@@ -30,7 +31,7 @@ const useStyles = makeStyles(() => ({
 const Header: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
-  const { tableConfig, tableSort } = props;
+  const { tableConfig, tableSort, hasRowArray } = props;
 
   const createSortHandler = (property: string) => () => {
     //If clicking on the same column, then change direction
@@ -45,11 +46,12 @@ const Header: React.FC<Props> = (props: Props) => {
   return (
     <TableHead>
       <TableRow>
+        {hasRowArray && <TableCell />}
         {tableConfig.columns
           .filter((col) => col.default === true)
           .map((col) => (
             <TableCell
-              key={col.sortField}
+              key={col.field}
               align="left"
               padding="none"
               sortDirection={tableSort.sortField === col.sortField ? tableSort.sortDirection : false}

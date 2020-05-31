@@ -1,0 +1,54 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: githubProjects {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          createdAt
+          updatedAt
+          closedAt
+          databaseId
+          number
+          url
+          name
+          state
+          body
+          columns {
+            totalCount
+            edges {
+              node {
+                id
+                databaseId
+                name
+                cards {
+                  totalCount
+                }
+              }
+            }
+          }
+          pendingCards {
+            totalCount
+          }
+          repository {
+            id
+            name
+            url
+            databaseId
+            owner {
+              id
+              login
+              url
+            }
+          }
+          organization {
+            id
+            login
+            url
+          }
+        }
+      }
+    }
+  }
+}

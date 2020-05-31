@@ -1,0 +1,19 @@
+query($currentQuery: String, $thirtyDays: String, $inactive: String) {
+  githubReleases {
+    currentQuery: data(query: $currentQuery) {
+      items {
+        totalCount
+      }
+    }
+    thirtyDays: data(query: $thirtyDays) {
+      items {
+        totalCount
+      }
+    }
+    inactive: data(query: $inactive) {
+      items {
+        totalCount
+      }
+    }
+  }
+}

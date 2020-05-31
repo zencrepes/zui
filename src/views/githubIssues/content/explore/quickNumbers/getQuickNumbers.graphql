@@ -1,0 +1,29 @@
+query(
+  $queryPrs: String
+  $openIssuesWithoutAssignee: String
+  $openIssuesInClosedMilestones: String
+  $oldIssues: String
+) {
+  githubIssues {
+    queryPrs: data(query: $queryPrs) {
+      items {
+        totalCount
+      }
+    }
+    openIssuesWithoutAssignee: data(query: $openIssuesWithoutAssignee) {
+      items {
+        totalCount
+      }
+    }
+    openIssuesInClosedMilestones: data(query: $openIssuesInClosedMilestones) {
+      items {
+        totalCount
+      }
+    }
+    oldIssues: data(query: $oldIssues) {
+      items {
+        totalCount
+      }
+    }
+  }
+}

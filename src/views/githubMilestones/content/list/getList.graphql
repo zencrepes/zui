@@ -1,0 +1,39 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: githubMilestones {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          createdAt
+          updatedAt
+          closedAt
+          description
+          dueOn
+          issues {
+            totalCount
+          }
+          pullRequests {
+            totalCount
+          }
+          number
+          state
+          title
+          url
+          repository {
+            id
+            name
+            url
+            databaseId
+            owner {
+              id
+              login
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: githubLabels {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          url
+          color
+          name
+          description
+          isDefault
+          createdAt
+          updatedAt
+          issues {
+            totalCount
+          }
+          pullRequests {
+            totalCount
+          }
+          repository {
+            id
+            name
+            url
+            databaseId
+            owner {
+              id
+              login
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

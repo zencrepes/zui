@@ -1,0 +1,38 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: githubReleases {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          createdAt
+          updatedAt
+          author {
+            id
+            login
+            name
+            company
+          }
+          description
+          isDraft
+          isPrerelease
+          name
+          publishedAt
+          tagName
+          url
+          repository {
+            id
+            name
+            url
+            owner {
+              id
+              login
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
