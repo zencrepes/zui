@@ -41,7 +41,7 @@ const OpenedSince: React.FC<Props> = (props: Props) => {
     const chartData = {
       datasets: [
         {
-          label: 'Number of PRs',
+          label: 'Number of issues',
           backgroundColor: '#64b5f6',
           borderColor: '#64b5f6',
           borderWidth: 2,

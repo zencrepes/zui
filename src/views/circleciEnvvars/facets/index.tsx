@@ -44,7 +44,7 @@ const FacetsHoc: React.FC<connectedProps> = (props: connectedProps) => {
       query={query}
       gqlAggregationData={gqlAggregationData}
       gqlMetricsFacet={gqlMetricsFacet}
-      unit={'vars'}
+      unit={''}
       pushNewQuery={pushNewQuery}
     />
   );

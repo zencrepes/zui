@@ -1,7 +1,7 @@
 query($query: String, $aggOptions: String) {
   githubWatchers {
     data(query: $query) {
-      starredAt: aggregations(field: "lastStarredAt", aggType: "date_histogram", aggOptions: $aggOptions) {
+      starredAt: aggregations(field: "starredAt", aggType: "date_histogram", aggOptions: $aggOptions) {
         buckets {
           keyAsString
           key

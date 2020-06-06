@@ -31,7 +31,7 @@ const TeamFocus: React.FC<Props> = (props: Props) => {
     return (
       <CustomCard
         headerTitle="Focus Heatmap"
-        headerFactTitle="Number of PRs closed per aggregation field and per week"
+        headerFactTitle="Number of issues closed per aggregation field and per week"
         headerFactValue=""
       >
         <Chart

@@ -57,7 +57,8 @@ const OpenByRepo: React.FC<Props> = (props: Props) => {
     return (
       <CustomCard
         headerTitle={
-          'Open PRs by Repository' + (srcBucketsSize > maxBucketsToDisplay ? ' (top ' + maxBucketsToDisplay + ')' : '')
+          'Open Issues per Repository' +
+          (srcBucketsSize > maxBucketsToDisplay ? ' (top ' + maxBucketsToDisplay + ')' : '')
         }
         headerFactTitle=""
         headerFactValue=""

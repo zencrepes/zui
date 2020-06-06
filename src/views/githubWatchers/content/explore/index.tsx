@@ -32,11 +32,11 @@ const useStyles = makeStyles({
 const buildBucketQuery = (from: Date, to: Date | null, query: any) => {
   let updatedQuery: any = {};
 
-  const filterFrom = createTermFilter('<=', 'lastStarredAt', from.toISOString());
+  const filterFrom = createTermFilter('<=', 'starredAt', from.toISOString());
   updatedQuery = addFilterToQuery(filterFrom, query);
 
   if (to !== null) {
-    const filterTo = createTermFilter('>=', 'lastStarredAt', to.toISOString());
+    const filterTo = createTermFilter('>=', 'starredAt', to.toISOString());
     updatedQuery = addFilterToQuery(filterTo, updatedQuery);
   }
 
@@ -46,10 +46,10 @@ const buildBucketQuery = (from: Date, to: Date | null, query: any) => {
 const buildFilterWeek = (weekStart: string, weekEnd: string, query: any) => {
   let updatedQuery: any = {};
 
-  const filterFrom = createTermFilter('>=', 'lastStarredAt', weekStart);
+  const filterFrom = createTermFilter('>=', 'starredAt', weekStart);
   updatedQuery = addFilterToQuery(filterFrom, query);
 
-  const filterTo = createTermFilter('<=', 'lastStarredAt', weekEnd);
+  const filterTo = createTermFilter('<=', 'starredAt', weekEnd);
   updatedQuery = addFilterToQuery(filterTo, updatedQuery);
 
   return updatedQuery;

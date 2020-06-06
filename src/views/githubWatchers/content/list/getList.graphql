@@ -12,6 +12,14 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
           login
           company
           url
+          repository {
+            name
+            url
+            owner {
+              login
+              url
+            }
+          }
           repositories {
             totalCount
           }
