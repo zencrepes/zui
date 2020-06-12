@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
+import { Alert } from '@material-ui/lab';
 
 import { makeStyles } from '@material-ui/core/styles';
 import pink from '@material-ui/core/colors/pink';
@@ -88,23 +89,36 @@ const mapState = (state: iRootState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   loginWithRedirect: dispatch.global.loginWithRedirect,
+  setAuthError: dispatch.global.setAuthError,
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
 
 const Login: React.FC<connectedProps> = (props: connectedProps) => {
-  const { loggedIn, loginWithRedirect } = props;
+  const { loggedIn, loginWithRedirect, location, setAuthError } = props;
   const classes = useStyles();
 
   const clickLogin = () => {
     loginWithRedirect();
   };
 
+  let hasAuthError = false;
+  const params = new URLSearchParams(location.search);
+  if (params.get('authError') !== null) {
+    hasAuthError = true;
+    setAuthError(true);
+  }
   return (
     <Layout>
       {loggedIn === true && <Redirect to="/" />}
 
       <main className={classes.layout}>
+        {hasAuthError && (
+          <Alert variant="filled" severity="error">
+            Your authentication was successful but you are not authorized to access ZenCrepes, please reach out to your
+            administrator to be granted access and log back in.
+          </Alert>
+        )}
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={8}>
           <Grid item xs={12} sm={6} md={8}>
             <h1 className={classes.title}>Log in to ZenCrepes</h1>
@@ -124,7 +138,7 @@ const Login: React.FC<connectedProps> = (props: connectedProps) => {
             <h4 className={classes.secondTitle}>Get Started</h4>
             <Paper className={classes.notice} elevation={1} color="secondary">
               <Typography component="p" className={classes.noticeText}>
-                You are currently connected to the server version of ZenCrepes
+                You are currently connected to the self-hosted version of ZenCrepes
               </Typography>
             </Paper>
             <Button variant="contained" onClick={clickLogin}>
