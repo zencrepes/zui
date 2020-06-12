@@ -46,6 +46,8 @@ export const global = {
     authDisabled: JSON.parse(window._env_.KEYCLOAK_DISABLED), // Is authentication active, if false, then does not check authentication status
     loggedIn: false, // Is the user logged in
     keycloak: null,
+    keycloakLogOut: null,
+    authError: false,
     userName: '',
     userAvatarUrl: '',
     userEmail: null,
@@ -104,6 +106,9 @@ export const global = {
     setLoginMenuOpen(state: any, payload: any) {
       return { ...state, loginMenuOpen: payload };
     },
+    setAuthError(state: any, payload: any) {
+      return { ...state, authError: payload };
+    },
     setCallbackState(state: any, payload: any) {
       return {
         ...state,
@@ -117,6 +122,7 @@ export const global = {
       return {
         ...state,
         keycloak: Keycloak,
+        keycloakLogOut: newState.keycloakLogOut,
         loggedIn: newState.loggedIn,
         userName: newState.name,
         userEmail: newState.Email,
@@ -125,6 +131,16 @@ export const global = {
     },
 
     logOutUser(state: any) {
+      return {
+        ...state,
+        keycloak: null,
+        loggedIn: false,
+        userName: '',
+        userEmail: '',
+        userId: '',
+      };
+    },
+    logOutUserAuth(state: any) {
       return {
         ...state,
         keycloak: null,
@@ -164,11 +180,15 @@ export const global = {
                 dispatch.global.setUserSession({
                   loggedIn: true,
                   keycloak: keycloak,
+                  keycloakLogOut: keycloak.logout,
                   name: userInfo.name,
                   email: userInfo.email,
                   id: userInfo.sub,
                 });
               });
+              if (keycloak.token !== undefined) {
+                localStorage.setItem('token', keycloak.token);
+              }
             } else {
               dispatch.global.setKeycloak(keycloak);
             }
@@ -199,10 +219,17 @@ export const global = {
       });
     },
 
-    async doLogOut() {
+    async doLogOut(payload: any, rootState: any) {
       // Note: This is not a log-out, just a way to force the UI to re-login.
       // rootState.global.keycloak.logout();
+      rootState.global.keycloakLogOut({ redirectUri: window._env_.ROOT_URL + '/login' });
       dispatch.global.logOutUser();
+    },
+
+    async doLogOutAuthError(payload: any, rootState: any) {
+      // Note: This is not a log-out, just a way to force the UI to re-login.
+      rootState.global.keycloakLogOut({ redirectUri: window._env_.ROOT_URL + '/login?authError' });
+      dispatch.global.logOutUserAuth();
     },
   }),
 };

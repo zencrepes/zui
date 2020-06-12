@@ -97,6 +97,7 @@ const mapState = (state: iRootState) => ({
   loggedIn: state.global.loggedIn,
   keycloak: state.global.keycloak,
   authDisabled: state.global.authDisabled,
+  authError: state.global.authError,
 });
 
 const mapDispatch = () => ({});
@@ -106,7 +107,7 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
   const theme = useTheme();
-  const { loggedIn, authDisabled, openDrawer, setOpenDrawer, keycloak } = props;
+  const { loggedIn, authDisabled, openDrawer, setOpenDrawer, keycloak, authError } = props;
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -120,7 +121,9 @@ const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
   // But this should only happen after keycloak has been initiated (otherwise the user gets redirecte right away to login)
   return (
     <React.Fragment>
-      {loggedIn === false && keycloak !== null && authDisabled !== true && <Redirect to="/login" />}
+      {loggedIn === false && keycloak !== null && authDisabled !== true && authError === false && (
+        <Redirect to="/login" />
+      )}
 
       <AppBar
         position="fixed"
