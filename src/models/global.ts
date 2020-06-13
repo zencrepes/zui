@@ -223,7 +223,6 @@ export const global = {
               if (keycloak.token !== undefined) {
                 localStorage.setItem('token', keycloak.token);
                 //https://wjw465150.gitbooks.io/keycloak-documentation/server_admin/topics/identity-broker/tokens.html
-
                 // Fetch GitHub user token
                 // Using this feature requires `Stored Tokens Readable` to be enabled in Keycloak
                 // This only works for new users, previously registered users will not have access to their tokens
