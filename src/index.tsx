@@ -12,6 +12,8 @@ import { Provider } from 'react-redux';
 
 import { store } from './store';
 
+window.store = store;
+
 const API_URL = window._env_.API_URL !== undefined ? window._env_.API_URL : 'http://127.0.0.1:5000/graphql';
 
 const httpLink: any = createHttpLink({

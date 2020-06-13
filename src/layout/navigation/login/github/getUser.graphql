@@ -1,0 +1,14 @@
+query {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+  viewer {
+    name
+    login
+    avatarUrl
+    url
+  }
+}

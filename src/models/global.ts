@@ -1,6 +1,9 @@
 // https://github.com/pimterry/loglevel
 import * as log from 'loglevel';
 import Keycloak from 'keycloak-js';
+import axios from 'axios';
+import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink, from } from '@apollo/client';
+import { setContext } from '@apollo/link-context';
 
 import { Dispatch } from '../store';
 import Dexie from 'dexie';
@@ -11,6 +14,28 @@ interface Query {
   name?: string;
   query?: any;
 }
+
+const createApolloClient = (ghToken: string) => {
+  const httpLink: any = createHttpLink({
+    uri: 'https://api.github.com/graphql',
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    return {
+      headers: {
+        ...headers,
+        authorization: ghToken !== '' ? `Bearer ${ghToken}` : '',
+      },
+    };
+  });
+
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: from([(authLink as unknown) as ApolloLink, httpLink]),
+  });
+
+  return client;
+};
 
 //https://github.com/dfahlander/Dexie.js/blob/master/samples/typescript-simple/src/index.ts
 //https://github.com/dfahlander/Dexie.js/issues/801
@@ -52,6 +77,9 @@ export const global = {
     userAvatarUrl: '',
     userEmail: null,
     userId: null,
+
+    githubToken: null,
+    githubClient: createApolloClient(''),
 
     auth0Initialized: false,
     authUser: null,
@@ -108,6 +136,12 @@ export const global = {
     },
     setAuthError(state: any, payload: any) {
       return { ...state, authError: payload };
+    },
+    setGithubToken(state: any, payload: any) {
+      return { ...state, githubToken: payload };
+    },
+    setGithubClient(state: any, payload: any) {
+      return { ...state, githubClient: payload };
     },
     setCallbackState(state: any, payload: any) {
       return {
@@ -188,6 +222,36 @@ export const global = {
               });
               if (keycloak.token !== undefined) {
                 localStorage.setItem('token', keycloak.token);
+                //https://wjw465150.gitbooks.io/keycloak-documentation/server_admin/topics/identity-broker/tokens.html
+                // Fetch GitHub user token
+                // Using this feature requires `Stored Tokens Readable` to be enabled in Keycloak
+                // This only works for new users, previously registered users will not have access to their tokens
+                axios
+                  .get(
+                    window._env_.KEYCLOAK_AUTH_SERVER_URL +
+                      'realms/' +
+                      window._env_.KEYCLOAK_REALM +
+                      '/broker/github/token',
+                    {
+                      headers: { Authorization: 'Bearer ' + keycloak.token },
+                    },
+                  )
+                  .then(function (response) {
+                    const decodedResponse = JSON.parse(
+                      '{"' +
+                        decodeURI(response.data).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') +
+                        '"}',
+                    );
+                    if (decodedResponse.access_token !== undefined) {
+                      dispatch.global.setGithubToken(decodedResponse.access_token);
+                      dispatch.global.setGithubApolloClient(decodedResponse.access_token);
+                    }
+                  })
+                  .catch(function (error) {
+                    console.log('Error fetching GitHub token');
+                    console.log(error);
+                    dispatch.global.setGithubToken(null);
+                  });
               }
             } else {
               dispatch.global.setKeycloak(keycloak);
@@ -217,6 +281,11 @@ export const global = {
           });
         }
       });
+    },
+
+    async setGithubApolloClient(ghToken: string) {
+      const client = createApolloClient(ghToken);
+      dispatch.global.setGithubClient(client);
     },
 
     async doLogOut(payload: any, rootState: any) {

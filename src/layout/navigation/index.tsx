@@ -22,7 +22,7 @@ import DashboardMenu from './menu/dashboard';
 import DynamicMenu from './menu/dynamic';
 import SettingsMenu from './menu/settings';
 
-import Login from './login';
+import Login from './login/index';
 
 interface Props {
   openDrawer: boolean;
