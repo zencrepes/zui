@@ -12,7 +12,7 @@ const mapState = (state: iRootState) => ({
   loadingIterateTotal: state.loading.loadingIterateTotal,
 });
 
-const mapDispatch = (dispatch: any) => ({});
+const mapDispatch = () => ({});
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 

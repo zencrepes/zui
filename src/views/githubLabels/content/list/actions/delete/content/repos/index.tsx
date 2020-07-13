@@ -13,7 +13,7 @@ interface Props {
   updateReposSelected: string[];
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       minHeight: '300px',

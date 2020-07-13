@@ -17,7 +17,7 @@ const mapState = (state: iRootState) => ({
   updateLabelsSelected: state.githubLabels.updateLabelsSelected,
 });
 
-const mapDispatch = (dispatch: any) => ({});
+const mapDispatch = () => ({});
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 

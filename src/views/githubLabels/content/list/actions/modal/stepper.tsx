@@ -68,7 +68,7 @@ export default function HorizontalLinearStepper() {
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
+        {steps.map((label) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: { optional?: React.ReactNode } = {};
           return (

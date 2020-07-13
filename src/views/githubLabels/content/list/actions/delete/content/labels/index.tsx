@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 import 'react-dual-listbox/lib/react-dual-listbox.css';
 import DualListBox from 'react-dual-listbox';
@@ -13,7 +13,7 @@ interface Props {
   updateLabelsSelected: string[];
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       minHeight: '300px',

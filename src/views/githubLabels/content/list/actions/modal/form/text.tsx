@@ -1,13 +1,9 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import { Paper } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
-
-import { SketchPicker } from 'react-color';
 
 interface Props {
   label: string;
@@ -18,7 +14,7 @@ interface Props {
   setTextContentEnable: Function;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     color: {
       width: '36px',
@@ -48,7 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Text: React.FC<Props> = (props: Props) => {
-  const classes = useStyles();
   const { label, placeholder, textContent, setTextContent, textContentEnable, setTextContentEnable } = props;
 
   const handleEnable = (event: React.ChangeEvent<HTMLInputElement>) => {

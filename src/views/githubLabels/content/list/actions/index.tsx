@@ -11,8 +11,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { iRootState } from '../../../../../store';
-
 import DeleteModal from './delete';
 
 const StyledMenu = withStyles({
@@ -46,7 +44,7 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-const mapState = (state: iRootState) => ({});
+const mapState = () => ({});
 
 const mapDispatch = (dispatch: any) => ({
   setOpenEditModal: dispatch.githubLabels.setOpenEditModal,

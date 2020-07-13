@@ -16,7 +16,7 @@ const mapDispatch = (dispatch: any) => ({
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
-const Staging: React.FC<connectedProps> = (props: connectedProps) => {
+const Staging: React.FC<connectedProps> = () => {
   return (
     <React.Fragment>
       <StagingStart />

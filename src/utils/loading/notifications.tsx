@@ -15,7 +15,7 @@ const mapState = (state: iRootState) => ({
   loadingSuccessMsg: state.loading.loadingSuccessMsg,
 });
 
-const mapDispatch = (dispatch: any) => ({});
+const mapDispatch = () => ({});
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 

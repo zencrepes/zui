@@ -14,7 +14,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { iRootState } from '../../../../store';
 
-const mapState = (state: iRootState) => ({});
+const mapState = () => ({});
 
 const mapDispatch = (dispatch: any) => ({
   doLogOut: dispatch.global.doLogOut,

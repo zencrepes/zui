@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -26,7 +26,7 @@ const getStepContent = (step: number) => {
   }
 };
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       width: '100%',
@@ -39,7 +39,7 @@ const mapState = (state: iRootState) => ({
   updateCurrentStep: state.githubLabels.updateCurrentStep,
 });
 
-const mapDispatch = (dispatch: any) => ({});
+const mapDispatch = () => ({});
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
@@ -50,7 +50,7 @@ const Content: React.FC<connectedProps> = (props: connectedProps) => {
   return (
     <div className={classes.root}>
       <Stepper activeStep={updateCurrentStep}>
-        {updateDeleteSteps.map((label: string, index: number) => {
+        {updateDeleteSteps.map((label: string) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: { optional?: React.ReactNode } = {};
           return (
