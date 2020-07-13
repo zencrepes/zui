@@ -9,12 +9,14 @@ import { TableConfig, TableSort, TablePaginationType } from '../../../../global'
 
 import SimpleTable from '../../../../components/tables/simple';
 import ExportTsv from '../../../../components/tables/exportTsv';
+import Actions from './actions';
 
 const GQL_QUERY = loader('./getList.graphql');
 
 //https://www.apollographql.com/docs/react/data/pagination/
 
 const mapState = (state: iRootState) => ({
+  githubToken: state.global.githubToken,
   query: state.githubLabels.query,
   tablePaginationRowsPerPage: state.githubLabels.tablePaginationRowsPerPage,
   tablePaginationCurrentPage: state.githubLabels.tablePaginationCurrentPage,
@@ -44,6 +46,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
     setTablePaginationCurrentPage,
     query,
     tableConfig,
+    githubToken,
   } = props;
 
   const [sortField, setSortField] = React.useState<string>(tableConfig.defaultSortField);
@@ -93,6 +96,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
           tableSort={tableSort}
           tablePagination={tablePagination}
           items={nodes}
+          actions={githubToken !== null ? <Actions /> : null}
           exportTsv={
             <ExportTsv
               gqlQuery={GQL_QUERY}

@@ -24,6 +24,24 @@ export const githubLabels = {
     tablePaginationOffset: 0,
     tablePaginationLimit: 25,
     defaultPoints: false,
+
+    openEditModal: false,
+    editAction: '',
+    labelName: '',
+    labelNameEnable: false,
+    labelColor: '',
+    labelColorEnable: false,
+    labelDescription: '',
+    labelDescriptionEnable: false,
+    updateReposAvailable: [],
+    updateReposSelected: [],
+    updateLabelsAvailable: [],
+    updateLabelsSelected: [],
+    updateDeleteSteps: ['Intro', 'Select Repos', 'Select Labels', 'Staging'],
+    updateCurrentStep: 0,
+
+    verifFlag: false, // Flag to trigger verification against GitHub
+    verifiedLabels: [], // Array of milestones that were verified in GitHub
   },
   reducers: {
     setLog(state: any, payload: any) {
@@ -54,13 +72,78 @@ export const githubLabels = {
       return { ...state, tablePaginationOffset: payload };
     },
     setTablePaginationLimit(state: any, payload: any) {
-      return { ...state, tablePaginationLimit: payload, tablePaginationCurrentPage: 0, tablePaginationOffset: 0 };
+      return {
+        ...state,
+        tablePaginationLimit: payload,
+        tablePaginationCurrentPage: 0,
+        tablePaginationOffset: 0,
+      };
     },
     setQuery(state: any, payload: any) {
       return { ...state, query: payload };
     },
     setQueries(state: any, payload: any) {
       return { ...state, queries: payload };
+    },
+    setOpenEditModal(state: any, payload: any) {
+      if (payload === false) {
+        // When closing the modal, by default set back the step to 0
+        return {
+          ...state,
+          openEditModal: payload,
+          updateCurrentStep: 0,
+          updateReposSelected: [],
+          updateLabelsSelected: [],
+        };
+      }
+      return { ...state, openEditModal: payload };
+    },
+    setEditAction(state: any, payload: any) {
+      return { ...state, editAction: payload };
+    },
+    setLabelName(state: any, payload: any) {
+      return { ...state, labelName: payload };
+    },
+    setLabelColor(state: any, payload: any) {
+      return { ...state, labelColor: payload };
+    },
+    setLabelDescription(state: any, payload: any) {
+      return { ...state, labelDescription: payload };
+    },
+    setLabelNameEnable(state: any, payload: any) {
+      return { ...state, labelNameEnable: payload };
+    },
+    setLabelColorEnable(state: any, payload: any) {
+      return { ...state, labelColorEnable: payload };
+    },
+    setLabelDescriptionEnable(state: any, payload: any) {
+      return { ...state, labelDescriptionEnable: payload };
+    },
+    setUpdateReposAvailable(state: any, payload: any) {
+      return { ...state, updateReposAvailable: payload };
+    },
+    setUpdateReposSelected(state: any, payload: any) {
+      return { ...state, updateReposSelected: payload };
+    },
+    setUpdateLabelsAvailable(state: any, payload: any) {
+      return { ...state, updateLabelsAvailable: payload };
+    },
+    setUpdateLabelsSelected(state: any, payload: any) {
+      return { ...state, updateLabelsSelected: payload };
+    },
+    setUpdateCurrentStep(state: any, payload: any) {
+      return { ...state, updateCurrentStep: payload };
+    },
+    setVerifFlag(state: any, payload: any) {
+      return { ...state, verifFlag: payload };
+    },
+    setVerifiedLabels(state: any, payload: any) {
+      return { ...state, verifiedLabels: payload };
+    },
+    insVerifiedLabels(state: any, payload: any) {
+      const newArray = state.verifiedLabels.slice();
+      newArray.splice(newArray.length, 0, payload);
+      return { ...state, verifiedLabels: newArray };
     },
   },
   effects: (dispatch: Dispatch) => ({

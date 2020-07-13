@@ -19,17 +19,18 @@ interface Props {
   tableSort: TableSort;
   tablePagination: TablePaginationType;
   exportTsv: any;
+  actions?: any;
 }
 
 const SimpleTable: React.FC<Props> = (props: Props) => {
-  const { items, totalCount, tableConfig, tableSort, tablePagination, exportTsv } = props;
+  const { items, totalCount, tableConfig, tableSort, tablePagination, exportTsv, actions } = props;
 
   const hasRowArray =
     tableConfig.columns.filter((c) => c.fieldType !== undefined && c.fieldType === 'array').length > 0 ? true : false;
 
   return (
     <React.Fragment>
-      <TableToolbar totalCount={totalCount} tableConfig={tableConfig} exportTsv={exportTsv} />
+      <TableToolbar totalCount={totalCount} tableConfig={tableConfig} exportTsv={exportTsv} actions={actions} />
       <TableContainer>
         <Table>
           <Header hasRowArray={hasRowArray} tableSort={tableSort} tableConfig={tableConfig} />

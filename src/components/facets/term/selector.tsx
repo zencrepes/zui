@@ -10,6 +10,7 @@ import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import blue from '@material-ui/core/colors/blue';
+import StopIcon from '@material-ui/icons/Stop';
 
 import { FacetAggBucket } from '../../../global';
 
@@ -54,7 +55,6 @@ const Selector: React.FC<Props> = (props: Props) => {
       clickItem(clickedValue);
     }
   };
-
   const facetItem = data.key.length > 20 ? data.key.slice(0, 25) + '...' : data.key;
   const notSupportedText = nullValue === data.key ? ' - Selection of empty values currently unsupported' : '';
   const disabledCheckbox = nullValue === data.key ? true : false;
@@ -68,6 +68,7 @@ const Selector: React.FC<Props> = (props: Props) => {
         className={classes.checkbox}
         disabled={disabledCheckbox}
       />
+      {facet.field === 'color' && <StopIcon key={data.key} style={{ fill: '#' + data.key }} />}
       <Tooltip title={data.key + notSupportedText}>
         {data.key === '__missing__' ? (
           <ListItemText primary={facet.nullValue} className={classes.listItemText} />

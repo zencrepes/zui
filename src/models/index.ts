@@ -1,4 +1,6 @@
 import { global } from './global';
+import { loading } from './loading';
+import { chip } from './chip';
 import { githubPullrequests } from './githubPullrequests';
 import { githubVulnerabilities } from './githubVulnerabilities';
 import { githubRepositories } from './githubRepositories';
@@ -15,6 +17,8 @@ import { circleciInsights } from './circleciInsights';
 
 export interface RootModel {
   global: typeof global;
+  loading: typeof loading;
+  chip: typeof chip;
   githubPullrequests: typeof githubPullrequests;
   githubVulnerabilities: typeof githubVulnerabilities;
   githubRepositories: typeof githubRepositories;
@@ -32,6 +36,8 @@ export interface RootModel {
 
 export const models: RootModel = {
   global,
+  loading,
+  chip,
   githubPullrequests,
   githubVulnerabilities,
   githubRepositories,

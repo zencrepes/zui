@@ -6,24 +6,16 @@ query(
 ) {
   githubIssues {
     queryPrs: data(query: $queryPrs) {
-      items {
-        totalCount
-      }
+      count
     }
     openIssuesWithoutAssignee: data(query: $openIssuesWithoutAssignee) {
-      items {
-        totalCount
-      }
+      count
     }
     openIssuesInClosedMilestones: data(query: $openIssuesInClosedMilestones) {
-      items {
-        totalCount
-      }
+      count
     }
     oldIssues: data(query: $oldIssues) {
-      items {
-        totalCount
-      }
+      count
     }
   }
 }

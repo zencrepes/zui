@@ -13,38 +13,38 @@ const CountCommits: React.FC<Props> = (props: Props) => {
   const buckets = [
     {
       key: 'bucketA',
-      name: '1 - 50',
-      from: 1,
-      to: 50,
+      name: '1',
+      from: 0,
+      to: 1,
     },
     {
-      name: '51 - 500',
+      name: '2 - 20',
       key: 'bucketB',
-      from: 51,
-      to: 500,
+      from: 2,
+      to: 20,
     },
     {
       key: 'bucketC',
-      name: '501 - 1,000',
-      from: 501,
-      to: 1000,
+      name: '21 - 250',
+      from: 21,
+      to: 250,
     },
     {
       key: 'bucketD',
+      name: '251 - 1k',
+      from: 251,
+      to: 1000,
+    },
+    {
+      key: 'bucketE',
       name: '1k - 2.5k',
       from: 1001,
       to: 2500,
     },
     {
-      key: 'bucketE',
-      name: '2.5k - 5k',
-      from: 2501,
-      to: 5000,
-    },
-    {
       key: 'bucketF',
-      name: '5k - 10k',
-      from: 5001,
+      name: '2.5k - 10k',
+      from: 2501,
       to: 10000,
     },
     {
@@ -57,13 +57,13 @@ const CountCommits: React.FC<Props> = (props: Props) => {
 
   return (
     <CountsBuckets
-      headerTitle="Commits to Head"
+      headerTitle="Commits to Master"
       headerFactTitle=""
       headerFactValue=""
       buckets={buckets}
       openQuery={openQuery}
       query={query}
-      countField="refs.totalCount"
+      countField="recentCommitsMaster.target.history.totalCount"
     />
   );
 };

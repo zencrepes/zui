@@ -1,0 +1,67 @@
+import React from 'react';
+import { connect } from 'react-redux';
+
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+
+import { iRootState } from '../../../../../../../store';
+
+import Intro from './intro';
+import Repos from './repos';
+import Labels from './labels';
+import Staging from './staging';
+
+const getStepContent = (step: number) => {
+  switch (step) {
+    case 0:
+      return <Intro />;
+    case 1:
+      return <Repos />;
+    case 2:
+      return <Labels />;
+    case 3:
+      return <Staging />;
+  }
+};
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+  }),
+);
+
+const mapState = (state: iRootState) => ({
+  updateDeleteSteps: state.githubLabels.updateDeleteSteps,
+  updateCurrentStep: state.githubLabels.updateCurrentStep,
+});
+
+const mapDispatch = (dispatch: any) => ({});
+
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
+
+const Content: React.FC<connectedProps> = (props: connectedProps) => {
+  const classes = useStyles();
+  const { updateDeleteSteps, updateCurrentStep } = props;
+
+  return (
+    <div className={classes.root}>
+      <Stepper activeStep={updateCurrentStep}>
+        {updateDeleteSteps.map((label: string, index: number) => {
+          const stepProps: { completed?: boolean } = {};
+          const labelProps: { optional?: React.ReactNode } = {};
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>{label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+      <div>{getStepContent(updateCurrentStep)}</div>
+    </div>
+  );
+};
+export default connect(mapState, mapDispatch)(Content);

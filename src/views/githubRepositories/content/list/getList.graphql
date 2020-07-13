@@ -26,6 +26,7 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
           hasWikiEnabled
           isArchived
           isPrivate
+          currentYearMasterCommits
         }
       }
     }

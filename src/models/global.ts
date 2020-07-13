@@ -61,7 +61,7 @@ declare global {
 
 export const global = {
   state: {
-    log: {},
+    log: log.noConflict(),
     loading: false,
     showMenu: false,
     pageTitle: null,

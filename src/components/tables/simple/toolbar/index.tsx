@@ -9,6 +9,7 @@ import { TableConfig } from '../../../../global';
 
 interface Props {
   exportTsv: any;
+  actions: any;
   totalCount: number;
   tableConfig: TableConfig;
 }
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const TableToolbar: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
-  const { exportTsv, totalCount, tableConfig } = props;
+  const { exportTsv, actions, totalCount, tableConfig } = props;
   return (
     <Toolbar className={classes.root}>
       <Grid container direction="row" justify="flex-start" alignItems="center" spacing={3}>
@@ -43,6 +44,7 @@ const TableToolbar: React.FC<Props> = (props: Props) => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm container></Grid>
+        <Grid item>{actions}</Grid>
         <Grid item>{exportTsv}</Grid>
       </Grid>
     </Toolbar>

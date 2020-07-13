@@ -81,25 +81,25 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
   const cards = [
     {
       key: 1,
-      count: data.githubIssues.queryPrs.items.totalCount,
+      count: data.githubIssues.queryPrs.count,
       query: query,
       title: 'Issues in current query',
     },
     {
       key: 2,
-      count: data.githubIssues.oldIssues.items.totalCount,
+      count: data.githubIssues.oldIssues.count,
       query: buildQuery(query, oldIssues),
       title: 'Open for more than 30 days',
     },
     {
       key: 3,
-      count: data.githubIssues.openIssuesWithoutAssignee.items.totalCount,
+      count: data.githubIssues.openIssuesWithoutAssignee.count,
       query: buildQuery(query, openIssuesWithoutAssignee),
       title: 'Open Issues without assignee',
     },
     {
       key: 4,
-      count: data.githubIssues.openIssuesInClosedMilestones.items.totalCount,
+      count: data.githubIssues.openIssuesInClosedMilestones.count,
       query: buildQuery(query, openIssuesInClosedMilestones),
       title: 'Open Issues in Closed Milestones',
     },

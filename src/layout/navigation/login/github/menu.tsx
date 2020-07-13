@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface Props {
-  userData: { name: string; url: string; avatarUrl: string };
+  userData: { name: string; url: string; avatarUrl: string; login: string };
 }
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;
@@ -89,7 +89,7 @@ const GithubMenu: React.FC<connectedProps> = (props: connectedProps) => {
           <ListItemIcon>
             <GitHubIcon />
           </ListItemIcon>
-          <ListItemText primary={userData.name} />
+          <ListItemText primary={userData.name === null ? userData.login : userData.name} />
         </ListItem>
         <ListItem onClick={handleLogOut} button>
           <ListItemIcon>

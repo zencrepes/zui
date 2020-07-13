@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import StopIcon from '@material-ui/icons/Stop';
 
 import { format } from 'date-fns';
 
@@ -80,6 +81,7 @@ const SimpleRow: React.FC<Props> = (props: Props) => {
             }
             return (
               <TableCell component="td" scope="row" padding="none" key={col.field}>
+                {col.field === 'color' && <StopIcon key={value} style={{ fill: '#' + value }} />}
                 {cellValue}
               </TableCell>
             );

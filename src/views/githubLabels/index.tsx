@@ -15,6 +15,8 @@ import Content from './content';
 import FacetsHoc from './facets';
 import Query from './query';
 
+import Staging from './data/staging';
+
 const GQL_GETCONFIG = loader('./getConfig.graphql');
 
 const mapState = () => ({});
@@ -74,6 +76,7 @@ const GithubLabels: React.FC<connectedProps> = (props: connectedProps) => {
     const tableConfig: TableConfig = data.dataset.config.table;
     return (
       <Layout>
+        <Staging />
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={2}>
           <Grid item>
             <FacetsHoc facets={facets} pushNewQuery={pushNewQuery} />

@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './App.css';
+
+import Loading from './utils/loading';
+
 import Dashboard from './views/dashboard';
 import Settings from './views/settings';
 import GithubPullrequests from './views/githubPullrequests';
@@ -33,6 +36,7 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
   initApp();
   return (
     <div className="App">
+      <Loading />
       <Router>
         <Switch>
           <Route exact path="/" render={() => <Dashboard />} />
