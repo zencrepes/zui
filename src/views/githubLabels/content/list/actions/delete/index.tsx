@@ -6,11 +6,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 
 import { iRootState } from '../../../../../../store';
-import Repos from '../utils/repos';
-import Labels from '../utils/labels';
+import ReposCheck from '../utils/repos/check';
+import LabelsCheck from '../utils/labels/check';
 import Content from './content';
 import Actions from './actions';
-import Title from './title';
+import Title from '../utils/title';
 
 const mapState = (state: iRootState) => ({
   openEditModal: state.githubLabels.openEditModal,
@@ -19,12 +19,13 @@ const mapState = (state: iRootState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   setOpenEditModal: dispatch.githubLabels.setOpenEditModal,
+  setLoading: dispatch.loading.setLoading,
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
 const DeleteModal: React.FC<connectedProps> = (props: connectedProps) => {
-  const { openEditModal, setOpenEditModal, editAction } = props;
+  const { openEditModal, setOpenEditModal, editAction, setLoading } = props;
 
   if (editAction !== 'delete') {
     return null;
@@ -36,8 +37,8 @@ const DeleteModal: React.FC<connectedProps> = (props: connectedProps) => {
 
   return (
     <React.Fragment>
-      {openEditModal && <Repos />}
-      {openEditModal && <Labels />}
+      {openEditModal && <ReposCheck />}
+      {openEditModal && <LabelsCheck />}
       <Dialog
         fullWidth={true}
         maxWidth={'xl'}
@@ -45,7 +46,9 @@ const DeleteModal: React.FC<connectedProps> = (props: connectedProps) => {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <Title>Bulk labels deletion</Title>
+        <Title setOpenEditModal={setOpenEditModal} setLoading={setLoading}>
+          Bulk labels deletion
+        </Title>
         <DialogContent>
           <Content />
         </DialogContent>

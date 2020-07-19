@@ -1,43 +1,60 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { loader } from 'graphql.macro';
-import { useQuery } from '@apollo/client';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+
+import 'react-dual-listbox/lib/react-dual-listbox.css';
+import DualListBox from 'react-dual-listbox';
 
 import { iRootState } from '../../../../../../../store';
 
-const gqlRepos = loader('./getRepos.graphql');
+interface Props {
+  reposAvailable: { value: string; label: string };
+  updateReposSelected: string[];
+}
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      minHeight: '300px',
+    },
+  }),
+);
 
 const mapState = (state: iRootState) => ({
-  query: state.githubLabels.query,
+  updateReposAvailable: state.githubLabels.updateReposAvailable,
+  updateReposSelected: state.githubLabels.updateReposSelected,
 });
 
 const mapDispatch = (dispatch: any) => ({
-  setOpenEditModal: dispatch.githubLabels.setOpenEditModal,
-  setUpdateReposAvailable: dispatch.githubLabels.setUpdateReposAvailable,
   setUpdateReposSelected: dispatch.githubLabels.setUpdateReposSelected,
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
-const Repos: React.FC<connectedProps> = (props: connectedProps) => {
-  const { query, setUpdateReposSelected, setUpdateReposAvailable } = props;
+const Selector: React.FC<connectedProps> = (props: connectedProps) => {
+  const classes = useStyles();
+  const { updateReposAvailable, updateReposSelected, setUpdateReposSelected } = props;
 
-  const { data } = useQuery(gqlRepos, {
-    variables: {
-      query: JSON.stringify(query),
-    },
-    fetchPolicy: 'cache-and-network',
-  });
-
-  if (data !== undefined) {
-    const reposAvailable = data.repos.data.items.nodes;
-    const reposSelected = reposAvailable.filter(
-      (r: any) => data.selectedRepos.data.aggregations.buckets.find((s: any) => s.key === r.id) !== undefined,
-    );
-    setUpdateReposAvailable(reposAvailable);
-    setUpdateReposSelected(reposSelected);
-  }
-  return null;
+  return (
+    <div className={classes.root}>
+      <DualListBox
+        canFilter
+        options={updateReposAvailable.map((r: any) => {
+          return {
+            value: r.id,
+            label: r.nameWithOwner,
+          };
+        })}
+        selected={updateReposSelected.map((r: any) => r.id)}
+        onChange={(selected: any) => {
+          const selectedRepos = updateReposAvailable.filter(
+            (r: any) => selected.find((sr: string) => r.id === sr) !== undefined,
+          );
+          setUpdateReposSelected(selectedRepos);
+        }}
+      />
+    </div>
+  );
 };
-export default connect(mapState, mapDispatch)(Repos);
+export default connect(mapState, mapDispatch)(Selector);

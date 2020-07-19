@@ -12,8 +12,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import { iRootState } from '../../../../store';
-
 const mapState = () => ({});
 
 const mapDispatch = (dispatch: any) => ({

@@ -10,7 +10,7 @@ import { iRootState } from '../../../../../../../store';
 
 import Intro from '../../utils/intro';
 import Repos from '../../utils/repos';
-import Labels from '../../utils/labels';
+import Fields from './fields';
 import Staging from '../../utils/staging';
 
 const getStepContent = (step: number) => {
@@ -20,7 +20,7 @@ const getStepContent = (step: number) => {
     case 1:
       return <Repos />;
     case 2:
-      return <Labels />;
+      return <Fields />;
     case 3:
       return <Staging />;
   }
@@ -35,7 +35,7 @@ const useStyles = makeStyles(() =>
 );
 
 const mapState = (state: iRootState) => ({
-  updateDeleteSteps: state.githubLabels.updateDeleteSteps,
+  updateCreateSteps: state.githubLabels.updateCreateSteps,
   updateCurrentStep: state.githubLabels.updateCurrentStep,
 });
 
@@ -45,12 +45,12 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 
 const Content: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
-  const { updateDeleteSteps, updateCurrentStep } = props;
+  const { updateCreateSteps, updateCurrentStep } = props;
 
   return (
     <div className={classes.root}>
       <Stepper activeStep={updateCurrentStep}>
-        {updateDeleteSteps.map((label: string) => {
+        {updateCreateSteps.map((label: string) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: { optional?: React.ReactNode } = {};
           return (

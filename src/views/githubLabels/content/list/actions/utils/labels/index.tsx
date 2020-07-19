@@ -1,47 +1,85 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-import { loader } from 'graphql.macro';
-import { useQuery } from '@apollo/client';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+
+import 'react-dual-listbox/lib/react-dual-listbox.css';
+import DualListBox from 'react-dual-listbox';
 
 import { iRootState } from '../../../../../../../store';
 
-const gqlLabels = loader('./getLabels.graphql');
+interface Props {
+  labelsAvailable: { value: string; label: string };
+  updateLabelsSelected: string[];
+}
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      minHeight: '300px',
+    },
+  }),
+);
 
 const mapState = (state: iRootState) => ({
-  query: state.githubLabels.query,
+  updateLabelsAvailable: state.githubLabels.updateLabelsAvailable,
+  updateReposSelected: state.githubLabels.updateReposSelected,
+  updateLabelsSelected: state.githubLabels.updateLabelsSelected,
 });
 
 const mapDispatch = (dispatch: any) => ({
-  setOpenEditModal: dispatch.githubLabels.setOpenEditModal,
-  setUpdateLabelsAvailable: dispatch.githubLabels.setUpdateLabelsAvailable,
   setUpdateLabelsSelected: dispatch.githubLabels.setUpdateLabelsSelected,
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
-const Labels: React.FC<connectedProps> = (props: connectedProps) => {
-  const { query, setUpdateLabelsSelected, setUpdateLabelsAvailable } = props;
+const Selector: React.FC<connectedProps> = (props: connectedProps) => {
+  const classes = useStyles();
+  const { updateLabelsAvailable, updateLabelsSelected, setUpdateLabelsSelected, updateReposSelected } = props;
 
-  let labelsAvailable: any = [];
-  let labelsSelected: any = [];
+  const uniqueAvailableLabels = updateLabelsAvailable
+    // Ensure the repository is in of one of the previously selected repos
+    .filter((l: any) => updateReposSelected.find((r: any) => r.id === l.repository.id) !== undefined)
+    .map((l: any) => l.name)
+    .reduce((acc: string[], current: string) => {
+      if (!acc.includes(current)) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }, []);
 
-  const { data } = useQuery(gqlLabels, {
-    variables: {
-      query: JSON.stringify(query),
-    },
-    fetchPolicy: 'cache-and-network',
-  });
+  const uniqueSelectedLabels = updateLabelsSelected
+    // Ensure the repository is in of one of the previously selected repos
+    .filter((l: any) => updateReposSelected.find((r: any) => r.id === l.repository.id) !== undefined)
+    .map((l: any) => l.name)
+    .reduce((acc: string[], current: string) => {
+      if (!acc.includes(current)) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }, []);
 
-  if (data !== undefined) {
-    labelsAvailable = data.labels.data.items.nodes;
-    labelsSelected = data.labels.data.items.nodes;
-  }
-  useEffect(() => {
-    setUpdateLabelsAvailable(labelsAvailable);
-    setUpdateLabelsSelected(labelsSelected);
-  });
-
-  return null;
+  return (
+    <div className={classes.root}>
+      <DualListBox
+        canFilter
+        options={uniqueAvailableLabels.map((l: string) => {
+          return {
+            value: l,
+            label: l,
+          };
+        })}
+        selected={uniqueSelectedLabels.map((l: string) => l)}
+        onChange={(selected: any) => {
+          const selectedLabels = updateLabelsAvailable.filter(
+            (l: any) => selected.find((sl: string) => l.name === sl) !== undefined,
+          );
+          setUpdateLabelsSelected(selectedLabels);
+        }}
+      />
+    </div>
+  );
 };
-export default connect(mapState, mapDispatch)(Labels);
+export default connect(mapState, mapDispatch)(Selector);

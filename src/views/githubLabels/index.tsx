@@ -6,6 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+
 import { TableConfig } from '../../global';
 
 import Layout from '../../layout';
@@ -16,6 +17,7 @@ import FacetsHoc from './facets';
 import Query from './query';
 
 import Staging from './data/staging';
+import Commit from './data/commit';
 
 const GQL_GETCONFIG = loader('./getConfig.graphql');
 
@@ -77,6 +79,7 @@ const GithubLabels: React.FC<connectedProps> = (props: connectedProps) => {
     return (
       <Layout>
         <Staging />
+        <Commit />
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={2}>
           <Grid item>
             <FacetsHoc facets={facets} pushNewQuery={pushNewQuery} />

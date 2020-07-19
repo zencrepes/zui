@@ -25,6 +25,8 @@ const createApolloClient = (ghToken: string) => {
       headers: {
         ...headers,
         authorization: ghToken !== '' ? `Bearer ${ghToken}` : '',
+        // See https://developer.github.com/v4/previews/
+        accept: 'application/vnd.github.bane-preview+json',
       },
     };
   });

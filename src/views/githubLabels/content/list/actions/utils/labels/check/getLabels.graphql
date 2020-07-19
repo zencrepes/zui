@@ -1,0 +1,26 @@
+query($query: String) {
+  labels: githubLabels {
+    data(query: $query) {
+      count
+      items(from: 0, size: 10000, orderBy: { direction: asc, field: "name.keyword" }) {
+        totalCount
+        nodes {
+          id
+          name
+          color
+          description
+          repository {
+            id
+            name
+            isArchived
+            owner {
+              id
+              login
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

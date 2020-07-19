@@ -12,6 +12,8 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import DeleteModal from './delete';
+import CreateModal from './create';
+import UpdateModal from './update';
 
 const StyledMenu = withStyles({
   paper: {
@@ -75,6 +77,8 @@ const ListActions: React.FC<connectedProps> = (props: connectedProps) => {
   return (
     <div>
       <DeleteModal />
+      <CreateModal />
+      <UpdateModal />
       <Button
         aria-controls="customized-menu"
         aria-haspopup="true"

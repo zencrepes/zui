@@ -12,7 +12,10 @@ declare global {
 export const githubLabels = {
   state: {
     log: {},
-    loading: false,
+    // loading: false,
+    loadFlag: false, // Flag to trigger data modifications in GitHub
+    verifFlag: false, // Flag to trigger verification against GitHub
+
     selectedTab: 'explore',
     dataset: 'githubLabels',
 
@@ -29,29 +32,35 @@ export const githubLabels = {
     editAction: '',
     labelName: '',
     labelNameEnable: false,
+    labelNameRequired: false,
     labelColor: '',
     labelColorEnable: false,
+    labelColorRequired: false,
     labelDescription: '',
     labelDescriptionEnable: false,
     updateReposAvailable: [],
     updateReposSelected: [],
     updateLabelsAvailable: [],
     updateLabelsSelected: [],
+    updateCreateSteps: ['Intro', 'Select Repos', 'Fields', 'Staging'],
     updateDeleteSteps: ['Intro', 'Select Repos', 'Select Labels', 'Staging'],
+    updateUpdateSteps: ['Intro', 'Select Repos', 'Select Labels', 'Fields', 'Staging'],
     updateCurrentStep: 0,
 
-    verifFlag: false, // Flag to trigger verification against GitHub
     verifiedLabels: [], // Array of milestones that were verified in GitHub
   },
   reducers: {
     setLog(state: any, payload: any) {
       return { ...state, log: payload };
     },
-    setLoading(state: any, payload: any) {
-      return { ...state, loading: payload };
+    setLoadFlag(state: any, payload: any) {
+      return { ...state, loadFlag: payload };
     },
     setSelectedTab(state: any, payload: any) {
       return { ...state, selectedTab: payload };
+    },
+    setRefreshFlag(state: any, payload: any) {
+      return { ...state, refreshFlag: payload };
     },
     setTablePaginationRowsPerPage(state: any, payload: any) {
       // Whenever we change the number of rows per page, we also reset all to default
@@ -104,6 +113,9 @@ export const githubLabels = {
     setLabelName(state: any, payload: any) {
       return { ...state, labelName: payload };
     },
+    setLabelNameRequired(state: any, payload: any) {
+      return { ...state, labelNameRequired: payload };
+    },
     setLabelColor(state: any, payload: any) {
       return { ...state, labelColor: payload };
     },
@@ -115,6 +127,9 @@ export const githubLabels = {
     },
     setLabelColorEnable(state: any, payload: any) {
       return { ...state, labelColorEnable: payload };
+    },
+    setLabelColorRequired(state: any, payload: any) {
+      return { ...state, labelColorRequired: payload };
     },
     setLabelDescriptionEnable(state: any, payload: any) {
       return { ...state, labelDescriptionEnable: payload };

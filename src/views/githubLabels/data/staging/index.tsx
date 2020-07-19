@@ -14,13 +14,19 @@ const mapState = (state: iRootState) => ({
   chipCost: state.chip.cost,
   chipRemaining: state.chip.remaining,
   chipResetAt: state.chip.resetAt,
+  log: state.global.log,
+  loading: state.loading.loading,
+  onSuccess: state.loading.onSuccess,
 
   verifFlag: state.githubLabels.verifFlag,
   updateLabelsSelected: state.githubLabels.updateLabelsSelected,
   editAction: state.githubLabels.editAction,
-  log: state.global.log,
-  loading: state.loading.loading,
-  onSuccess: state.loading.onSuccess,
+  labelName: state.githubLabels.labelName,
+  labelNameEnable: state.githubLabels.labelNameEnable,
+  labelColor: state.githubLabels.labelColor,
+  labelColorEnable: state.githubLabels.labelColorEnable,
+  labelDescription: state.githubLabels.labelDescription,
+  labelDescriptionEnable: state.githubLabels.labelDescriptionEnable,
 });
 
 const mapDispatch = (dispatch: any) => ({
@@ -80,10 +86,10 @@ class Staging extends React.Component<connectedProps> {
       setLoadingIterateTotal,
       setLoadingIterateCurrent,
       log,
-      onSuccess,
       setVerifiedLabels,
       insVerifiedLabels,
       updateLabelsSelected,
+      labelNameEnable,
     } = this.props;
     setLoading(true);
     setLoadingModal(false);
@@ -104,11 +110,11 @@ class Staging extends React.Component<connectedProps> {
           if (this.props.chipRemaining - this.props.chipCost < 50 && this.props.chipResetAt !== '') {
             const msg = 'No token available, will resuming querying after ' + this.props.chipResetAt;
             setLoadingMsg(msg);
-            log(msg);
+            log.info(msg);
             const sleepDuration = (new Date(this.props.chipResetAt).getTime() - new Date().getTime()) / 1000;
-            log('Will resume querying in: ' + sleepDuration + 's');
+            log.info('Will resume querying in: ' + sleepDuration + 's');
             await this.sleep(sleepDuration + 10000);
-            log('Ready to resume querying');
+            log.info('Ready to resume querying');
           }
 
           const baseMsg =
@@ -119,8 +125,7 @@ class Staging extends React.Component<connectedProps> {
             ' - Total: ' +
             this.processedLabels +
             '/' +
-            updateLabelsSelected.length +
-            '';
+            updateLabelsSelected.length;
           setLoadingIterateTotal(updateLabelsSelected.length);
           setLoadingIterateCurrent(this.processedLabels);
           setLoadingMsg(baseMsg);
@@ -173,24 +178,37 @@ class Staging extends React.Component<connectedProps> {
                     fetchedLabel.repository.viewerPermission,
                 });
                 this.verifErrors++;
-              } else if (fetchedLabel === null && editAction !== 'create') {
+              } else if ((fetchedLabel === null || fetchedLabel.label === null) && editAction !== 'create') {
                 insVerifiedLabels({
                   id: chunk[idx].id,
                   error: true,
                   errorMsg: "This label doesn't seem to exist in GitHub. Was it deleted ?",
                 });
                 this.verifErrors++;
-              } else if (fetchedLabel === null && editAction === 'create') {
+              } else if (fetchedLabel.label === null && editAction === 'create') {
                 // The label doesn't exist in the repository, meaning all-clear for creating.
                 insVerifiedLabels({
                   ...chunk[idx],
                   error: false,
                 });
-              } else if (fetchedLabel !== null && editAction === 'create') {
+              } else if (fetchedLabel.label !== null && editAction === 'create') {
                 insVerifiedLabels({
                   ...chunk[idx],
                   error: true,
-                  errorMsg: 'This label already exists in GitHub. Please rename instead of creating a label.',
+                  errorMsg:
+                    'This label already exists in GitHub. Please use the "Update" instead of the "Create" action.',
+                });
+                this.verifErrors++;
+              } else if (
+                editAction === 'update' &&
+                labelNameEnable === true &&
+                updateLabelsSelected.filter((l: any) => l.repository.id === fetchedLabel.id).length > 1
+              ) {
+                insVerifiedLabels({
+                  id: chunk[idx].id,
+                  error: true,
+                  errorMsg:
+                    'Labels must be unique, but we detected more than 1 repository receiving the same new label name',
                 });
                 this.verifErrors++;
               } else {
@@ -213,7 +231,9 @@ class Staging extends React.Component<connectedProps> {
     }
     setLoadingSuccess(true);
     setLoading(false);
-    onSuccess();
+    await this.sleep(500);
+    setLoadingModal(false);
+    // onSuccess();
   };
 
   render() {

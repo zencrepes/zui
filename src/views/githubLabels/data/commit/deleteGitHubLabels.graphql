@@ -1,0 +1,5 @@
+mutation($labelId: String!) {
+  deleteLabel(input: { id: $labelId }) {
+    clientMutationId
+  }
+}
