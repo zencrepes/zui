@@ -12,7 +12,9 @@ declare global {
 export const githubRepositories = {
   state: {
     log: {},
-    loading: false,
+    loadFlag: false, // Flag to trigger data modifications in GitHub
+    verifFlag: false, // Flag to trigger verification against GitHub
+
     selectedTab: 'explore',
     dataset: 'githubRepositories',
 
@@ -24,16 +26,36 @@ export const githubRepositories = {
     tablePaginationOffset: 0,
     tablePaginationLimit: 25,
     defaultPoints: false,
+
+    openEditModal: false,
+    editAction: '',
+    editDisableNext: false,
+    updateReposAvailable: [],
+    updateReposSelected: [],
+    updateAddTeamSteps: ['Intro', 'Select Repos', 'Select Team', 'Staging'],
+    updateCurrentStep: 0,
+    updateTeamSlug: '',
+    updateTeamPermission: 'read',
+    verifiedRepos: [], // Array of repositories that were verified in GitHub
   },
   reducers: {
     setLog(state: any, payload: any) {
       return { ...state, log: payload };
     },
-    setLoading(state: any, payload: any) {
-      return { ...state, loading: payload };
+    setLoadFlag(state: any, payload: any) {
+      return { ...state, loadFlag: payload };
+    },
+    setVerifFlag(state: any, payload: any) {
+      return { ...state, verifFlag: payload };
+    },
+    setEditAction(state: any, payload: any) {
+      return { ...state, editAction: payload };
     },
     setSelectedTab(state: any, payload: any) {
       return { ...state, selectedTab: payload };
+    },
+    setEditDisableNext(state: any, payload: any) {
+      return { ...state, editDisableNext: payload };
     },
     setTablePaginationRowsPerPage(state: any, payload: any) {
       // Whenever we change the number of rows per page, we also reset all to default
@@ -54,13 +76,53 @@ export const githubRepositories = {
       return { ...state, tablePaginationOffset: payload };
     },
     setTablePaginationLimit(state: any, payload: any) {
-      return { ...state, tablePaginationLimit: payload, tablePaginationCurrentPage: 0, tablePaginationOffset: 0 };
+      return {
+        ...state,
+        tablePaginationLimit: payload,
+        tablePaginationCurrentPage: 0,
+        tablePaginationOffset: 0,
+      };
     },
     setQuery(state: any, payload: any) {
       return { ...state, query: payload };
     },
     setQueries(state: any, payload: any) {
       return { ...state, queries: payload };
+    },
+    setOpenEditModal(state: any, payload: any) {
+      if (payload === false) {
+        // When closing the modal, by default set back the step to 0
+        return {
+          ...state,
+          openEditModal: payload,
+          updateCurrentStep: 0,
+          updateReposSelected: [],
+        };
+      }
+      return { ...state, openEditModal: payload };
+    },
+    setUpdateReposAvailable(state: any, payload: any) {
+      return { ...state, updateReposAvailable: payload };
+    },
+    setUpdateReposSelected(state: any, payload: any) {
+      return { ...state, updateReposSelected: payload };
+    },
+    setUpdateCurrentStep(state: any, payload: any) {
+      return { ...state, updateCurrentStep: payload };
+    },
+    setVerifiedRepos(state: any, payload: any) {
+      return { ...state, verifiedRepos: payload };
+    },
+    insVerifiedRepos(state: any, payload: any) {
+      const newArray = state.verifiedRepos.slice();
+      newArray.splice(newArray.length, 0, payload);
+      return { ...state, verifiedRepos: newArray };
+    },
+    setUpdateTeamSlug(state: any, payload: any) {
+      return { ...state, updateTeamSlug: payload };
+    },
+    setUpdateTeamPermission(state: any, payload: any) {
+      return { ...state, updateTeamPermission: payload };
     },
   },
   effects: (dispatch: Dispatch) => ({

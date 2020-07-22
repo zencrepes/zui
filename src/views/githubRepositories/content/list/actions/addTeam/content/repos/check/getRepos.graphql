@@ -1,0 +1,32 @@
+query($query: String) {
+  repos: githubRepositories {
+    data {
+      count
+      items(from: 0, size: 10000, orderBy: { direction: asc, field: "name.keyword" }) {
+        totalCount
+        nodes {
+          id
+          name
+          nameWithOwner
+          isArchived
+          owner {
+            id
+            login
+            url
+          }
+        }
+      }
+    }
+  }
+  selectedRepos: githubRepositories {
+    data(query: $query) {
+      aggregations(field: "repository.id") {
+        field
+        buckets {
+          docCount
+          key
+        }
+      }
+    }
+  }
+}
