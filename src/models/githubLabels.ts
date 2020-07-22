@@ -12,7 +12,6 @@ declare global {
 export const githubLabels = {
   state: {
     log: {},
-    // loading: false,
     loadFlag: false, // Flag to trigger data modifications in GitHub
     verifFlag: false, // Flag to trigger verification against GitHub
 
@@ -47,7 +46,7 @@ export const githubLabels = {
     updateUpdateSteps: ['Intro', 'Select Repos', 'Select Labels', 'Fields', 'Staging'],
     updateCurrentStep: 0,
 
-    verifiedLabels: [], // Array of milestones that were verified in GitHub
+    verifiedLabels: [], // Array of labels that were verified in GitHub
   },
   reducers: {
     setLog(state: any, payload: any) {

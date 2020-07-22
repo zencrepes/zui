@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 const mapDispatch = (dispatch: any) => ({
-  setVerifFlag: dispatch.githubLabels.setVerifFlag,
+  setVerifFlag: dispatch.githubRepositories.setVerifFlag,
 });
 
 type connectedProps = ReturnType<typeof mapDispatch>;

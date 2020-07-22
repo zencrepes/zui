@@ -53,7 +53,7 @@ const Text: React.FC<Props> = (props: Props) => {
           }}
           error={error}
           helperText={helperText}
-        />{' '}
+        />
       </Grid>
     </Grid>
   );
