@@ -71,6 +71,20 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     openQuery(updatedQuery);
   };
 
+  const replaceFilter = (filter: any) => {
+    const updatedQuery = {
+      ...query,
+      content: query.content.map((f: any) => {
+        if (f.field === filter.field) {
+          return filter;
+        } else {
+          return f;
+        }
+      }),
+    };
+    openQuery(updatedQuery);
+  };
+
   const loadQuery = (query: SavedQuery) => {
     openQuery(query.query);
     setStateOpenManageQueryDialog(false);
@@ -133,7 +147,7 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
           </Grid>
         )}
         <Grid item xs={12} sm container>
-          <DisplayQuery query={query} facets={facets} removeFilter={removeFilter} />
+          <DisplayQuery query={query} facets={facets} removeFilter={removeFilter} replaceFilter={replaceFilter} />
         </Grid>
         <Grid item>
           <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={0}>

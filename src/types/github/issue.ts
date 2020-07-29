@@ -20,4 +20,5 @@ export interface Issue {
   assignees: UserConnection;
   reviewRequests: any;
   reviews: any;
+  points: number;
 }

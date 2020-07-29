@@ -1,28 +1,34 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { Facet } from '../../../../global';
 
 import ExpandButton from './expandButton';
 import Value from './value';
+import Op from './op';
+
 interface Props {
   filter: any;
   facet: Facet;
   removeFilter: Function | null;
+  replaceFilter: Function | null;
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     marginLeft: '5px',
   },
   query: {
     flex: 1,
   },
+  button: {
+    margin: theme.spacing(1),
+  },
 }));
 
 const Term: React.FC<Props> = (props: Props) => {
-  const { filter, facet, removeFilter } = props;
+  const { filter, facet, removeFilter, replaceFilter } = props;
   const classes = useStyles();
   const [collapsed, setCollapsed] = React.useState(false);
 
@@ -31,12 +37,15 @@ const Term: React.FC<Props> = (props: Props) => {
     if (collapsed) {
       facetsValues = filter.content.value.slice(0, 2);
     }
-
     return (
       <div className={classes.root}>
         <span>{facet.name} </span>
         {facetsValues.length === 1 && <span>is</span>}
-        {facetsValues.length > 1 && <span> in (</span>}
+        {facetsValues.length > 1 && (
+          <React.Fragment>
+            <Op filter={filter} replaceFilter={replaceFilter} /> (
+          </React.Fragment>
+        )}
         {facetsValues.map((value: string) => (
           <Value
             key={value}

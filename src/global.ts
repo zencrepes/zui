@@ -46,6 +46,7 @@ export interface Facet {
 
 export interface FacetAggBucket {
   key: string;
+  count: number;
   docCount: number;
 }
 

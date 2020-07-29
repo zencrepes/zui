@@ -65,6 +65,9 @@ export const githubIssues = {
     setQueries(state: any, payload: any) {
       return { ...state, queries: payload };
     },
+    setDefaultPoints(state: any, payload: any) {
+      return { ...state, defaultPoints: payload };
+    },
   },
   effects: (dispatch: Dispatch) => ({
     async initView() {

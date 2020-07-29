@@ -11,6 +11,7 @@ const QUICKNUMBERS_QUERY = loader('./getQuickNumbers.graphql');
 
 interface Props {
   query: any;
+  defaultPoints: boolean;
   thirtyDaysPrior: any;
   openQuery: Function;
 }
@@ -47,7 +48,7 @@ const buildQuery = (sourceQuery: any, additionalData: any) => {
 };
 
 const QuickNumbers: React.FC<Props> = (props: Props) => {
-  const { query, thirtyDaysPrior, openQuery } = props;
+  const { query, thirtyDaysPrior, openQuery, defaultPoints } = props;
   const classes = useStyles();
 
   const openIssuesWithoutAssignee = [
@@ -78,30 +79,37 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
   if (data === undefined) {
     return null;
   }
+  const suffix = defaultPoints === true ? ' (pts)' : '';
   const cards = [
     {
       key: 1,
-      count: data.githubIssues.queryPrs.count,
+      count: defaultPoints === true ? data.githubIssues.queryPrs.metrics.sum : data.githubIssues.queryPrs.count,
       query: query,
-      title: 'Issues in current query',
+      title: 'Issues in current query' + suffix,
     },
     {
       key: 2,
-      count: data.githubIssues.oldIssues.count,
+      count: defaultPoints === true ? data.githubIssues.oldIssues.metrics.sum : data.githubIssues.oldIssues.count,
       query: buildQuery(query, oldIssues),
-      title: 'Open for more than 30 days',
+      title: 'Open for more than 30 days' + suffix,
     },
     {
       key: 3,
-      count: data.githubIssues.openIssuesWithoutAssignee.count,
+      count:
+        defaultPoints === true
+          ? data.githubIssues.openIssuesWithoutAssignee.metrics.sum
+          : data.githubIssues.openIssuesWithoutAssignee.count,
       query: buildQuery(query, openIssuesWithoutAssignee),
-      title: 'Open Issues without assignee',
+      title: 'Open Issues without assignee' + suffix,
     },
     {
       key: 4,
-      count: data.githubIssues.openIssuesInClosedMilestones.count,
+      count:
+        defaultPoints === true
+          ? data.githubIssues.openIssuesInClosedMilestones.metrics.sum
+          : data.githubIssues.openIssuesInClosedMilestones.count,
       query: buildQuery(query, openIssuesInClosedMilestones),
-      title: 'Open Issues in Closed Milestones',
+      title: 'Open Issues in Closed Milestones' + suffix,
     },
   ];
 
