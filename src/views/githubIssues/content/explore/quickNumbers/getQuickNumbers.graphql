@@ -7,15 +7,27 @@ query(
   githubIssues {
     queryPrs: data(query: $queryPrs) {
       count
+      metrics(field: "points") {
+        sum
+      }
     }
     openIssuesWithoutAssignee: data(query: $openIssuesWithoutAssignee) {
       count
+      metrics(field: "points") {
+        sum
+      }
     }
     openIssuesInClosedMilestones: data(query: $openIssuesInClosedMilestones) {
       count
+      metrics(field: "points") {
+        sum
+      }
     }
     oldIssues: data(query: $oldIssues) {
       count
+      metrics(field: "points") {
+        sum
+      }
     }
   }
 }

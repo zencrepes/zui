@@ -195,6 +195,11 @@ const IssueWide: React.FC<Props> = (props: Props) => {
           </Grid>
         )}
       </Grid>
+      <Grid item>
+        <Tooltip title="Story Points">
+          <Avatar className={classes.avatar}>{item.points !== null ? item.points.toString() : ''}</Avatar>
+        </Tooltip>
+      </Grid>
     </Grid>
   );
 };

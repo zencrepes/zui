@@ -19,6 +19,7 @@ import { createTermFilter, addFilterToQuery } from '../../../../utils/query';
 
 const mapState = (state: iRootState) => ({
   query: state.githubIssues.query,
+  defaultPoints: state.githubIssues.defaultPoints,
 });
 
 const mapDispatch = () => ({});
@@ -66,7 +67,7 @@ const buildFilterWeek = (weekStart: string, weekEnd: string, query: any) => {
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
 const Explore: React.FC<connectedProps> = (props: connectedProps) => {
-  const { query, history } = props;
+  const { query, history, defaultPoints } = props;
   const classes = useStyles();
 
   const openQuery = (newQuery: any) => {
@@ -141,7 +142,12 @@ const Explore: React.FC<connectedProps> = (props: connectedProps) => {
   return (
     <Grid container spacing={3} className={classes.root}>
       <Grid item xs={12}>
-        <QuickNumbers query={query} thirtyDaysPrior={thirtyDaysPrior} openQuery={openQuery} />
+        <QuickNumbers
+          query={query}
+          defaultPoints={defaultPoints}
+          thirtyDaysPrior={thirtyDaysPrior}
+          openQuery={openQuery}
+        />
       </Grid>
       <Grid item xs={12}>
         <ClosedPerWeek query={query} openWeek={openWeek} />

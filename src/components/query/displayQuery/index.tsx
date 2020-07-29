@@ -12,6 +12,7 @@ import DateQuery from './date';
 interface Props {
   query: any;
   removeFilter: Function | null;
+  replaceFilter: Function | null;
   facets: Array<Facet>;
 }
 
@@ -25,7 +26,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const DisplayQuery: React.FC<Props> = (props: Props) => {
-  const { query, facets, removeFilter } = props;
+  const { query, facets, removeFilter, replaceFilter } = props;
   const classes = useStyles();
 
   if (Object.keys(query).length > 0) {
@@ -37,7 +38,7 @@ const DisplayQuery: React.FC<Props> = (props: Props) => {
             if (facet !== undefined && (facet.facetType === 'term' || facet.facetType === 'boolean')) {
               return (
                 <Grid item key={filter.content.field}>
-                  <Term filter={filter} facet={facet} removeFilter={removeFilter} />
+                  <Term filter={filter} facet={facet} removeFilter={removeFilter} replaceFilter={replaceFilter} />
                 </Grid>
               );
             } else if (facet !== undefined && facet.facetType === 'metrics') {
@@ -57,7 +58,7 @@ const DisplayQuery: React.FC<Props> = (props: Props) => {
             if (emptyFacet !== undefined && (emptyFacet.facetType === 'term' || emptyFacet.facetType === 'boolean')) {
               return (
                 <Grid item key={filter.content.field}>
-                  <Term filter={filter} facet={emptyFacet} removeFilter={removeFilter} />
+                  <Term filter={filter} facet={emptyFacet} removeFilter={removeFilter} replaceFilter={replaceFilter} />
                 </Grid>
               );
             }
