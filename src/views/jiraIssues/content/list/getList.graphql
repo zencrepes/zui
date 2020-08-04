@@ -11,6 +11,7 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
           createdAt
           updatedAt
           closedAt
+          endOfSupport
           points
           originalPoints
           type {
@@ -49,12 +50,24 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
           resolution {
             name
           }
+          priority {
+            name
+          }
           fixVersions {
             totalCount
             edges {
               node {
                 id
                 name
+              }
+            }
+          }
+          remoteLinks {
+            totalCount
+            edges {
+              node {
+                key
+                points
               }
             }
           }

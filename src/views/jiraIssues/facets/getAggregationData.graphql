@@ -4,6 +4,7 @@ query($field: String!, $query: String) {
       aggregations(field: $field) {
         field
         buckets {
+          count
           docCount
           key
         }
