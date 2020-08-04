@@ -83,13 +83,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getContrastYIQ = (hexcolor: string) => {
+  const r = parseInt(hexcolor.substr(0, 2), 16);
+  const g = parseInt(hexcolor.substr(2, 2), 16);
+  const b = parseInt(hexcolor.substr(4, 2), 16);
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 128 ? 'black' : 'white';
+};
+
 const IssueWide: React.FC<Props> = (props: Props) => {
   const { item } = props;
   const classes = useStyles();
 
   const pointsExp = XRegExp('SP:[.\\d]');
   return (
-    <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
+    <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
       <Grid item>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
           <Grid item>
@@ -120,6 +128,29 @@ const IssueWide: React.FC<Props> = (props: Props) => {
             </a>
           </Grid>
         </Grid>
+        {item.labels.totalCount > 0 && (
+          <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={0}>
+            {
+              //Filters out labels which are point since points are listed in the last column anyway
+              item.labels.edges
+                .filter((label) => pointsExp.test(label.node.name) !== true)
+                .map((label) => {
+                  return (
+                    <Grid item key={label.node.name}>
+                      <Label
+                        variant="small"
+                        m={1}
+                        style={{ background: '#' + label.node.color, fontWeight: 400 }}
+                        color={getContrastYIQ(label.node.color)}
+                      >
+                        {label.node.name}
+                      </Label>
+                    </Grid>
+                  );
+                })
+            }
+          </Grid>
+        )}
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
           <Grid item xs={12} sm container>
             {item.milestone !== null && (
@@ -159,26 +190,6 @@ const IssueWide: React.FC<Props> = (props: Props) => {
             )}
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item>
-        {item.labels.totalCount > 0 && (
-          <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
-            {
-              //Filters out labels which are point since points are listed in the last column anyway
-              item.labels.edges
-                .filter((label) => pointsExp.test(label.node.name) !== true)
-                .map((label) => {
-                  return (
-                    <Grid item key={label.node.name}>
-                      <Label variant="large" m={1} style={{ background: '#' + label.node.color }}>
-                        {label.node.name}
-                      </Label>
-                    </Grid>
-                  );
-                })
-            }
-          </Grid>
-        )}
       </Grid>
       <Grid item>
         {item.assignees.totalCount > 0 && (

@@ -22,7 +22,7 @@ const ComplexTable: React.FC<Props> = (props: Props) => {
   const { children, totalCount, tableConfig, tableSort, tablePagination, exportTsv } = props;
 
   return (
-    <Table>
+    <Table size="small">
       <Header totalCount={totalCount} tableConfig={tableConfig} tableSort={tableSort} exportTsv={exportTsv} />
       <TableBody>{children}</TableBody>
       <TableFooter>

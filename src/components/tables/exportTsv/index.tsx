@@ -28,14 +28,14 @@ const get = (obj: any, path: string, defaultValue = undefined) => {
   return result === undefined || result === obj ? defaultValue : result;
 };
 
-// Harcoding and limiting to 500 records only for the time being
+// Harcoding and limiting to 8000 records only for the time being
 const ExportTsv: React.FC<Props> = (props: Props) => {
   const { query, gqlQuery, totalCount, tableSort, tableConfig } = props;
 
   const [getItems, { loading, data }] = useLazyQuery(gqlQuery, {
     variables: {
       from: 0,
-      size: 500,
+      size: 8000,
       query: JSON.stringify(query),
       sortField: tableSort.sortField,
       sortDirection: tableSort.sortDirection,
@@ -52,6 +52,32 @@ const ExportTsv: React.FC<Props> = (props: Props) => {
     const header = tableConfig.columns.map((c: any) => c.name);
     dataset = data.dataset.data.items.nodes.map((i: any) => {
       return tableConfig.columns.map((c: any) => {
+        if (c.fieldType === 'array') {
+          const fieldArray = get(i, c.field);
+          if (!Array.isArray(fieldArray)) {
+            return '';
+          }
+          let exportString = '';
+          let cpt = 0;
+          for (const node of fieldArray) {
+            exportString = exportString + get(node, c.fieldNode);
+            if (fieldArray.length > 1 && cpt < fieldArray.length) {
+              exportString = exportString + '|';
+            }
+            cpt++;
+          }
+          return exportString;
+        } else if (c.fieldType === 'arraysum') {
+          const fieldArray = get(i, c.field);
+          if (!Array.isArray(fieldArray)) {
+            return '';
+          }
+          let exportValue = 0;
+          for (const node of fieldArray) {
+            exportValue = exportValue + get(node, c.fieldNode);
+          }
+          return exportValue;
+        }
         return get(i, c.field);
       });
     });
@@ -66,9 +92,9 @@ const ExportTsv: React.FC<Props> = (props: Props) => {
       <Button variant="contained" color="primary" size="small" startIcon={<GetAppIcon />} onClick={clickButton}>
         TSV
       </Button>
-      {totalCount > 500 && (
+      {totalCount > 8000 && (
         <span>
-          <i>(first 500)</i>{' '}
+          <i>(first 8000)</i>{' '}
         </span>
       )}
       {dataset.length > 0 && <CSVDownload data={dataset} target="_blank" />}

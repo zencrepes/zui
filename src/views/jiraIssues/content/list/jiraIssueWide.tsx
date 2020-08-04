@@ -94,7 +94,7 @@ const JiraIssueWide: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
+    <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
       <Grid item>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
           <Grid item>
@@ -147,6 +147,52 @@ const JiraIssueWide: React.FC<Props> = (props: Props) => {
             </a>
           </Grid>
         </Grid>
+        <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={0}>
+          {item.status.statusCategory.key !== 'done' && item.status.name !== 'Open' && (
+            <Grid item>
+              <Label variant="small" bg="#1C90FA" m={1}>
+                {item.status.name}
+              </Label>
+            </Grid>
+          )}
+          {item.resolution !== null && item.resolution.name !== 'Done' && (
+            <Grid item>
+              <Label variant="small" bg="#A575FF" m={1}>
+                {item.resolution.name}
+              </Label>
+            </Grid>
+          )}
+          {item.fixVersions !== null && (
+            <React.Fragment>
+              {item.fixVersions.edges.map((fv: any) => {
+                return (
+                  <Grid item key={fv.node.id}>
+                    <Tooltip title="FixVersion">
+                      <Label variant="small" bg="#A500FF" m={1}>
+                        {'fv:' + fv.node.name}
+                      </Label>
+                    </Tooltip>
+                  </Grid>
+                );
+              })}
+            </React.Fragment>
+          )}
+          {item.versions !== null && (
+            <React.Fragment>
+              {item.versions.edges.map((fv: any) => {
+                return (
+                  <Grid item key={fv.node.id}>
+                    <Tooltip title="Version" key={fv.node.id}>
+                      <Label variant="small" bg="#EE00FF" m={1}>
+                        {'v:' + fv.node.name}
+                      </Label>
+                    </Tooltip>
+                  </Grid>
+                );
+              })}
+            </React.Fragment>
+          )}
+        </Grid>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
           <Grid item className={classes.pullrequestSubTitle}>
             <span>
@@ -166,34 +212,6 @@ const JiraIssueWide: React.FC<Props> = (props: Props) => {
             ) : (
               <span>, last updated on {format(new Date(item.updatedAt), 'eee MMM d, yyyy')}</span>
             )}
-            {item.resolution !== null && item.resolution.name !== 'Done' && (
-              <Label variant="small" bg="#A575FF" m={1}>
-                {item.resolution.name}
-              </Label>
-            )}
-            {item.status.statusCategory.key !== 'done' && item.status.name !== 'Open' && (
-              <Label variant="small" bg="#1C90FA" m={1}>
-                {item.status.name}
-              </Label>
-            )}
-            {item.fixVersions.edges.map((fv: any) => {
-              return (
-                <Tooltip title="FixVersion" key={fv.node.id}>
-                  <Label variant="small" bg="#A500FF" m={1}>
-                    {'fv:' + fv.node.name}
-                  </Label>
-                </Tooltip>
-              );
-            })}
-            {item.versions.edges.map((fv: any) => {
-              return (
-                <Tooltip title="Version" key={fv.node.id}>
-                  <Label variant="small" bg="#EE00FF" m={1}>
-                    {'v:' + fv.node.name}
-                  </Label>
-                </Tooltip>
-              );
-            })}
           </Grid>
         </Grid>
       </Grid>
