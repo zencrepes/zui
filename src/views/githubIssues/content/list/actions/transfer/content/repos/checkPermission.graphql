@@ -1,0 +1,14 @@
+query($repoId: ID!) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+  node(id: $repoId) {
+    ... on Repository {
+      id
+      viewerPermission
+    }
+  }
+}

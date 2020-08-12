@@ -2,7 +2,6 @@ import React from 'react';
 import XRegExp from 'xregexp';
 
 import { makeStyles } from '@material-ui/core/styles';
-
 import Grid from '@material-ui/core/Grid/Grid';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,6 +15,8 @@ import { StateLabel, Label } from '@primer/components';
 import { format } from 'date-fns';
 
 import { Issue } from '../../../../types/github/issue';
+
+import SelectIssue from './selectIssue';
 
 interface ItemEl {
   id: string;
@@ -98,6 +99,9 @@ const IssueWide: React.FC<Props> = (props: Props) => {
   const pointsExp = XRegExp('SP:[.\\d]');
   return (
     <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
+      <Grid item>
+        <SelectIssue issue={item} />
+      </Grid>
       <Grid item>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
           <Grid item>

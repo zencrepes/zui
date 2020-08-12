@@ -12,18 +12,27 @@ import Header from './header';
 interface Props {
   children: any[];
   totalCount: number;
+  totalSelected?: any;
   tableConfig: TableConfig;
   tableSort: TableSort;
   tablePagination: TablePaginationType;
   exportTsv: any;
+  actions?: any;
 }
 
 const ComplexTable: React.FC<Props> = (props: Props) => {
-  const { children, totalCount, tableConfig, tableSort, tablePagination, exportTsv } = props;
+  const { children, totalCount, totalSelected, tableConfig, tableSort, tablePagination, exportTsv, actions } = props;
 
   return (
     <Table size="small">
-      <Header totalCount={totalCount} tableConfig={tableConfig} tableSort={tableSort} exportTsv={exportTsv} />
+      <Header
+        totalCount={totalCount}
+        totalSelected={totalSelected}
+        tableConfig={tableConfig}
+        tableSort={tableSort}
+        exportTsv={exportTsv}
+        actions={actions}
+      />
       <TableBody>{children}</TableBody>
       <TableFooter>
         <TableRow>

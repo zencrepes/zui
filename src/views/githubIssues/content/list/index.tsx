@@ -13,12 +13,15 @@ import { TableConfig, TableSort, TablePaginationType } from '../../../../global'
 import ComplexTable from '../../../../components/tables/complex';
 import ExportTsv from '../../../../components/tables/exportTsv';
 import IssueWide from './issueWide';
+import TotalSelected from './totalSelected';
+import Actions from './actions';
 
 const GQL_QUERY = loader('./getList.graphql');
 
 //https://www.apollographql.com/docs/react/data/pagination/
 
 const mapState = (state: iRootState) => ({
+  githubToken: state.global.githubToken,
   query: state.githubIssues.query,
   tablePaginationRowsPerPage: state.githubIssues.tablePaginationRowsPerPage,
   tablePaginationCurrentPage: state.githubIssues.tablePaginationCurrentPage,
@@ -41,6 +44,7 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 
 const List: React.FC<connectedProps> = (props: connectedProps) => {
   const {
+    githubToken,
     tablePaginationOffset,
     tablePaginationLimit,
     setTablePaginationLimit,
@@ -93,9 +97,11 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
       <React.Fragment>
         <ComplexTable
           totalCount={totalCount}
+          totalSelected={<TotalSelected />}
           tableConfig={tableConfig}
           tableSort={tableSort}
           tablePagination={tablePagination}
+          actions={githubToken !== null ? <Actions /> : null}
           exportTsv={
             <ExportTsv
               gqlQuery={GQL_QUERY}

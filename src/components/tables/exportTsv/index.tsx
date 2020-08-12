@@ -35,7 +35,7 @@ const ExportTsv: React.FC<Props> = (props: Props) => {
   const [getItems, { loading, data }] = useLazyQuery(gqlQuery, {
     variables: {
       from: 0,
-      size: 8000,
+      size: 0,
       query: JSON.stringify(query),
       sortField: tableSort.sortField,
       sortDirection: tableSort.sortDirection,

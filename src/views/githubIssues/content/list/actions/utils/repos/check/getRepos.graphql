@@ -1,0 +1,21 @@
+query {
+  repos: githubRepositories {
+    data {
+      count
+      items(from: 0, size: 10000, orderBy: { direction: asc, field: "name.keyword" }) {
+        totalCount
+        nodes {
+          id
+          name
+          nameWithOwner
+          isArchived
+          owner {
+            id
+            login
+            url
+          }
+        }
+      }
+    }
+  }
+}
