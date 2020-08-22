@@ -16,7 +16,7 @@ interface Props {
   tableConfig: TableConfig;
   tableSort: TableSort;
   tablePagination: TablePaginationType;
-  exportTsv: any;
+  exportTsv?: any;
   actions?: any;
 }
 

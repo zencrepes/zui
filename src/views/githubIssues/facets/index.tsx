@@ -7,8 +7,8 @@ import { iRootState } from '../../../store';
 
 import Facets from '../../../components/facets';
 
-const gqlAggregationData = loader('./getTermFacetData.graphql');
-const gqlMetricsFacet = loader('./getMetricsFacetData.graphql');
+const gqlAggregationData = loader('../graphql/getAggsTermsData.graphql');
+const gqlMetricsFacet = loader('../graphql/getAggsMetricsData.graphql');
 
 interface Facet {
   field: string;

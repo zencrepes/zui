@@ -7,7 +7,7 @@ import CustomCard from '../../../../../components/customCard';
 
 import Chart from './chart';
 
-const ACTIVITYMATRIX_QUERY = loader('./getActivityMatrix.graphql');
+const ACTIVITYMATRIX_QUERY = loader('../../../graphql/getActivityMatrix.graphql');
 
 interface Props {
   query: any;

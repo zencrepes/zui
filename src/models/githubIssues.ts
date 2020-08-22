@@ -19,6 +19,11 @@ export const githubIssues = {
 
     query: {},
     queries: [],
+    configFacets: [],
+    queryLabelsAggs: [],
+    queryVelocity: {},
+    queryVelocityDaily: [],
+    queryCompletion: [],
 
     tablePaginationRowsPerPage: 25,
     tablePaginationCurrentPage: 0,
@@ -88,6 +93,21 @@ export const githubIssues = {
     },
     setQueries(state: any, payload: any) {
       return { ...state, queries: payload };
+    },
+    setConfigFacets(state: any, payload: any) {
+      return { ...state, configFacets: payload };
+    },
+    setQueryLabelsAggs(state: any, payload: any) {
+      return { ...state, queryLabelsAggs: payload };
+    },
+    setQueryVelocity(state: any, payload: any) {
+      return { ...state, queryVelocity: payload };
+    },
+    setQueryVelocityDaily(state: any, payload: any) {
+      return { ...state, queryVelocityDaily: payload };
+    },
+    setQueryCompletion(state: any, payload: any) {
+      return { ...state, queryCompletion: payload };
     },
     setDefaultPoints(state: any, payload: any) {
       return { ...state, defaultPoints: payload };

@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import NumberCard from './numberCard';
 
-const QUICKNUMBERS_QUERY = loader('./getQuickNumbers.graphql');
+const QUICKNUMBERS_QUERY = loader('../../../graphql/getQuickNumbers.graphql');
 
 interface Props {
   query: any;

@@ -16,7 +16,7 @@ import IssueWide from './issueWide';
 import TotalSelected from './totalSelected';
 import Actions from './actions';
 
-const GQL_QUERY = loader('./getList.graphql');
+const GQL_QUERY = loader('../../graphql/getList.graphql');
 
 //https://www.apollographql.com/docs/react/data/pagination/
 
@@ -116,7 +116,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
             return (
               <TableRow key={item.id}>
                 <TableCell component="th" scope="row">
-                  <IssueWide item={item} />
+                  <IssueWide item={item} selectable={true} />
                 </TableCell>
               </TableRow>
             );

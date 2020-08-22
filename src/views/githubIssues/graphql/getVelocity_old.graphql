@@ -1,0 +1,16 @@
+query($field: String!, $query: String, $aggOptions: String) {
+  githubIssues {
+    data(query: $query) {
+      velocity: aggregations(field: $field, aggType: "date_histogram", aggOptions: $aggOptions) {
+        field
+        buckets {
+          docCount
+          key
+          keyAsString
+          sum
+          moving
+        }
+      }
+    }
+  }
+}

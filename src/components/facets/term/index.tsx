@@ -29,7 +29,7 @@ const TermFacet: React.FC<Props> = (props: Props) => {
     variables: {
       field: facet.field,
       query: JSON.stringify(query),
-      aggOptions: JSON.stringify({ points: defaultPoints }),
+      aggOptions: JSON.stringify({ points: defaultPoints, disjoint: true }),
     },
     fetchPolicy: 'cache-and-network',
   });

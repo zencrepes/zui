@@ -40,12 +40,7 @@ const Term: React.FC<Props> = (props: Props) => {
     return (
       <div className={classes.root}>
         <span>{facet.name} </span>
-        {facetsValues.length === 1 && <span>is</span>}
-        {facetsValues.length > 1 && (
-          <React.Fragment>
-            <Op filter={filter} replaceFilter={replaceFilter} /> (
-          </React.Fragment>
-        )}
+        <Op filter={filter} replaceFilter={replaceFilter} /> <span>(</span>
         {facetsValues.map((value: string) => (
           <Value
             key={value}
@@ -58,7 +53,7 @@ const Term: React.FC<Props> = (props: Props) => {
           />
         ))}
         <ExpandButton collapsed={collapsed} length={filter.content.value.length} onClick={setCollapsed} />
-        {filter.content.value.length > 1 && <span> )</span>}
+        <span>)</span>
       </div>
     );
   } else {

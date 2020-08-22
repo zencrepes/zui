@@ -10,3 +10,4 @@ export { default as createDateFilter } from './createDateFilter';
 export { default as addRemoveDateFromQuery } from './addRemoveDateFromQuery';
 export { default as removeDateFieldFromQuery } from './removeDateFieldFromQuery';
 export { default as removeFilterFromQuery } from './removeFilterFromQuery';
+export { default as getFilterFromQuery } from './getFilterFromQuery';

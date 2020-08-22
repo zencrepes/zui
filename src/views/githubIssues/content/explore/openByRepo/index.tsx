@@ -6,7 +6,7 @@ import CustomCard from '../../../../../components/customCard';
 
 import AggregationTree from '../../../../../components/charts/nivo/aggregationTree';
 
-const OPENBYREPO_QUERY = loader('./getOpenByRepo.graphql');
+const OPENBYREPO_QUERY = loader('../../../graphql/getOpenByRepo.graphql');
 
 interface Props {
   query: any;

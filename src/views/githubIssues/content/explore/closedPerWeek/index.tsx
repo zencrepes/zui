@@ -7,9 +7,9 @@ import CustomCard from '../../../../../components/customCard';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
-import HistoryLine from '../../../../../components/charts/chartsJS/historyLine';
+import HistoryLine from '../../../../../components/charts/chartJS/historyLine';
 
-const PRWEEK_QUERY = loader('./getPrsClosedPerDay.graphql');
+const PRWEEK_QUERY = loader('../../../graphql/getPrsClosedPerDay.graphql');
 
 interface Props {
   query: any;

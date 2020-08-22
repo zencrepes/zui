@@ -1,0 +1,27 @@
+query($query: String) {
+  githubIssues {
+    data(query: $query) {
+      count
+      projects {
+        totalCount
+        nodes {
+          id
+          name
+          url
+          body
+        }
+      }
+    }
+    data(query: $query) {
+      milestones {
+        totalCount
+        nodes {
+          id
+          title
+          url
+          description
+        }
+      }
+    }
+  }
+}

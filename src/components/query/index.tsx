@@ -75,7 +75,7 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     const updatedQuery = {
       ...query,
       content: query.content.map((f: any) => {
-        if (f.field === filter.field) {
+        if (f.field === filter.field && f.tag === undefined) {
           return filter;
         } else {
           return f;
@@ -157,7 +157,7 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
               </Grid>
             )}
             <Grid item>
-              <DisplayRawQuery query={query} />
+              <DisplayRawQuery query={query} facets={facets} openQuery={openQuery} />
             </Grid>
           </Grid>
         </Grid>

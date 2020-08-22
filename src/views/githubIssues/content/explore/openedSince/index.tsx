@@ -4,9 +4,9 @@ import { useQuery } from '@apollo/client';
 
 import CustomCard from '../../../../../components/customCard';
 
-import SimpleBar from '../../../../../components/charts/chartsJS/simpleBar';
+import SimpleBar from '../../../../../components/charts/chartJS/simpleBar';
 
-const OPENEDSINCE_QUERY = loader('./getOpenedSince.graphql');
+const OPENEDSINCE_QUERY = loader('../../../graphql/getOpenedSince.graphql');
 
 interface Props {
   query: any;

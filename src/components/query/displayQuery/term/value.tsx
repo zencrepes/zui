@@ -46,9 +46,33 @@ const Value: React.FC<Props> = (props: Props) => {
   };
 
   if (removeFilter !== null) {
-    return <Chip onDelete={handleDelete} variant="outlined" label={displayValue} className={classes.root} />;
+    if (filter.tag !== undefined) {
+      return (
+        <Chip
+          onDelete={handleDelete}
+          variant="outlined"
+          color="secondary"
+          label={displayValue}
+          className={classes.root}
+        />
+      );
+    } else {
+      return (
+        <Chip
+          onDelete={handleDelete}
+          variant="outlined"
+          color="primary"
+          label={displayValue}
+          className={classes.root}
+        />
+      );
+    }
   } else {
-    return <Chip variant="outlined" label={displayValue} className={classes.root} />;
+    if (filter.tag !== undefined) {
+      return <Chip variant="outlined" color="secondary" label={displayValue} className={classes.root} />;
+    } else {
+      return <Chip variant="outlined" color="primary" label={displayValue} className={classes.root} />;
+    }
   }
 };
 

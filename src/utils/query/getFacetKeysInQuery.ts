@@ -4,7 +4,7 @@ export const getFacetKeysInQuery = (facet: Facet, query: any) => {
   if (Object.keys(query).length === 0) {
     return [];
   }
-  const identifiedFilter = query.content.find((q: any) => q.content.field === facet.field);
+  const identifiedFilter = query.content.find((q: any) => q.content.field === facet.field && q.tag === undefined);
   if (identifiedFilter === undefined) {
     return [];
   }

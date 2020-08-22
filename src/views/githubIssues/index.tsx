@@ -19,12 +19,13 @@ import PointsSwitch from './pointsSwitch';
 import Staging from './data/staging';
 import Commit from './data/commit';
 
-const GQL_CONFIG = loader('./getConfig.graphql');
+const GQL_CONFIG = loader('./graphql/getConfig.graphql');
 
 const mapState = () => ({});
 
 const mapDispatch = (dispatch: any) => ({
   updateQueryIfDifferent: dispatch.githubIssues.updateQueryIfDifferent,
+  setConfigFacets: dispatch.githubIssues.setConfigFacets,
 });
 
 const useStyles = makeStyles(() => ({
@@ -46,7 +47,11 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 
 const GithubIssues: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
-  const { updateQueryIfDifferent, location, history } = props;
+  const { updateQueryIfDifferent, setConfigFacets, location, history } = props;
+
+  const { data } = useQuery(GQL_CONFIG, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   const pushNewQuery = (modifiedQuery: any) => {
     history.push({
@@ -65,10 +70,10 @@ const GithubIssues: React.FC<connectedProps> = (props: connectedProps) => {
         updateQueryIfDifferent(JSON.parse(queryUrl));
       }
     }
-  });
-
-  const { data } = useQuery(GQL_CONFIG, {
-    fetchPolicy: 'cache-and-network',
+    if (data !== undefined) {
+      const facets: Facet[] = data.dataset.config.aggregations.nodes;
+      setConfigFacets(facets);
+    }
   });
 
   if (data === undefined) {

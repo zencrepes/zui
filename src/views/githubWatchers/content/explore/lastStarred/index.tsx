@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 
 import CustomCard from '../../../../../components/customCard';
 
-import SimpleBar from '../../../../../components/charts/chartsJS/simpleBar';
+import SimpleBar from '../../../../../components/charts/chartJS/simpleBar';
 
 const GQL_QUERY = loader('./getQuery.graphql');
 

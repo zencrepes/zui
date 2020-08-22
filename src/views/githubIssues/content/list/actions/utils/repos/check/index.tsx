@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 
-const gqlRepos = loader('./getRepos.graphql');
+const gqlRepos = loader('../../../../../../graphql/getRepos.graphql');
 
 const mapState = () => ({});
 

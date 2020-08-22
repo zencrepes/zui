@@ -13,7 +13,7 @@ interface Props {
   totalSelected: any;
   tableConfig: TableConfig;
   tableSort: TableSort;
-  exportTsv: any;
+  exportTsv?: any;
   actions: any;
 }
 
@@ -34,8 +34,8 @@ const Header: React.FC<Props> = (props: Props) => {
             <Grid item>
               <Sort tableSort={tableSort} tableConfig={tableConfig} />
             </Grid>
-            <Grid item>{actions}</Grid>
-            <Grid item>{exportTsv}</Grid>
+            {actions !== undefined && <Grid item>{actions}</Grid>}
+            {exportTsv !== undefined && <Grid item>{exportTsv}</Grid>}
           </Grid>
         </TableCell>
       </TableRow>

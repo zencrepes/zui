@@ -31,7 +31,7 @@ const Op: React.FC<Props> = (props: Props) => {
       onClick={clickUpdateFilter}
       disabled={replaceFilter === null}
     >
-      {filter.op === 'in' ? 'in' : 'all of'}
+      {filter.op}
     </Button>
   );
 };

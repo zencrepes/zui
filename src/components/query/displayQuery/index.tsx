@@ -37,7 +37,7 @@ const DisplayQuery: React.FC<Props> = (props: Props) => {
             const facet = facets.find((f: Facet) => f.field === filter.content.field);
             if (facet !== undefined && (facet.facetType === 'term' || facet.facetType === 'boolean')) {
               return (
-                <Grid item key={filter.content.field}>
+                <Grid item key={filter.tag !== undefined ? filter.content.field + filter.tag : filter.content.field}>
                   <Term filter={filter} facet={facet} removeFilter={removeFilter} replaceFilter={replaceFilter} />
                 </Grid>
               );

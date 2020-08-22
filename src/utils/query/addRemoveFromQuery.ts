@@ -17,7 +17,7 @@ export const addRemoveFromQuery = (value: string, facet: Facet, query: any, forc
     return updatedQuery;
   }
 
-  const identifiedFilter = query.content.find((q: any) => q.content.field === facet.field);
+  const identifiedFilter = query.content.find((q: any) => q.content.field === facet.field && q.tag === undefined);
   if (identifiedFilter === undefined) {
     // The facet doesn't exist, adding it
     updatedQuery = {
@@ -39,7 +39,7 @@ export const addRemoveFromQuery = (value: string, facet: Facet, query: any, forc
     ...query,
     content: query.content
       .map((filter: any) => {
-        if (filter.content.field === identifiedFilter.content.field) {
+        if (filter.content.field === identifiedFilter.content.field && filter.tag === undefined) {
           return updatedFilter;
         }
         return filter;
