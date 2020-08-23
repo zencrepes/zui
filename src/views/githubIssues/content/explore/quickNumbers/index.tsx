@@ -79,19 +79,19 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
   if (data === undefined) {
     return null;
   }
-  const suffix = defaultPoints === true ? ' (pts)' : '';
+  const unit = defaultPoints ? 'Points' : 'Issues';
   const cards = [
     {
       key: 1,
       count: defaultPoints === true ? data.githubIssues.queryPrs.metrics.sum : data.githubIssues.queryPrs.count,
       query: query,
-      title: 'Issues in current query' + suffix,
+      title: unit + ' in current query',
     },
     {
       key: 2,
       count: defaultPoints === true ? data.githubIssues.oldIssues.metrics.sum : data.githubIssues.oldIssues.count,
       query: buildQuery(query, oldIssues),
-      title: 'Open for more than 30 days' + suffix,
+      title: unit + ' open for more than 30 days',
     },
     {
       key: 3,
@@ -100,7 +100,7 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
           ? data.githubIssues.openIssuesWithoutAssignee.metrics.sum
           : data.githubIssues.openIssuesWithoutAssignee.count,
       query: buildQuery(query, openIssuesWithoutAssignee),
-      title: 'Open Issues without assignee' + suffix,
+      title: unit + ' open without assignee',
     },
     {
       key: 4,
@@ -109,7 +109,7 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
           ? data.githubIssues.openIssuesInClosedMilestones.metrics.sum
           : data.githubIssues.openIssuesInClosedMilestones.count,
       query: buildQuery(query, openIssuesInClosedMilestones),
-      title: 'Open Issues in Closed Milestones' + suffix,
+      title: unit + ' open in Closed Milestones',
     },
   ];
 

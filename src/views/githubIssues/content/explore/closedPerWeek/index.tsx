@@ -9,20 +9,21 @@ import parseISO from 'date-fns/parseISO';
 
 import HistoryLine from '../../../../../components/charts/chartJS/historyLine';
 
-const PRWEEK_QUERY = loader('../../../graphql/getPrsClosedPerDay.graphql');
+const PRWEEK_QUERY = loader('../../../graphql/getPrsClosedPerWeek.graphql');
 
 interface Props {
   query: any;
   openWeek: Function;
+  defaultPoints: boolean;
 }
 
 const ClosedPerWeek: React.FC<Props> = (props: Props) => {
-  const { query, openWeek } = props;
+  const { query, openWeek, defaultPoints } = props;
 
   const { data } = useQuery(PRWEEK_QUERY, {
     variables: {
       query: JSON.stringify(query),
-      aggOptions: JSON.stringify({ calendarInterval: 'week' }), // eslint-disable-line @typescript-eslint/camelcase
+      aggOptions: JSON.stringify({ calendarInterval: 'week', sumField: 'points' }), // eslint-disable-line @typescript-eslint/camelcase
     },
     fetchPolicy: 'cache-and-network',
   });
@@ -37,20 +38,30 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
 
     const dataseries: Array<any> = [];
     // Prep the data
+
     for (const x of datapoints) {
       const createdAt = data.githubIssues.data.createdAt.buckets.find((item: any) => item.keyAsString === x);
       const closedAt = data.githubIssues.data.closedAt.buckets.find((item: any) => item.keyAsString === x);
-      dataseries.push({
-        label: x,
-        createdAt: createdAt !== undefined ? createdAt.docCount : 0,
-        closedAt: closedAt !== undefined ? closedAt.docCount : 0,
-      });
+      if (defaultPoints) {
+        dataseries.push({
+          label: x,
+          createdAt: createdAt !== undefined ? createdAt.sum : 0,
+          closedAt: closedAt !== undefined ? closedAt.sum : 0,
+        });
+      } else {
+        dataseries.push({
+          label: x,
+          createdAt: createdAt !== undefined ? createdAt.docCount : 0,
+          closedAt: closedAt !== undefined ? closedAt.docCount : 0,
+        });
+      }
     }
 
+    const unit = defaultPoints ? 'Points' : 'Issues';
     const chartData = {
       datasets: [
         {
-          label: 'Issues Created',
+          label: unit + ' Created',
           data: dataseries.map((item: any) => item.createdAt),
           backgroundColor: 'rgb(54, 162, 235)',
           borderColor: 'rgb(54, 162, 235)',
@@ -60,7 +71,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
           fill: false,
         },
         {
-          label: 'Issues Closed',
+          label: unit + ' Closed',
           data: dataseries.map((item: any) => item.closedAt),
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',

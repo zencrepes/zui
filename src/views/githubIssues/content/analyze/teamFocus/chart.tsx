@@ -13,6 +13,7 @@ interface Props {
   field: any;
   setField: Function;
   openMatrixClick: Function;
+  defaultPoints: boolean;
 }
 
 const getEmptyWeekFromData = (data: any) => {
@@ -45,17 +46,25 @@ const getEmptyWeekCalendar = (firstWeek: Date, lastWeek: Date) => {
   return weekCalendar;
 };
 
-const buildDataset = (data: any, emptyCalendar: Array<string>) => {
+const buildDataset = (data: any, emptyCalendar: Array<string>, defaultPoints: boolean) => {
   const dataset = [];
 
   for (const bucket of data.buckets) {
     const formattedBucket: any = {};
-    formattedBucket[data.field] = bucket.key + ' (' + bucket.docCount + ')';
+    if (defaultPoints) {
+      formattedBucket[data.field] = bucket.key + ' (' + bucket.sum + ')';
+    } else {
+      formattedBucket[data.field] = bucket.key + ' (' + bucket.docCount + ')';
+    }
     formattedBucket.value = bucket.key;
 
     for (const week of emptyCalendar) {
       const weekExist = bucket.weeks.find((w: any) => w.weekStart === week);
-      formattedBucket[week] = weekExist === undefined ? 0 : weekExist.docCount;
+      if (defaultPoints) {
+        formattedBucket[week] = weekExist === undefined ? 0 : weekExist.sum;
+      } else {
+        formattedBucket[week] = weekExist === undefined ? 0 : weekExist.docCount;
+      }
     }
     dataset.push(formattedBucket);
   }
@@ -64,7 +73,7 @@ const buildDataset = (data: any, emptyCalendar: Array<string>) => {
 };
 
 const Chart: React.FC<Props> = (props: Props) => {
-  const { dataset, field, setField, openMatrixClick } = props;
+  const { dataset, field, setField, openMatrixClick, defaultPoints } = props;
 
   const initMaxBuckets = dataset.buckets.length <= 30 ? dataset.buckets.length : 30;
   const [maxBuckets, setMaxBuckets] = React.useState<number>(initMaxBuckets);
@@ -85,7 +94,7 @@ const Chart: React.FC<Props> = (props: Props) => {
   const [maxWeeks, setMaxWeeks] = React.useState<number>(initWeeks);
 
   const emptyCalendarSliced = emptyCalendar.slice(emptyCalendar.length - maxWeeks, emptyCalendar.length);
-  let updatedDataset = buildDataset(dataset, emptyCalendarSliced);
+  let updatedDataset = buildDataset(dataset, emptyCalendarSliced, defaultPoints);
 
   updatedDataset = updatedDataset.slice(0, maxBuckets);
 

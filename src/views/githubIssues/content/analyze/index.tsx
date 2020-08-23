@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
 
 const Analyze: React.FC<connectedProps> = (props: connectedProps) => {
-  const { query, history } = props;
+  const { query, history, defaultPoints } = props;
   const classes = useStyles();
 
   const openQuery = (newQuery: any) => {
@@ -54,7 +54,7 @@ const Analyze: React.FC<connectedProps> = (props: connectedProps) => {
   return (
     <Grid container spacing={3} className={classes.root}>
       <Grid item xs={12}>
-        <TeamFocus query={query} openMatrixClick={openMatrixClick} />
+        <TeamFocus query={query} openMatrixClick={openMatrixClick} defaultPoints={defaultPoints} />
       </Grid>
     </Grid>
   );

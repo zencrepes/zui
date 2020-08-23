@@ -6,6 +6,7 @@ query($query: String, $aggOptions: String) {
           keyAsString
           key
           docCount
+          sum
         }
       }
       closedAt: aggregations(field: "closedAt", aggType: "date_histogram", aggOptions: $aggOptions) {
@@ -13,6 +14,7 @@ query($query: String, $aggOptions: String) {
           keyAsString
           key
           docCount
+          sum
         }
       }
     }

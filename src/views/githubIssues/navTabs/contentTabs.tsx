@@ -28,7 +28,7 @@ const ContentTabs: React.FC<connectedProps> = (props: connectedProps) => {
       <Tab label="Explore" value="explore" />
       <Tab label="Analyze" value="analyze" />
       <Tab label="Deliver" value="deliver" />
-      <Tab label="Plan" value="plan" />
+      {/* <Tab label="Plan" value="plan" /> */}
       <Tab label="List" value="list" />
     </Tabs>
   );
