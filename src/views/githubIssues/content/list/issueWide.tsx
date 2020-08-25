@@ -2,12 +2,12 @@ import React from 'react';
 import XRegExp from 'xregexp';
 
 import { makeStyles } from '@material-ui/core/styles';
-
 import Grid from '@material-ui/core/Grid/Grid';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 
@@ -17,6 +17,8 @@ import { format } from 'date-fns';
 
 import { Issue } from '../../../../types/github/issue';
 
+import SelectIssue from './selectIssue';
+
 interface ItemEl {
   id: string;
   title: string;
@@ -25,6 +27,7 @@ interface ItemEl {
 
 interface Props {
   item: Issue;
+  selectable: boolean;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -92,12 +95,17 @@ const getContrastYIQ = (hexcolor: string) => {
 };
 
 const IssueWide: React.FC<Props> = (props: Props) => {
-  const { item } = props;
+  const { item, selectable } = props;
   const classes = useStyles();
 
   const pointsExp = XRegExp('SP:[.\\d]');
   return (
     <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
+      {selectable && (
+        <Grid item>
+          <SelectIssue issue={item} />
+        </Grid>
+      )}
       <Grid item>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
           <Grid item>
@@ -152,8 +160,8 @@ const IssueWide: React.FC<Props> = (props: Props) => {
           </Grid>
         )}
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
-          <Grid item xs={12} sm container>
-            {item.milestone !== null && (
+          {item.milestone !== null && (
+            <Grid item>
               <Tooltip title="Issue attached to milestone">
                 <Chip
                   icon={<DirectionsRunIcon className={classes.iconSprint} />}
@@ -163,8 +171,23 @@ const IssueWide: React.FC<Props> = (props: Props) => {
                   variant="outlined"
                 />
               </Tooltip>
-            )}
-          </Grid>
+            </Grid>
+          )}
+          {item.projectCards.edges.map((projectCard) => {
+            return (
+              <Grid item key={projectCard.node.id}>
+                <Tooltip title="Issue attached to a project">
+                  <Chip
+                    icon={<AccountTreeIcon className={classes.iconSprint} />}
+                    label={projectCard.node.project.name}
+                    className={classes.chipAgile}
+                    color="primary"
+                    variant="outlined"
+                  />
+                </Tooltip>
+              </Grid>
+            );
+          })}
         </Grid>
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
           <Grid item className={classes.issueSubTitle}>

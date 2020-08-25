@@ -5,8 +5,10 @@ import { iRootState } from '../../../store';
 import { TableConfig } from '../../../global';
 
 import Explore from './explore';
-import List from './list';
 import Analyze from './analyze';
+import Deliver from './deliver';
+// import Plan from './plan';
+import List from './list';
 
 const mapState = (state: iRootState) => ({
   selectedTab: state.githubIssues.selectedTab,
@@ -29,6 +31,10 @@ const Content: React.FC<connectedProps> = (props: connectedProps) => {
       return <Explore />;
     case 'analyze':
       return <Analyze />;
+    case 'deliver':
+      return <Deliver tableConfig={tableConfig} />;
+    // case 'plan':
+    //   return <Plan />;
     case 'list':
       return <List tableConfig={tableConfig} />;
     default:

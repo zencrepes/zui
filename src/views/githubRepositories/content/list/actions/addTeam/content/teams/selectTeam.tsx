@@ -68,7 +68,7 @@ const SelectTeam: React.FC<connectedProps> = (props: connectedProps) => {
   }
   if (data.organization.viewerCanAdminister === false) {
     return (
-      <Alert severity="error">You need administrative privilated at the organization level for this operation</Alert>
+      <Alert severity="error">You need administrative privileges at the organization level for this operation</Alert>
     );
   }
   return (

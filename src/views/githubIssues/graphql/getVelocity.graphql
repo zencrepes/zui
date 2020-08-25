@@ -1,0 +1,22 @@
+query($query: String, $moving: Float, $interval: String) {
+  githubIssues {
+    data(query: $query) {
+      velocity(moving: $moving, interval: $interval) {
+        items {
+          date
+          issues {
+            sum
+            moving
+          }
+          points {
+            sum
+            moving
+          }
+        }
+        assignees {
+          login
+        }
+      }
+    }
+  }
+}

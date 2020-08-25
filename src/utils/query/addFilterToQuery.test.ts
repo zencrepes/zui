@@ -54,3 +54,20 @@ test('Add a term filter to a query that does not already contain this filter', (
 
   expect(JSON.stringify(response)).toEqual(JSON.stringify(expectedResponse));
 });
+
+test('Add a term filter to a query already containing the same filter but different tag (same field, same value, different tag)', () => {
+  const sourceQuery = { op: 'and', content: [{ op: 'in', content: { field: 'state', value: ['OPEN'] } }] };
+  const filter = createTermFilter('in', 'state', ['OPEN'], 'myTag');
+
+  const response = addFilterToQuery(filter, sourceQuery);
+
+  const expectedResponse = {
+    op: 'and',
+    content: [
+      { op: 'in', content: { field: 'state', value: ['OPEN'] } },
+      { op: 'in', tag: 'myTag', content: { field: 'state', value: ['OPEN'] } },
+    ],
+  };
+
+  expect(JSON.stringify(response)).toEqual(JSON.stringify(expectedResponse));
+});

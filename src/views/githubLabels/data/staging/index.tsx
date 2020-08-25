@@ -175,7 +175,7 @@ class Staging extends React.Component<connectedProps> {
                   error: true,
                   errorMsg:
                     'Your missing write permission on this repository. Your permission is: ' +
-                    fetchedLabel.repository.viewerPermission,
+                    fetchedLabel.viewerPermission,
                 });
                 this.verifErrors++;
               } else if ((fetchedLabel === null || fetchedLabel.label === null) && editAction !== 'create') {

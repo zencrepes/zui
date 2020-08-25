@@ -11,6 +11,10 @@ export const addFilterToQuery = (filter: any, query: any) => {
   // Always start by removing the filter from the query if it already exists, we'll add it back after
   updatedQuery = removeFilterFromQuery(filter, query);
 
+  // console.log('filter:' + JSON.stringify(filter));
+  // console.log('query:' + JSON.stringify(query));
+  // console.log('updatedQuery:' + JSON.stringify(updatedQuery));
+
   if (Object.keys(updatedQuery).length === 0) {
     updatedQuery = {
       op: 'and',
@@ -21,7 +25,11 @@ export const addFilterToQuery = (filter: any, query: any) => {
 
   // Search for an existing filter
   const identifiedFilter = query.content.find(
-    (c: any) => c.op === filter.op && c.content.field === filter.content.field && Array.isArray(c.content.value),
+    (c: any) =>
+      c.op === filter.op &&
+      c.content.field === filter.content.field &&
+      c.tag === filter.tag &&
+      Array.isArray(c.content.value),
   );
   if (identifiedFilter === undefined) {
     updatedQuery = {

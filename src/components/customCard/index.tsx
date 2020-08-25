@@ -77,7 +77,7 @@ const useStyles = makeStyles(() => ({
 interface Props {
   headerTitle: string;
   headerIcon?: any;
-  headerFactTitle?: string;
+  headerFactTitle?: any;
   headerFactValue?: string;
   headerLegend?: string;
   children: any;

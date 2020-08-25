@@ -1,16 +1,18 @@
-query($query: String, $field: String!, $dateField: String!) {
+query($query: String, $field: String!, $dateField: String!, $aggOptions: String) {
   githubIssues {
     data(query: $query) {
-      activity(dateField: $dateField, field: $field) {
+      matrix(dateField: $dateField, field: $field, aggOptions: $aggOptions) {
         field
         fromWeekStart
         toWeekStart
         buckets {
           key
           docCount
+          sum
           weeks {
             weekStart
             docCount
+            sum
           }
         }
       }

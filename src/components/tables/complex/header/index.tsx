@@ -10,13 +10,15 @@ import Sort from './sort';
 
 interface Props {
   totalCount: number;
+  totalSelected: any;
   tableConfig: TableConfig;
   tableSort: TableSort;
-  exportTsv: any;
+  exportTsv?: any;
+  actions: any;
 }
 
 const Header: React.FC<Props> = (props: Props) => {
-  const { tableConfig, tableSort, totalCount, exportTsv } = props;
+  const { tableConfig, tableSort, totalCount, totalSelected, exportTsv, actions } = props;
   return (
     <TableHead>
       <TableRow>
@@ -27,11 +29,13 @@ const Header: React.FC<Props> = (props: Props) => {
                 {totalCount} {tableConfig.itemsType}
               </span>
             </Grid>
+            {totalSelected !== undefined && <Grid item>{totalSelected}</Grid>}
             <Grid item xs={12} sm container></Grid>
             <Grid item>
               <Sort tableSort={tableSort} tableConfig={tableConfig} />
             </Grid>
-            <Grid item>{exportTsv}</Grid>
+            {actions !== undefined && <Grid item>{actions}</Grid>}
+            {exportTsv !== undefined && <Grid item>{exportTsv}</Grid>}
           </Grid>
         </TableCell>
       </TableRow>

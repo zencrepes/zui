@@ -1,0 +1,58 @@
+query($query: String) {
+  githubIssues {
+    data(query: $query) {
+      oneWeek: velocity(moving: 1, window: 3) {
+        current {
+          date
+          issues {
+            sum
+            moving
+          }
+          points {
+            sum
+            moving
+          }
+        }
+      }
+      twoWeeks: velocity(moving: 2, window: 4) {
+        current {
+          date
+          issues {
+            sum
+            moving
+          }
+          points {
+            sum
+            moving
+          }
+        }
+      }
+      fourWeeks: velocity(moving: 4, window: 6) {
+        current {
+          date
+          issues {
+            sum
+            moving
+          }
+          points {
+            sum
+            moving
+          }
+        }
+      }
+      twelveWeeks: velocity(moving: 12, window: 14) {
+        current {
+          date
+          issues {
+            sum
+            moving
+          }
+          points {
+            sum
+            moving
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+query($query: String) {
+  issues: githubIssues {
+    data(query: $query) {
+      count
+      items(from: 0, size: 4000, orderBy: { direction: asc, field: "repository.name.keyword" }) {
+        totalCount
+        nodes {
+          id
+          title
+          number
+          repository {
+            id
+            name
+            owner {
+              id
+              login
+            }
+          }
+        }
+      }
+    }
+  }
+}

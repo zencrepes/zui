@@ -108,7 +108,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
         >
           {nodes.map((item: any) => {
             return (
-              <TableRow key={item.id}>
+              <TableRow key={item.key + '_' + item.project.key}>
                 <TableCell component="th" scope="row">
                   <JiraIssueWide item={item} />
                 </TableCell>

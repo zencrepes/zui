@@ -7,27 +7,29 @@ import CustomCard from '../../../../../components/customCard';
 
 import Chart from './chart';
 
-const ACTIVITYMATRIX_QUERY = loader('./getActivityMatrix.graphql');
+const ACTIVITYMATRIX_QUERY = loader('../../../graphql/getActivityMatrix.graphql');
 
 interface Props {
   query: any;
   openMatrixClick: Function;
+  defaultPoints: boolean;
 }
 
 const TeamFocus: React.FC<Props> = (props: Props) => {
-  const { query, openMatrixClick } = props;
+  const { query, openMatrixClick, defaultPoints } = props;
   const [field, setField] = React.useState<string>('repository.name.keyword');
 
   const { data } = useQuery(ACTIVITYMATRIX_QUERY, {
     variables: {
       query: JSON.stringify(query),
       field: field,
-      dateField: 'createdAt',
+      dateField: 'closedAt',
+      aggOptions: JSON.stringify({ points: true }), // eslint-disable-line @typescript-eslint/camelcase
     },
     fetchPolicy: 'cache-and-network',
   });
   if (data !== undefined) {
-    const dataset = data.githubIssues.data.activity;
+    const dataset = data.githubIssues.data.matrix;
     return (
       <CustomCard
         headerTitle="Focus Heatmap"
@@ -40,6 +42,7 @@ const TeamFocus: React.FC<Props> = (props: Props) => {
           query={query}
           setField={setField}
           openMatrixClick={openMatrixClick}
+          defaultPoints={defaultPoints}
         />
       </CustomCard>
     );

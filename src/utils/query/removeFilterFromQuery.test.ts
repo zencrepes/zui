@@ -176,3 +176,45 @@ test('Removing one value from one of two filters (value as array) - 2', () => {
   };
   expect(JSON.stringify(response)).toEqual(JSON.stringify(expectedResponse));
 });
+
+test('Tag: Removal of a filter with tag does not remove another other query filters without that same tag', () => {
+  const sourceQuery = { op: 'and', content: [{ op: 'in', content: { field: 'state', value: ['OPEN'] } }] };
+  const filter = createTermFilter('in', 'state', ['OPEN'], 'myTag');
+
+  const response = removeFilterFromQuery(filter, sourceQuery);
+
+  const expectedResponse = { op: 'and', content: [{ op: 'in', content: { field: 'state', value: ['OPEN'] } }] };
+  expect(JSON.stringify(response)).toEqual(JSON.stringify(expectedResponse));
+});
+
+test('Tag: Remove the only filter with tag from the query', () => {
+  const sourceQuery = {
+    op: 'and',
+    content: [{ op: 'in', tag: 'myTag', content: { field: 'state', value: ['valueX'] } }],
+  };
+  const filter = createTermFilter('in', 'state', ['valueX'], 'myTag');
+
+  const response = removeFilterFromQuery(filter, sourceQuery);
+
+  const expectedResponse = {};
+  expect(JSON.stringify(response)).toEqual(JSON.stringify(expectedResponse));
+});
+
+test('Tag: Remove one filter with tag from the query', () => {
+  const sourceQuery = {
+    op: 'and',
+    content: [
+      { op: 'in', tag: 'myTag', content: { field: 'state', value: ['valueA'] } },
+      { op: 'in', content: { field: 'state', value: ['valueB'] } },
+    ],
+  };
+  const filter = createTermFilter('in', 'state', ['valueA'], 'myTag');
+
+  const response = removeFilterFromQuery(filter, sourceQuery);
+
+  const expectedResponse = {
+    op: 'and',
+    content: [{ op: 'in', content: { field: 'state', value: ['valueB'] } }],
+  };
+  expect(JSON.stringify(response)).toEqual(JSON.stringify(expectedResponse));
+});

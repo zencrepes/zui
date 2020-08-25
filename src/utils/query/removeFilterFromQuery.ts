@@ -1,8 +1,11 @@
-// https://medium.com/@alvaro.saburido/set-theory-for-arrays-in-es6-eb2f20a61848
 export const removeFilterFromQuery = (filter: any, query: any) => {
   if (Object.keys(query).length === 0) {
-    return query;
+    return { ...query };
   }
+
+  // console.log('----');
+  // console.log(JSON.stringify(filter));
+  // console.log(JSON.stringify(query));
 
   const updatedContents = query.content
     .map((c: any) => {
@@ -11,6 +14,13 @@ export const removeFilterFromQuery = (filter: any, query: any) => {
       }
 
       if (c.content.field !== filter.content.field) {
+        return c;
+      }
+
+      // console.log('c.content.tag: ' + c.tag);
+      // console.log('filter.content.tag: ' + filter.tag);
+      // We don't want to mix tag and filter on the same field.
+      if (c.tag !== filter.tag) {
         return c;
       }
 

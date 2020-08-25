@@ -11,6 +11,12 @@ const Op: React.FC<Props> = (props: Props) => {
   const { filter, replaceFilter } = props;
 
   const clickUpdateFilter = () => {
+    // let newOp = 'in';
+    // if (filter.op === 'in') {
+    //   newOp = 'all';
+    // } else if (filter.op === 'all') {
+    //   newOp = 'not-in';
+    // }
     const newOp = filter.op === 'in' ? 'all' : 'in';
     if (replaceFilter !== null) {
       replaceFilter({ ...filter, op: newOp });
@@ -25,7 +31,7 @@ const Op: React.FC<Props> = (props: Props) => {
       onClick={clickUpdateFilter}
       disabled={replaceFilter === null}
     >
-      {filter.op === 'in' ? 'in' : 'all of'}
+      {filter.op}
     </Button>
   );
 };

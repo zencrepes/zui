@@ -3,7 +3,7 @@ import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 
 import CustomCard from '../../../../../components/customCard';
-import SimpleBar from '../../../../../components/charts/chartsJS/simpleBar';
+import SimpleBar from '../../../../../components/charts/chartJS/simpleBar';
 
 import { createTermFilter, addFilterToQuery } from '../../../../../utils/query';
 

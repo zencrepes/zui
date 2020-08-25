@@ -150,7 +150,7 @@ const Explore: React.FC<connectedProps> = (props: connectedProps) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <ClosedPerWeek query={query} openWeek={openWeek} />
+        <ClosedPerWeek query={query} openWeek={openWeek} defaultPoints={defaultPoints} />
       </Grid>
       <Grid item xs={4}>
         <OpenedDuring query={query} openQuery={openQuery} />

@@ -20,6 +20,7 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
             name
           }
           diskUsage
+          description
           forkCount
           hasIssuesEnabled
           hasProjectsEnabled
@@ -27,6 +28,38 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
           isArchived
           isPrivate
           currentYearMasterCommits
+          recentCommitsMaster {
+            name
+            target {
+              history {
+                totalCount
+                edges {
+                  node {
+                    pushedDate
+                  }
+                }
+              }
+            }
+          }
+          primaryLanguage {
+            name
+          }
+          pullRequests {
+            totalCount
+          }
+          repositoryTopics {
+            totalCount
+            edges {
+              node {
+                id
+                topic {
+                  id
+                  name
+                }
+                url
+              }
+            }
+          }
         }
       }
     }

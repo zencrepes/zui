@@ -3,6 +3,7 @@ import { Milestone } from './milestone';
 import { Actor } from './actor';
 import { LabelConnection } from './labelConnection';
 import { UserConnection } from './userConnection';
+import { ProjectCardConnection } from './projectCardConnection';
 
 export interface Issue {
   id: string;
@@ -17,6 +18,7 @@ export interface Issue {
   number: number;
   author: Actor;
   labels: LabelConnection;
+  projectCards: ProjectCardConnection;
   assignees: UserConnection;
   reviewRequests: any;
   reviews: any;

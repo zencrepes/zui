@@ -7,7 +7,7 @@ import CustomCard from '../../../../../components/customCard';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
-import HistoryStacked from '../../../../../components/charts/chartsJS/historyStacked';
+import HistoryStacked from '../../../../../components/charts/chartJS/historyStacked';
 
 import { createTermFilter, addFilterToQuery } from '../../../../../utils/query';
 

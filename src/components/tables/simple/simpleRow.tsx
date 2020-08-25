@@ -10,12 +10,16 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid/Grid';
+import { Label } from '@primer/components';
+import randomColor from 'randomcolor';
+import { format } from 'date-fns';
+
+import * as MicroBarChart from 'react-micro-bar-chart';
 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import StopIcon from '@material-ui/icons/Stop';
-
-import { format } from 'date-fns';
 
 import { TableConfig } from '../../../global';
 
@@ -24,6 +28,14 @@ interface Props {
   hasRowArray: boolean;
   tableConfig: TableConfig;
 }
+
+const getContrastYIQ = (hexcolor: string) => {
+  const r = parseInt(hexcolor.substr(0, 2), 16);
+  const g = parseInt(hexcolor.substr(2, 2), 16);
+  const b = parseInt(hexcolor.substr(4, 2), 16);
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 128 ? 'black' : 'white';
+};
 
 const getObjectValue = (obj: any, path: string, defaultValue = undefined) => {
   const travel = (regexp: any) =>
@@ -62,13 +74,53 @@ const SimpleRow: React.FC<Props> = (props: Props) => {
           .filter((col) => col.default === true)
           .map((col) => {
             const value = getObjectValue(item, col.field, undefined);
-            let cellValue;
-            if (col.fieldType === 'boolean') {
+            let cellValue: any = ' ';
+            if (value === undefined) {
+              cellValue = '';
+            } else if (col.fieldType === 'boolean') {
               cellValue = <span>{JSON.stringify(value)}</span>;
             } else if (col.fieldType === 'date' && value !== null) {
               cellValue = <span>{format(new Date(value), 'eee MMM d, yyyy')}</span>;
             } else if (col.fieldType === 'array') {
               cellValue = <span>{value.length}</span>;
+            } else if (col.fieldType === 'microchart') {
+              cellValue = (
+                <MicroBarChart
+                  data={value.data.map((d: any) => d.count)}
+                  tooltip
+                  tipOffset={[0, 20]}
+                  tipTemplate={(d: any, i: any, data: any) => value.tooltips[i]}
+                  hoverColor="rgb(161,130,214)"
+                  fillColor={value.fillColor}
+                />
+              );
+            } else if (col.fieldType === 'rowarray') {
+              if (value.length > 0) {
+                const nodes = value.map((t: any) => getObjectValue(t, col.subfield, undefined)).sort();
+                cellValue = (
+                  <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={0}>
+                    {nodes.map((nodeValue: any) => {
+                      const bgColor = randomColor({
+                        luminosity: 'dark',
+                        format: 'rgb', // e.g. 'rgb(225,200,20)'
+                        seed: nodeValue,
+                      });
+                      return (
+                        <Grid item key={nodeValue}>
+                          <Label
+                            variant="small"
+                            m={1}
+                            style={{ background: bgColor, fontWeight: 400 }}
+                            color={getContrastYIQ(bgColor)}
+                          >
+                            {nodeValue}
+                          </Label>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                );
+              }
             } else if (col.linkField !== null) {
               const link = getObjectValue(item, col.linkField, undefined);
               cellValue = (
