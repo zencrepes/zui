@@ -56,10 +56,13 @@
     "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
     "react-dual-listbox": "^2.0.0",
+    "react-micro-bar-chart": "^1.1.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-tagcloud": "^2.0.0",
+    "remove": "^0.1.5",
+    "string-to-color": "^2.2.2",
     "styled-components": "^5.0.1",
     "typescript": "~3.8.3",
     "yarn": "^1.22.4"

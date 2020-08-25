@@ -10,6 +10,7 @@ import { TableConfig, TableSort, TablePaginationType } from '../../../../global'
 import SimpleTable from '../../../../components/tables/simple';
 import ExportTsv from '../../../../components/tables/exportTsv';
 import Actions from './actions';
+import { startOfMonth, sub, parseISO, format } from 'date-fns';
 
 const GQL_QUERY = loader('./getList.graphql');
 
@@ -88,6 +89,23 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
       changeRowsPerPage: changeRowsPerPage,
     };
 
+    const today = new Date();
+    const months = [
+      { date: startOfMonth(today), count: 0 },
+      { date: startOfMonth(sub(today, { months: 1 })), count: null },
+      { date: startOfMonth(sub(today, { months: 2 })), count: null },
+      { date: startOfMonth(sub(today, { months: 3 })), count: null },
+      { date: startOfMonth(sub(today, { months: 4 })), count: null },
+      { date: startOfMonth(sub(today, { months: 5 })), count: null },
+      { date: startOfMonth(sub(today, { months: 6 })), count: null },
+      { date: startOfMonth(sub(today, { months: 7 })), count: null },
+      { date: startOfMonth(sub(today, { months: 8 })), count: null },
+      { date: startOfMonth(sub(today, { months: 9 })), count: null },
+      { date: startOfMonth(sub(today, { months: 10 })), count: null },
+      { date: startOfMonth(sub(today, { months: 11 })), count: null },
+      { date: startOfMonth(sub(today, { months: 12 })), count: null },
+    ];
+
     return (
       <React.Fragment>
         <SimpleTable
@@ -95,7 +113,54 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
           tableConfig={tableConfig}
           tableSort={tableSort}
           tablePagination={tablePagination}
-          items={nodes}
+          items={nodes.map((n: any) => {
+            // Adding recent commits to a micro chart
+            const recentCommits = n.recentCommitsMaster.target.history.edges
+              .map((c: any) => c.node.pushedDate)
+              .filter((c: any) => c !== null);
+            let countCommits = 0;
+            const commitMonths = months.map((m: any) => {
+              const commitsMonths = recentCommits.filter(
+                (c: any) => m.date.toISOString() === startOfMonth(parseISO(c)).toISOString(),
+              );
+              countCommits = countCommits + commitsMonths.length;
+              return {
+                ...m,
+                count: commitsMonths.length,
+              };
+            });
+            // Calculate datapoints needed to reach 20 commits
+            let monthCpt = 0;
+            let commitsCpt = 0;
+            for (const cm of commitMonths) {
+              if (commitsCpt < 20 && commitsCpt < recentCommits.length) {
+                commitsCpt = commitsCpt + cm.count;
+                monthCpt = monthCpt + 1;
+              }
+            }
+            const tooltips = commitMonths.map((cm: any) => {
+              return (
+                cm.count +
+                ' commits to master in <u>' +
+                format(cm.date, 'LLL yyyy') +
+                '</u><br /> <i>There has been a total of <b>' +
+                (recentCommits.length === 20 ? '20 or more' : recentCommits.length) +
+                '</b> commits over <b>' +
+                monthCpt +
+                '</b> months</i>'
+              );
+            });
+            let fillColor = '#12ff1a';
+            if (monthCpt < 3) {
+              fillColor = '#12ff1a';
+            } else if (recentCommits.length < 20 || monthCpt > 7) {
+              fillColor = '#ff1c1c';
+            } else if (monthCpt > 4) {
+              fillColor = '#ffcb34';
+            }
+
+            return { ...n, microchart: { data: commitMonths, tooltips, months: monthCpt, fillColor } };
+          })}
           actions={githubToken !== null ? <Actions /> : null}
           exportTsv={
             <ExportTsv

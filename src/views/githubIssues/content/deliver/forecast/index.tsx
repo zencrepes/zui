@@ -163,7 +163,7 @@ const Forecast: React.FC<connectedProps> = (props: connectedProps) => {
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    {Math.round(data.githubIssues.data.twelveWeeks.current.issues.moving)} pts/week
+                    {Math.round(data.githubIssues.data.twelveWeeks.current.issues.moving)} issues/week
                   </React.Fragment>
                 )}
               </TableCell>

@@ -50,7 +50,7 @@ const OpenByRepo: React.FC<Props> = (props: Props) => {
   if (data !== undefined && data.githubIssues.data !== undefined) {
     let buckets = data.githubIssues.data.aggregations.buckets;
     const srcBucketsSize = buckets.length;
-    const maxBucketsToDisplay = 75;
+    const maxBucketsToDisplay = 25;
     if (buckets.length > maxBucketsToDisplay) {
       buckets = buckets.slice(0, maxBucketsToDisplay);
     }

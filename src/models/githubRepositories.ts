@@ -21,10 +21,10 @@ export const githubRepositories = {
     query: {},
     queries: [],
 
-    tablePaginationRowsPerPage: 25,
+    tablePaginationRowsPerPage: 50,
     tablePaginationCurrentPage: 0,
     tablePaginationOffset: 0,
-    tablePaginationLimit: 25,
+    tablePaginationLimit: 50,
     defaultPoints: false,
 
     openEditModal: false,
