@@ -115,9 +115,12 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
           tablePagination={tablePagination}
           items={nodes.map((n: any) => {
             // Adding recent commits to a micro chart
-            const recentCommits = n.recentCommitsMaster.target.history.edges
-              .map((c: any) => c.node.pushedDate)
-              .filter((c: any) => c !== null);
+            let recentCommits: any[] = [];
+            if (n.recentCommitsMaster !== null) {
+              recentCommits = n.recentCommitsMaster.target.history.edges
+                .map((c: any) => c.node.pushedDate)
+                .filter((c: any) => c !== null);
+            }
             let countCommits = 0;
             const commitMonths = months.map((m: any) => {
               const commitsMonths = recentCommits.filter(

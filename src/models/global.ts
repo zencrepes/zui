@@ -61,6 +61,30 @@ declare global {
   }
 }
 
+/*
+  This function refreshes the token
+  The token is stored to localstorage and automatically fetched by Apollo (see src/index.tsx) for each call
+*/
+const refreshToken = (keycloak: any) => {
+  const interval = setInterval(function () {
+    keycloak
+      .updateToken(30) // Number of seconds prior to expiry
+      .success(() => {
+        // console.log(
+        //   new Date().toISOString() +
+        //     ': successfully got a new token: ' +
+        //     keycloak.token.slice(0, 10) +
+        //     '-' +
+        //     keycloak.token.slice(-10),
+        // );
+        localStorage.setItem('token', keycloak.token);
+      })
+      .error(() => {
+        console.log('Unable to refresh token');
+      });
+  }, 60000);
+};
+
 export const global = {
   state: {
     log: log.noConflict(),
@@ -205,6 +229,7 @@ export const global = {
           realm: window._env_.KEYCLOAK_REALM,
           clientId: window._env_.KEYCLOAK_CLIENT_ID,
         });
+
         keycloak
           .init({
             onLoad: 'check-sso',
@@ -212,6 +237,7 @@ export const global = {
           })
           .then((authenticated: boolean) => {
             if (authenticated === true && rootState.global.loggedIn === false && rootState.global.keycloak === null) {
+              refreshToken(keycloak);
               keycloak.loadUserInfo().then((userInfo: any) => {
                 dispatch.global.setUserSession({
                   loggedIn: true,
@@ -222,6 +248,27 @@ export const global = {
                   id: userInfo.sub,
                 });
               });
+              //https://stackoverflow.com/questions/43422542/keycloak-js-automatic-token-refesh
+              keycloak.onTokenExpired = () => {
+                console.log('token expired', keycloak.token);
+                keycloak
+                  .updateToken(30)
+                  .success(() => {
+                    keycloak.loadUserInfo().then((userInfo: any) => {
+                      dispatch.global.setUserSession({
+                        loggedIn: true,
+                        keycloak: keycloak,
+                        keycloakLogOut: keycloak.logout,
+                        name: userInfo.name,
+                        email: userInfo.email,
+                        id: userInfo.sub,
+                      });
+                    });
+                  })
+                  .error(() => {
+                    console.log('Unable to refresh token');
+                  });
+              };
               if (keycloak.token !== undefined) {
                 localStorage.setItem('token', keycloak.token);
                 //https://wjw465150.gitbooks.io/keycloak-documentation/server_admin/topics/identity-broker/tokens.html
@@ -298,9 +345,35 @@ export const global = {
     },
 
     async doLogOutAuthError(payload: any, rootState: any) {
-      // Note: This is not a log-out, just a way to force the UI to re-login.
-      rootState.global.keycloakLogOut({ redirectUri: window._env_.ROOT_URL + '/login?authError' });
-      dispatch.global.logOutUserAuth();
+      // Note: This is not a log-out, just a way to force the UI to re-login.      console.log(rootState.global.keycloak);
+      if (rootState.global.keycloak === null) {
+        dispatch.global.initApp();
+      } else {
+        rootState.global.keycloakLogOut({
+          redirectUri: window._env_.ROOT_URL + '/login?authError',
+        });
+        dispatch.global.logOutUserAuth();
+      }
+    },
+
+    async doLogOutExpiredToken(payload: any, rootState: any) {
+      // Note: This is not a log-out, just a way to force the UI to re-login.      console.log(rootState.global.keycloak);
+      if (rootState.global.keycloak === null) {
+        dispatch.global.initApp();
+      } else {
+        rootState.global.keycloakLogOut({
+          redirectUri: window._env_.ROOT_URL + '/login?expiredToken',
+        });
+        dispatch.global.logOutUserAuth();
+      }
+    },
+
+    async deleteKeycloakProfile(payload: any, rootState: any) {
+      // Note: This is not a log-out, just a way to force the UI to re-login.      console.log(rootState.global.keycloak);
+      if (rootState.global.keycloak !== null) {
+        console.log('User self delete keycloak profile');
+        console.log(rootState.global.keycloak);
+      }
     },
   }),
 };
