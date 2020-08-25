@@ -23,7 +23,8 @@ const httpLink: any = createHttpLink({
 // https://www.apollographql.com/docs/react/v3.0-beta/networking/authentication/
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token') === null ? 'Missing token' : localStorage.getItem('token');
+  const token: any = localStorage.getItem('token') === null ? 'Missing token' : localStorage.getItem('token');
+  // console.log('apollo token: ' + token.slice(0, 10) + '-' + token.slice(-10));
   return {
     headers: {
       ...headers,
@@ -42,6 +43,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError !== undefined && String(networkError).includes('403')) {
     store.dispatch.global.doLogOutAuthError();
   }
+
+  // if (networkError !== undefined && String(networkError).includes('401')) {
+  //   store.dispatch.global.doLogOutExpiredToken();
+  // }
 });
 
 const client = new ApolloClient({

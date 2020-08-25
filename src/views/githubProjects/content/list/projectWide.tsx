@@ -6,6 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
+import randomColor from 'randomcolor';
 
 import { StateLabel, Label } from '@primer/components';
 
@@ -111,13 +112,18 @@ const IssueWide: React.FC<Props> = (props: Props) => {
             {
               //Filters out labels which are point since points are listed in the last column anyway
               item.columns.edges.map((col: any) => {
+                const bgColor = randomColor({
+                  luminosity: 'dark',
+                  format: 'rgb', // e.g. 'rgb(225,200,20)'
+                  seed: col.node.name,
+                });
                 return (
                   <Grid item key={col.node.name}>
                     <Label
                       variant="small"
                       m={1}
-                      style={{ background: '#123456', fontWeight: 400 }}
-                      color={getContrastYIQ('#123456')}
+                      style={{ background: bgColor, fontWeight: 400 }}
+                      color={getContrastYIQ(bgColor)}
                     >
                       {col.node.name} ({col.node.cards.totalCount})
                     </Label>

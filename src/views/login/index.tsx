@@ -85,11 +85,13 @@ const useStyles = makeStyles((theme) => ({
 
 const mapState = (state: iRootState) => ({
   loggedIn: state.global.loggedIn,
+  // keycloak: state.global.keycloak,
 });
 
 const mapDispatch = (dispatch: any) => ({
   loginWithRedirect: dispatch.global.loginWithRedirect,
   setAuthError: dispatch.global.setAuthError,
+  // deleteKeycloakProfile: dispatch.global.deleteKeycloakProfile,
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
@@ -104,19 +106,40 @@ const Login: React.FC<connectedProps> = (props: connectedProps) => {
 
   let hasAuthError = false;
   const params = new URLSearchParams(location.search);
-  if (params.get('authError') !== null) {
+  if (params.get('authError') !== null || params.get('expiredToken') !== null) {
     hasAuthError = true;
     setAuthError(true);
   }
+
+  // const deleteProfile = () => {
+  //   deleteKeycloakProfile();
+  // };
+
   return (
     <Layout>
       {loggedIn === true && <Redirect to="/" />}
 
       <main className={classes.layout}>
-        {hasAuthError && (
+        {hasAuthError && params.get('authError') !== null && (
           <Alert variant="filled" severity="error">
             Your authentication was successful but you are not authorized to access ZenCrepes, please reach out to your
             administrator to be granted access and log back in.
+            {/* <br />{' '}
+            {keycloak !== null && (
+              <React.Fragment>
+                If your GitHub default email did not match the configured authorized domain when you first logged-in,
+                you can start again by{' '}
+                <Button size="small" onClick={deleteProfile} variant="outlined">
+                  Deleting your profile
+                </Button>
+              </React.Fragment>
+            )} */}
+          </Alert>
+        )}
+        {hasAuthError && params.get('expiredToken') !== null && (
+          <Alert variant="filled" severity="error">
+            Your likely seeing this screen because your JWT token expired, simply click on &quot;Login&quot; to
+            reconnect.
           </Alert>
         )}
         <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={8}>
