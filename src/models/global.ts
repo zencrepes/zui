@@ -66,7 +66,7 @@ declare global {
   The token is stored to localstorage and automatically fetched by Apollo (see src/index.tsx) for each call
 */
 const refreshToken = (keycloak: any) => {
-  const interval = setInterval(function () {
+  setInterval(function () {
     keycloak
       .updateToken(30) // Number of seconds prior to expiry
       .success(() => {
