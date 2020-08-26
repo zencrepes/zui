@@ -250,7 +250,6 @@ export const global = {
               });
               //https://stackoverflow.com/questions/43422542/keycloak-js-automatic-token-refesh
               keycloak.onTokenExpired = () => {
-                console.log('token expired', keycloak.token);
                 keycloak
                   .updateToken(30)
                   .success(() => {
@@ -369,7 +368,7 @@ export const global = {
     },
 
     async deleteKeycloakProfile(payload: any, rootState: any) {
-      // Note: This is not a log-out, just a way to force the UI to re-login.      console.log(rootState.global.keycloak);
+      // Note: This is not a log-out, just a way to force the UI to re-login.
       if (rootState.global.keycloak !== null) {
         console.log('User self delete keycloak profile');
         console.log(rootState.global.keycloak);
