@@ -89,7 +89,7 @@ const SimpleRow: React.FC<Props> = (props: Props) => {
                   data={value.data.map((d: any) => d.count)}
                   tooltip
                   tipOffset={[0, 20]}
-                  tipTemplate={(d: any, i: any, data: any) => value.tooltips[i]}
+                  tipTemplate={(d: any, i: any) => value.tooltips[i]}
                   hoverColor="rgb(161,130,214)"
                   fillColor={value.fillColor}
                 />
