@@ -1,0 +1,56 @@
+query($id: String!) {
+  githubIssues {
+    data {
+      item(id: $id) {
+        id
+        title
+        state
+        url
+        number
+        createdAt
+        updatedAt
+        closedAt
+        labels {
+          totalCount
+          edges {
+            node {
+              id
+              color
+              name
+              description
+            }
+          }
+        }
+        assignees {
+          totalCount
+          edges {
+            node {
+              id
+              avatarUrl
+              login
+              name
+              url
+            }
+          }
+        }
+        points
+        author {
+          login
+          avatarUrl
+          url
+        }
+        repository {
+          id
+          name
+          url
+          databaseId
+          owner {
+            id
+            login
+            url
+          }
+        }
+      }
+    }
+  }
+}

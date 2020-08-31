@@ -75,7 +75,7 @@ const QueryHandling: React.FC<connectedProps> = (props: connectedProps) => {
     const updatedQuery = {
       ...query,
       content: query.content.map((f: any) => {
-        if (f.field === filter.field && f.tag === undefined) {
+        if (f.content.field === filter.content.field && (f.tag === undefined || f.tag === filter.tag)) {
           return filter;
         } else {
           return f;

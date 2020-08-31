@@ -81,25 +81,25 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
   const cards = [
     {
       key: 1,
-      count: data.githubPullrequests.queryPrs.items.totalCount,
+      count: data.githubPullrequests.queryPrs.count,
       query: query,
       title: 'PRs in current query',
     },
     {
       key: 2,
-      count: data.githubPullrequests.oldPrs.items.totalCount,
+      count: data.githubPullrequests.oldPrs.count,
       query: buildQuery(query, oldPrs),
       title: 'Open PRs older than 30 days',
     },
     {
       key: 3,
-      count: data.githubPullrequests.openPrsWithoutReview.items.totalCount,
+      count: data.githubPullrequests.openPrsWithoutReview.count,
       query: buildQuery(query, openPrsWithoutReview),
       title: 'Open PRs without review request',
     },
     {
       key: 4,
-      count: data.githubPullrequests.openPrsInClosedMilestones.items.totalCount,
+      count: data.githubPullrequests.openPrsInClosedMilestones.count,
       query: buildQuery(query, openPrsInClosedMilestones),
       title: 'Open PRs in Closed Milestones',
     },

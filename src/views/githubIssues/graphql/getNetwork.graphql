@@ -1,0 +1,27 @@
+query($rootNodes: [String!]!) {
+  githubIssues {
+    data {
+      network(rootNodes: $rootNodes) {
+        totalCount
+        processTime
+        nodes {
+          id
+          group
+          label
+          data {
+            id
+            target
+            source
+            distance
+            partial
+            title
+            url
+            number
+            state
+            typename
+          }
+        }
+      }
+    }
+  }
+}

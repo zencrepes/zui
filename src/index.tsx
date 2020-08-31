@@ -44,15 +44,17 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     store.dispatch.global.doLogOutAuthError();
   }
 
-  // if (networkError !== undefined && String(networkError).includes('401')) {
-  //   store.dispatch.global.doLogOutExpiredToken();
-  // }
+  if (networkError !== undefined && String(networkError).includes('401')) {
+    store.dispatch.global.doLogOutExpiredToken();
+  }
 });
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: from([(authLink as unknown) as ApolloLink, errorLink, httpLink]),
 });
+
+store.dispatch.global.setZapiClient(client);
 
 declare global {
   interface Window {
