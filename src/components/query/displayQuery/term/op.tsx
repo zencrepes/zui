@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 
 interface Props {
   filter: any;
@@ -23,17 +24,7 @@ const Op: React.FC<Props> = (props: Props) => {
     }
   };
 
-  return (
-    <Button
-      variant="outlined"
-      color="primary"
-      size="small"
-      onClick={clickUpdateFilter}
-      disabled={replaceFilter === null}
-    >
-      {filter.op}
-    </Button>
-  );
+  return <Chip size="small" label={filter.op} onClick={clickUpdateFilter} disabled={replaceFilter === null} />;
 };
 
 export default Op;

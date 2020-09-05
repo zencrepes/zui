@@ -33,6 +33,7 @@ const Value: React.FC<Props> = (props: Props) => {
   if (removeFilter !== null) {
     return (
       <Chip
+        size="small"
         onDelete={handleDelete}
         variant="outlined"
         label={format(parseISO(filter.content.value), 'LLL do yyyy')}

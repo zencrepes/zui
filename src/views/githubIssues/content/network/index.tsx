@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 import { connect } from 'react-redux';
@@ -9,48 +9,59 @@ import Grid from '@material-ui/core/Grid/Grid';
 import { iRootState } from '../../../../store';
 
 import IssuesGraph from './graph';
-import Controls from './controls';
+import About from './about';
 import Path from './path';
 import Selected from './selected';
-
-const mapState = (state: iRootState) => ({
-  query: state.githubIssues.query,
-  zapiClient: state.global.zapiClient,
-});
+import IssueHover from './issueHover';
 
 const GQL_NETWORK = loader('../../graphql/getNetwork.graphql');
 
+// interface githubIssues extends Omit<iRootState, 'githubIssues'> {
+//   githubIssues: any;
+// }
+
+const mapState = (state: iRootState) => ({
+  updateIssuesSelected: state.githubIssues.updateIssuesSelected,
+  query: state.githubIssues.query,
+});
+
 const mapDispatch = (dispatch: any) => ({
-  setNetworkDistanceGraphCeiling: dispatch.githubIssues.setNetworkDistanceGraphCeiling,
+  setNetworkData: dispatch.githubIssues.setNetworkData,
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps;
 const Network: React.FC<connectedProps> = (props: connectedProps) => {
-  const { zapiClient, setNetworkDistanceGraphCeiling } = props;
-
-  const [graphNodeSelected, setGraphNodeSelected] = React.useState({});
-  const [graphNodeSelectedDialog, setGraphNodeSelectedDialog] = React.useState({});
-
-  console.log(props);
-  console.log(graphNodeSelected);
-  console.log(graphNodeSelectedDialog);
+  const { setNetworkData, updateIssuesSelected, query } = props;
 
   const { data } = useQuery(GQL_NETWORK, {
     variables: {
-      rootNodes: ['MDU6SXNzdWU2NzUyNTA1MTA='],
+      query: JSON.stringify(query),
+      rootNodes: updateIssuesSelected.map((i: any) => i.id),
     },
     fetchPolicy: 'cache-and-network',
   });
 
-  if (data === undefined) {
-    return null;
-  }
-  const issuesGraph: any = data.githubIssues.data.network.nodes;
+  useEffect(() => {
+    if (data !== undefined) {
+      setNetworkData(data.githubIssues.data.network);
+    }
+  });
 
-  // Get ceiling distance
-  const distances = issuesGraph.map((i: any) => i.data.distance).filter((i: any) => i !== null);
-  if (distances.length > 0) {
-    setNetworkDistanceGraphCeiling(Math.max(...distances));
+  if (data === undefined) {
+    return (
+      <span>
+        <i>Please wait, loading data</i>
+      </span>
+    );
+  }
+  const issuesGraph = data.githubIssues.data.network;
+
+  if (issuesGraph.nodes.length === 0) {
+    return (
+      <span>
+        <i>No root nodes found</i>
+      </span>
+    );
   }
 
   return (
@@ -58,16 +69,12 @@ const Network: React.FC<connectedProps> = (props: connectedProps) => {
       <Selected />
       <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
         <Grid item xs={9}>
-          <IssuesGraph
-            setGraphNodeSelected={setGraphNodeSelected}
-            setGraphNodeSelectedDialog={setGraphNodeSelectedDialog}
-            issuesGraph={issuesGraph}
-            zapiClient={zapiClient}
-          />
+          <IssuesGraph issuesGraph={issuesGraph} updateIssuesSelected={updateIssuesSelected} />
         </Grid>
         <Grid item xs={3}>
-          <Controls />
+          <IssueHover />
           <Path />
+          <About />
         </Grid>
       </Grid>
     </React.Fragment>

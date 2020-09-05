@@ -51,12 +51,12 @@ export const githubIssues = {
     reposAvailable: [],
 
     networkGraph: {},
+    networkData: [],
     networkShowDialog: false,
+    networkNodeHover: {},
     networkNodeSelected: {},
     networkPathStart: {},
     networkPathEnd: {},
-    networkDistanceGraph: 5,
-    networkDistanceGraphCeiling: 10,
     networkUpdateTimeoutId: {},
     networkUpdating: false,
   },
@@ -182,8 +182,14 @@ export const githubIssues = {
     setNetworkGraph(state: any, payload: any) {
       return { ...state, networkGraph: payload };
     },
+    setNetworkData(state: any, payload: any) {
+      return { ...state, networkData: payload };
+    },
     setNetworkShowDialog(state: any, payload: any) {
       return { ...state, networkShowDialog: payload };
+    },
+    setNetworkNodeHover(state: any, payload: any) {
+      return { ...state, networkNodeHover: payload };
     },
     setNetworkNodeSelected(state: any, payload: any) {
       return { ...state, networkNodeSelected: payload };
@@ -193,12 +199,6 @@ export const githubIssues = {
     },
     setNetworkPathEnd(state: any, payload: any) {
       return { ...state, networkPathEnd: payload };
-    },
-    setNetworkDistanceGraph(state: any, payload: any) {
-      return { ...state, networkDistanceGraph: payload };
-    },
-    setNetworkDistanceGraphCeiling(state: any, payload: any) {
-      return { ...state, networkDistanceGraphCeiling: payload };
     },
     setNetworkUpdateTimeoutId(state: any, payload: any) {
       return { ...state, networkUpdateTimeoutId: payload };
@@ -284,10 +284,10 @@ export const githubIssues = {
       // Create new timeout
       const timeoutId = setTimeout(async () => {
         dispatch.githubIssues.setNetworkUpdating(true);
-        await sleep(100);
+        await sleep(500);
+        dispatch.githubIssues.setNetworkUpdating(false);
       }, 500);
       dispatch.githubIssues.setNetworkUpdateTimeoutId(timeoutId);
-      dispatch.githubIssues.setNetworkDistanceGraph(payload);
     },
   }),
 };

@@ -10,7 +10,8 @@ import DirectionsIcon from '@material-ui/icons/Directions';
 import ClearIcon from '@material-ui/icons/Clear';
 
 import { iRootState } from '../../../../../store';
-import CustomCard from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
+
 import IssueLink from './issueLink';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,9 +44,8 @@ const Path: React.FC<connectedProps> = (props: connectedProps) => {
 
   const nodeStart: any = networkPathStart;
   const nodeEnd: any = networkPathEnd;
-  console.log(nodeStart);
   return (
-    <CustomCard headerTitle="Draw Shorted Path" headerFactTitle="" headerFactValue="">
+    <DataCard title="Shortest Path">
       <Grid
         container
         direction="column"
@@ -95,7 +95,7 @@ const Path: React.FC<connectedProps> = (props: connectedProps) => {
           </Grid>
         </Grid>
       </Grid>
-    </CustomCard>
+    </DataCard>
   );
 };
 

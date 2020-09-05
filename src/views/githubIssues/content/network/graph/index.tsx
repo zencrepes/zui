@@ -1,38 +1,31 @@
 import React, { Component } from 'react';
-import { loader } from 'graphql.macro';
-
-import CustomCard from '../../../../../components/customCard';
-import IssueCompact from './issueTooltip';
-
 import { connect } from 'react-redux';
 
-import Cytoscape from 'cytoscape';
-import COSEBilkent from 'cytoscape-cose-bilkent';
-//import cytoscapeQtip from 'cytoscape-qtip';
-
-import popper from 'cytoscape-popper';
-
-import Tippy from 'tippy.js';
-import 'tippy.js/themes/light-border.css';
-import ReactDOMServer from 'react-dom/server';
+import { withRouter } from 'react-router-dom';
 
 import CytoscapeComponent from 'react-cytoscapejs';
+import Cytoscape from 'cytoscape';
+import COSEBilkent from 'cytoscape-cose-bilkent';
+
+import RefreshIcon from '@material-ui/icons/Refresh';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import ExploreIcon from '@material-ui/icons/Explore';
+import ClearIcon from '@material-ui/icons/Clear';
 
 import { iRootState } from '../../../../../store';
-
-const GQL_SINGLEISSUE = loader('../../../graphql/getIssue.graphql');
+import DataCard from '../../../../../components/dataCard';
 
 Cytoscape.use(COSEBilkent);
-Cytoscape.use(popper);
 
-const mapState = (state: iRootState) => ({
-  networkDistanceGraph: state.githubIssues.networkDistanceGraph,
-});
+const mapState = (state: iRootState) => ({});
 
 const mapDispatch = (dispatch: any) => ({
   setNetworkGraph: dispatch.githubIssues.setNetworkGraph,
   setNetworkShowDialog: dispatch.githubIssues.setNetworkShowDialog,
   setNetworkNodeSelected: dispatch.githubIssues.setNetworkNodeSelected,
+  setNetworkNodeHover: dispatch.githubIssues.setNetworkNodeHover,
+  setSelectedTab: dispatch.githubIssues.setSelectedTab,
+  setUpdateIssuesSelected: dispatch.githubIssues.setUpdateIssuesSelected,
 });
 
 class IssuesGraph extends Component<any, any> {
@@ -49,7 +42,6 @@ class IssuesGraph extends Component<any, any> {
 
   componentDidMount() {
     const { setNetworkGraph } = this.props;
-    console.log(this.chartRef);
     setNetworkGraph(this.chartRef);
     this.updateChart(this.chartRef);
   }
@@ -60,159 +52,21 @@ class IssuesGraph extends Component<any, any> {
       this.clickedLink = true;
       setNetworkNodeSelected(node);
       setNetworkShowDialog(true);
-      this.clearTippies();
       setTimeout(async () => {
         this.clickedLink = false;
       }, 500);
     }
   };
 
-  //https://github.com/cytoscape/cytoscape.js/blob/master/documentation/demos/tokyo-railways/tokyo-railways.js
-  makeTippy = async (node: any) => {
-    const { zapiClient } = this.props;
-    let nodeData = node.data();
-    console.log(nodeData.partial);
-    if (nodeData.partial !== true) {
-      const data = await zapiClient.query({
-        query: GQL_SINGLEISSUE,
-        variables: {
-          id: node.id(),
-        },
-        fetchPolicy: 'no-cache',
-        errorPolicy: 'ignore',
-      });
-      nodeData = data.data.githubIssues.data.item;
-    }
-
-    const tip = Tippy(document.createElement('div'), {
-      // const tip = Tippy(node.popperRef(), {
-      // content: node.id(),
-      content: function () {
-        return ReactDOMServer.renderToString(<IssueCompact issue={nodeData} />);
-      },
-      // content: function () {
-      //   return ReactDOMServer.renderToString(<span>{nodeData.title}</span>);
-      // },
-      // getReferenceClientRect: node.popperRef().getBoundingClientRect(),
-      theme: 'light-border',
-      // arrow: true,
-      hideOnClick: false,
-      allowHTML: true,
-      arrow: false,
-      // interactive: true,
-      interactiveBorder: 30,
-      trigger: 'manual',
-      showOnCreate: true,
-      // sticky: true,
-      getReferenceClientRect: () => node.popperRef().getBoundingClientRect(),
-      popperOptions: {
-        strategy: 'fixed',
-      },
-      //   sticky: true,
-      // interactive: true,
-      // onShow(instance: any) {
-      //   console.log(instance);
-      //   // instance.popperInstance.reference = node.popperRef();
-      // },
-    });
-    return tip;
-    /*
-    return Tippy(node.popperRef(), {
-      content: function () {
-        var div = document.createElement('div');
-        div.innerHTML = text;
-        // return div;
-        return ReactDOMServer.renderToString(<IssueCompact issue={nodeElement} />);
-      },
-      getReferenceClientRect: null,
-      trigger: 'manual',
-      theme: 'light-border',
-      arrow: true,
-      placement: 'bottom',
-      //hideOnClick: true,
-      interactive: true,
-      //   multiple: true,
-      //   sticky: true,
-      popperOptions: {
-        strategy: 'fixed',
-      },
-    });
-    */
-  };
-
-  // makePopper = (ele: any) => {
-  //   console.log(ele);
-  //   console.log(ele.data());
-  //   let ref = ele.popperRef();
-  //   ele.tippy = Tippy(document.createElement('div'), {
-  //     //   content: ReactDOMServer.renderToString(<IssueCompact issue={ele.data} />),
-  //     content: ele.id(),
-  //     hideOnClick: false,
-  //     onShow(instance: any) {
-  //       console.log(instance);
-  //       // instance.popperInstance.reference = ref;
-  //     },
-  //   });
-  // };
-
-  // Clear all previous tippies
-  clearTippies = () => {
-    Object.values(this.tippyInstances).forEach((tippy: any) => {
-      tippy.hide();
-      tippy.destroy();
-    });
-    this.tippyInstances = {};
-    this.selectedTippies = {};
-  };
-
   updateChart = (cy: any) => {
-    console.log('updateChart');
-    const { issuesGraph, networkDistanceGraph } = this.props;
+    const { issuesGraph, setNetworkNodeHover } = this.props;
 
-    const issuesGraphFiltered = issuesGraph.filter(
-      (i: any) => i.data.distance <= networkDistanceGraph || i.data.distance === null,
-    );
-
-    this.clearTippies();
-    // const makePop = this.makePopper;
     cy.elements().remove();
-    cy.add(issuesGraphFiltered);
-
-    // cy.ready(function () {
-    //   cy.elements().forEach(function (ele: any) {
-    //     makePop(ele);
-    //   });
-    // });
-
-    // cy.elements().unbind('mouseover');
-    // cy.elements().bind('mouseover', (event: any) => event.target.tippy.show());
-
-    // cy.elements().unbind('mouseout');
-    // cy.elements().bind('mouseout', (event: any) => event.target.tippy.hide());
+    cy.add(issuesGraph.nodes);
 
     cy.on('mouseover', 'node', async (event: any) => {
-      console.log('mouseover');
-      console.log(event);
-      const nodeId = event.target.id();
-      const dataNode = event.target.data();
-      const node = event.target;
-      if (this.tippyInstances[nodeId] === undefined) {
-        this.tippyInstances[nodeId] = await this.makeTippy(node);
-      }
-      this.tippyInstances[nodeId].show();
-    });
-
-    cy.on('mouseout', 'node', (event: any) => {
-      console.log('mouse out');
-      const nodeId = event.target.id();
-      if (this.tippyInstances[nodeId] !== undefined) {
-        // this.tippyInstances[nodeId].hide();
-        Object.values(this.tippyInstances).forEach((tippy: any) => {
-          tippy.hide();
-        });
-        // this.tippyInstances[nodeId].destroy();
-        // delete this.tippyInstances[nodeId];
-      }
+      // const nodeId = event.target.id();
+      setNetworkNodeHover(event.target.data());
     });
 
     cy.on('click', 'node', (event: any) => {
@@ -227,14 +81,14 @@ class IssuesGraph extends Component<any, any> {
   };
 
   render() {
+    const { issuesGraph, history, setSelectedTab, setUpdateIssuesSelected, updateIssuesSelected } = this.props;
+
     const stylesheet = [
       {
         selector: 'node',
         style: {
           width: 10,
           height: 10,
-          //                    content: 'data(id)'
-          //                    shape: 'vee'
         },
       },
       {
@@ -266,7 +120,19 @@ class IssuesGraph extends Component<any, any> {
         },
       },
       {
-        selector: '[?partial]',
+        selector: '[state = "MERGED"]',
+        style: {
+          backgroundColor: '#6f42c1',
+        },
+      },
+      // {
+      //   selector: '[?partial]',
+      //   style: {
+      //     shape: 'rectangle',
+      //   },
+      // },
+      {
+        selector: '[typename = "PullRequest"]',
         style: {
           shape: 'rectangle',
         },
@@ -304,25 +170,86 @@ class IssuesGraph extends Component<any, any> {
       },
     ];
 
-    /*
-edge.not-path {
-  opacity: 0.1;
-  z-index: 0;
-}
+    const redrawView = () => {
+      const layout = this.chartRef.layout({
+        name: 'cose-bilkent',
+        animate: 'end',
+        animationEasing: 'ease-out',
+        animationDuration: 1000,
+        randomize: true,
+      });
+      layout.run();
+    };
 
-node.not-path {
-  opacity: 0.333;
-  z-index: 0;
-}
+    const resetView = () => {
+      this.chartRef.fit();
+    };
 
-edge.path {
-  opacity: 0.666;
-  z-index: 0;
-}
- */
+    const clearSelected = () => {
+      setUpdateIssuesSelected([]);
+    };
+
+    const openIssues = () => {
+      const issues = issuesGraph.nodes.filter((n: any) => n.group === 'nodes').map((n: any) => n.id);
+      if (issues.length > 0) {
+        setSelectedTab('list');
+        const newQuery = {
+          op: 'and',
+          content: [
+            {
+              op: 'in',
+              content: {
+                field: 'id',
+                value: issues,
+              },
+            },
+          ],
+        };
+        history.push({
+          pathname: '/githubIssues',
+          search: '?q=' + encodeURIComponent(JSON.stringify(newQuery)),
+          state: { detail: newQuery },
+        });
+      }
+    };
+
+    const headerTitle =
+      issuesGraph.source === 'id'
+        ? 'Generated from issues selected in the list view'
+        : 'Generated from the current query';
+    const rootNodes = issuesGraph.nodes.filter((i: any) => i.data.distance === 0 && i.group === 'nodes');
+
+    const actionButtons = [
+      {
+        name: 'Redraw View',
+        onClick: redrawView,
+        icon: <RefreshIcon />,
+      },
+      {
+        name: 'Reset View',
+        onClick: resetView,
+        icon: <FullscreenIcon />,
+      },
+      {
+        name: 'See issues list',
+        onClick: openIssues,
+        icon: <ExploreIcon />,
+      },
+    ];
+    if (updateIssuesSelected.length > 0) {
+      actionButtons.push({
+        name: 'Clear Selected',
+        onClick: clearSelected,
+        icon: <ClearIcon />,
+      });
+    }
 
     return (
-      <CustomCard headerTitle="Issues Graph">
+      <DataCard
+        title="Issues Graph"
+        subtitle={headerTitle + ', with ' + rootNodes.length + ' root nodes.'}
+        actionButtons={actionButtons}
+      >
         <CytoscapeComponent
           elements={[]}
           layout={{ name: 'cose-bilkent' }}
@@ -330,9 +257,9 @@ edge.path {
           stylesheet={stylesheet}
           cy={(cy: any) => (this.chartRef = cy)}
         />
-      </CustomCard>
+      </DataCard>
     );
   }
 }
 
-export default connect(mapState, mapDispatch)(IssuesGraph);
+export default connect(mapState, mapDispatch)(withRouter(IssuesGraph));

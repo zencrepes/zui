@@ -18,6 +18,7 @@ const mapDispatch = (dispatch: any) => ({
   setNetworkNodeSelected: dispatch.githubIssues.setNetworkNodeSelected,
   setNetworkPathStart: dispatch.githubIssues.setNetworkPathStart,
   setNetworkPathEnd: dispatch.githubIssues.setNetworkPathEnd,
+  setUpdateIssuesSelected: dispatch.githubIssues.setUpdateIssuesSelected,
 });
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
@@ -29,11 +30,9 @@ const Selected: React.FC<connectedProps> = (props: connectedProps) => {
     networkNodeSelected,
     setNetworkPathEnd,
     setNetworkPathStart,
+    setUpdateIssuesSelected,
   } = props;
-
-  const openNode = () => {
-    console.log('openNode');
-  };
+  const selectedNode: any = networkNodeSelected;
 
   const closeDialog = () => {
     setNetworkShowDialog(false);
@@ -41,28 +40,14 @@ const Selected: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   const filterGraph = () => {
-    console.log('filterGraph');
-
-    // const {
-    //   setGraphNodeSelectedDialog,
-    //   setGraphNodeSelected,
-    //   graphNodeSelected,
-    //   setUpdateQuery,
-    //   setUpdateQueryPath,
-    //   setGraphPathStart,
-    //   setGraphPathEnd,
-    // } = this.props;
-    // const query = { id: { $in: [graphNodeSelected.id()] } };
-    // setUpdateQuery(query);
-    // setUpdateQueryPath('/issues/graph');
-    // setGraphNodeSelectedDialog(false);
-    // setGraphNodeSelected({});
-    // setGraphPathStart({});
-    // setGraphPathEnd({});
+    setUpdateIssuesSelected([{ id: selectedNode.id() }]);
+    setNetworkNodeSelected({});
+    setNetworkPathEnd({});
+    setNetworkPathStart({});
+    setNetworkShowDialog(false);
   };
 
   const setStart = () => {
-    console.log(networkNodeSelected);
     setNetworkPathStart(networkNodeSelected);
     setNetworkShowDialog(false);
     setNetworkNodeSelected({});
@@ -78,8 +63,9 @@ const Selected: React.FC<connectedProps> = (props: connectedProps) => {
     <Dialog onClose={closeDialog} aria-labelledby="Node selected" open={networkShowDialog}>
       <DialogTitle id="simple-dialog-title">Which action do you want to perform?</DialogTitle>
       <MenuList id="simple-menu">
-        <MenuItem onClick={openNode}>Open node in GitHub</MenuItem>
-        <MenuItem onClick={filterGraph}>Build new graph from selected node</MenuItem>
+        {Object.values(selectedNode).length > 0 && selectedNode._private.data.typename === 'Issue' && (
+          <MenuItem onClick={filterGraph}>Build new graph from selected node</MenuItem>
+        )}
         <MenuItem onClick={setStart}>Use node as Path start</MenuItem>
         <MenuItem onClick={setEnd}>Use node as Path end</MenuItem>
       </MenuList>

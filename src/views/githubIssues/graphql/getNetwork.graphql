@@ -1,9 +1,10 @@
-query($rootNodes: [String!]!) {
+query($query: String, $rootNodes: [String!]!) {
   githubIssues {
-    data {
+    data(query: $query) {
       network(rootNodes: $rootNodes) {
         totalCount
         processTime
+        source
         nodes {
           id
           group

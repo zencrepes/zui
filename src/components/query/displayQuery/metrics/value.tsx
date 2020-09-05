@@ -28,9 +28,17 @@ const Value: React.FC<Props> = (props: Props) => {
   };
 
   if (removeFilter !== null) {
-    return <Chip onDelete={handleDelete} variant="outlined" label={filter.content.value} className={classes.root} />;
+    return (
+      <Chip
+        size="small"
+        onDelete={handleDelete}
+        variant="outlined"
+        label={filter.content.value}
+        className={classes.root}
+      />
+    );
   } else {
-    return <Chip variant="outlined" label={filter.content.value} className={classes.root} />;
+    return <Chip size="small" variant="outlined" label={filter.content.value} className={classes.root} />;
   }
 };
 
