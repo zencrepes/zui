@@ -3,11 +3,11 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { CSVDownload } from 'react-csv';
 
-import { useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import { TableConfig, TableSort } from '../../../global';
+import Download from './download';
 
 interface Props {
   query: any;
@@ -31,8 +31,9 @@ const get = (obj: any, path: string, defaultValue = undefined) => {
 // Harcoding and limiting to 8000 records only for the time being
 const ExportTsv: React.FC<Props> = (props: Props) => {
   const { query, gqlQuery, totalCount, tableSort, tableConfig } = props;
+  const [download, setDownload] = React.useState(false);
 
-  const [getItems, { loading, data }] = useLazyQuery(gqlQuery, {
+  const { loading, data } = useQuery(gqlQuery, {
     variables: {
       from: 0,
       size: 0,
@@ -41,10 +42,11 @@ const ExportTsv: React.FC<Props> = (props: Props) => {
       sortDirection: tableSort.sortDirection,
     },
     fetchPolicy: 'cache-and-network',
+    skip: download === false, // Do not run the query if the download flag is set to false
   });
 
   const clickButton = async () => {
-    getItems();
+    setDownload(true);
   };
 
   let dataset: Array<any> = [];
@@ -67,6 +69,22 @@ const ExportTsv: React.FC<Props> = (props: Props) => {
             cpt++;
           }
           return exportString;
+        } else if (c.fieldType === 'rowarray') {
+          const value = get(i, c.field, undefined);
+          if (value.length > 0) {
+            const nodes = value.map((t: any) => get(t, c.subfield, undefined)).sort();
+            let exportString = '';
+            let cpt = 0;
+            for (const node of nodes) {
+              exportString = exportString + node;
+              if (nodes.length > 1 && cpt < nodes.length - 1) {
+                exportString = exportString + '|';
+              }
+              cpt++;
+            }
+            return exportString;
+          }
+          return '';
         } else if (c.fieldType === 'arraysum') {
           const fieldArray = get(i, c.field);
           if (!Array.isArray(fieldArray)) {
@@ -87,6 +105,7 @@ const ExportTsv: React.FC<Props> = (props: Props) => {
   if (loading) {
     return <CircularProgress variant="indeterminate" disableShrink size={20} thickness={4} />;
   }
+
   return (
     <React.Fragment>
       <Button variant="contained" color="primary" size="small" startIcon={<GetAppIcon />} onClick={clickButton}>
@@ -97,7 +116,9 @@ const ExportTsv: React.FC<Props> = (props: Props) => {
           <i>(first 8000)</i>{' '}
         </span>
       )}
-      {dataset.length > 0 && <CSVDownload data={dataset} target="_blank" />}
+      {dataset.length > 0 && download === true && (
+        <Download dataset={dataset} download={download} setDownload={setDownload} />
+      )}
     </React.Fragment>
   );
 };

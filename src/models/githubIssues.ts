@@ -9,6 +9,10 @@ declare global {
   }
 }
 
+const sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 export const githubIssues = {
   state: {
     log: {},
@@ -45,6 +49,16 @@ export const githubIssues = {
     verifiedIssues: [], // Array of issues that were verified in GitHub
 
     reposAvailable: [],
+
+    networkGraph: {},
+    networkData: [],
+    networkShowDialog: false,
+    networkNodeHover: {},
+    networkNodeSelected: {},
+    networkPathStart: {},
+    networkPathEnd: {},
+    networkUpdateTimeoutId: {},
+    networkUpdating: false,
   },
   reducers: {
     setLog(state: any, payload: any) {
@@ -165,6 +179,33 @@ export const githubIssues = {
     setUpdateAddLabelName(state: any, payload: any) {
       return { ...state, updateAddLabelName: payload };
     },
+    setNetworkGraph(state: any, payload: any) {
+      return { ...state, networkGraph: payload };
+    },
+    setNetworkData(state: any, payload: any) {
+      return { ...state, networkData: payload };
+    },
+    setNetworkShowDialog(state: any, payload: any) {
+      return { ...state, networkShowDialog: payload };
+    },
+    setNetworkNodeHover(state: any, payload: any) {
+      return { ...state, networkNodeHover: payload };
+    },
+    setNetworkNodeSelected(state: any, payload: any) {
+      return { ...state, networkNodeSelected: payload };
+    },
+    setNetworkPathStart(state: any, payload: any) {
+      return { ...state, networkPathStart: payload };
+    },
+    setNetworkPathEnd(state: any, payload: any) {
+      return { ...state, networkPathEnd: payload };
+    },
+    setNetworkUpdateTimeoutId(state: any, payload: any) {
+      return { ...state, networkUpdateTimeoutId: payload };
+    },
+    setNetworkUpdating(state: any, payload: any) {
+      return { ...state, networkUpdating: payload };
+    },
   },
   effects: (dispatch: Dispatch) => ({
     async initView() {
@@ -203,6 +244,50 @@ export const githubIssues = {
       if (originalTab !== newTab) {
         dispatch.githubIssues.setSelectedTab(newTab);
       }
+    },
+
+    async buildNetworkPath(payload: any, rootState: any) {
+      const cy = rootState.githubIssues.networkGraph;
+      setTimeout(() => {
+        const aStar = cy.elements().aStar({
+          root: rootState.githubIssues.networkPathStart,
+          goal: rootState.githubIssues.networkPathEnd,
+          weight: function (e: any) {
+            if (e.data('is_walking')) {
+              return 0.25; // assume very little time to walk inside stn
+            }
+            return e.data('is_bullet') ? 1 : 3; // assume bullet is ~3x faster
+          },
+        });
+
+        if (!aStar.found) {
+          dispatch.githubIssues.clearNetworkPath();
+          cy.endBatch();
+          return;
+        }
+        cy.elements().not(aStar.path).addClass('not-path');
+        aStar.path.addClass('path');
+        cy.endBatch();
+      }, 300);
+    },
+
+    async clearNetworkPath(payload: any, rootState: any) {
+      dispatch.githubIssues.setNetworkPathStart({});
+      dispatch.githubIssues.setNetworkPathEnd({});
+      const cy = rootState.githubIssues.networkGraph;
+      cy.elements().removeClass('path not-path start end');
+    },
+
+    async updateNetworkDistance(payload: any, rootState: any) {
+      clearTimeout(rootState.githubIssues.networkUpdateTimeoutId);
+
+      // Create new timeout
+      const timeoutId = setTimeout(async () => {
+        dispatch.githubIssues.setNetworkUpdating(true);
+        await sleep(500);
+        dispatch.githubIssues.setNetworkUpdating(false);
+      }, 500);
+      dispatch.githubIssues.setNetworkUpdateTimeoutId(timeoutId);
     },
   }),
 };

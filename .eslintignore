@@ -1,3 +1,5 @@
 .estlintrc.js
 .prettierrc.js
 src/serviceWorker.ts
+.storybook
+*stories*

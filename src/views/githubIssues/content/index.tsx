@@ -8,6 +8,7 @@ import Explore from './explore';
 import Analyze from './analyze';
 import Deliver from './deliver';
 // import Plan from './plan';
+import Network from './network';
 import List from './list';
 
 const mapState = (state: iRootState) => ({
@@ -35,6 +36,8 @@ const Content: React.FC<connectedProps> = (props: connectedProps) => {
       return <Deliver tableConfig={tableConfig} />;
     // case 'plan':
     //   return <Plan />;
+    case 'network':
+      return <Network />;
     case 'list':
       return <List tableConfig={tableConfig} />;
     default:

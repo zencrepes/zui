@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Term: React.FC<Props> = (props: Props) => {
   const { filter, facet, removeFilter, replaceFilter } = props;
   const classes = useStyles();
-  const [collapsed, setCollapsed] = React.useState(false);
+  const [collapsed, setCollapsed] = React.useState(true);
 
   if (Array.isArray(filter.content.value)) {
     let facetsValues = filter.content.value;

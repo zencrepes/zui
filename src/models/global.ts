@@ -106,6 +106,7 @@ export const global = {
 
     githubToken: null,
     githubClient: createApolloClient(''),
+    zapiClient: createApolloClient(''),
 
     auth0Initialized: false,
     authUser: null,
@@ -168,6 +169,9 @@ export const global = {
     },
     setGithubClient(state: any, payload: any) {
       return { ...state, githubClient: payload };
+    },
+    setZapiClient(state: any, payload: any) {
+      return { ...state, zapiClient: payload };
     },
     setCallbackState(state: any, payload: any) {
       return {
@@ -355,16 +359,33 @@ export const global = {
       }
     },
 
-    async doLogOutExpiredToken(payload: any, rootState: any) {
+    async doLogOutExpiredToken() {
       // Note: This is not a log-out, just a way to force the UI to re-login.      console.log(rootState.global.keycloak);
-      if (rootState.global.keycloak === null) {
-        dispatch.global.initApp();
-      } else {
-        rootState.global.keycloakLogOut({
-          redirectUri: window._env_.ROOT_URL + '/login?expiredToken',
+      // https://stackoverflow.com/questions/41017287/cannot-use-new-with-expression-typescript
+      const keycloak = Keycloak({
+        url: window._env_.KEYCLOAK_AUTH_SERVER_URL,
+        realm: window._env_.KEYCLOAK_REALM,
+        clientId: window._env_.KEYCLOAK_CLIENT_ID,
+      });
+      keycloak
+        .init({
+          onLoad: 'check-sso',
+          silentCheckSsoRedirectUri: window._env_.KEYCLOAK_AUDIENCE + '/silent-check-sso.html',
+        })
+        .then(() => {
+          keycloak.logout({
+            redirectUri: window._env_.ROOT_URL + '/login?expiredToken',
+          });
         });
-        dispatch.global.logOutUserAuth();
-      }
+
+      // if (rootState.global.keycloak === null) {
+      //   dispatch.global.initApp();
+      // } else {
+      //   rootState.global.keycloakLogOut({
+      //     redirectUri: window._env_.ROOT_URL + '/login?expiredToken',
+      //   });
+      //   dispatch.global.logOutUserAuth();
+      // }
     },
 
     async deleteKeycloakProfile(payload: any, rootState: any) {

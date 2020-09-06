@@ -19,7 +19,10 @@ const mapDispatch = (dispatch: any) => ({
 });
 
 const useStyles = makeStyles(() => ({
-  avatar: {},
+  avatar: {
+    width: 36,
+    height: 36,
+  },
 }));
 
 interface Props {

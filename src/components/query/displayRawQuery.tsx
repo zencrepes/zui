@@ -79,7 +79,11 @@ const DisplayRawQuery: React.FC<Props> = (props: Props) => {
                 >
                   Arranger SQON
                 </a>{' '}
-                for its query language, this editor is provided as a quick playground to navigate into your data.
+                for its query language, this editor is provided as a quick playground to navigate into your data. <br />
+                You can find more details about queries in{' '}
+                <a href="https://docs.zencrepes.io//docs/use/querying" target="_blank" rel="noopener noreferrer">
+                  ZenCrepes documentation
+                </a>{' '}
               </Typography>
               <Editor
                 value={query}

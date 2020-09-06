@@ -20,9 +20,11 @@ import { iRootState } from '../../store';
 
 import DashboardMenu from './menu/dashboard';
 import DynamicMenu from './menu/dynamic';
-import SettingsMenu from './menu/settings';
+// import SettingsMenu from './menu/settings';
 
 import Login from './login/index';
+import GitHub from './github';
+import Docs from './docs';
 
 interface Props {
   openDrawer: boolean;
@@ -146,6 +148,8 @@ const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
           <Typography variant="h6" noWrap className={classes.title}>
             ZenCrepes
           </Typography>
+          <Docs />
+          <GitHub />
           {loggedIn === true && <Login />}
         </Toolbar>
       </AppBar>
@@ -172,7 +176,7 @@ const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
             <Divider />
           </React.Fragment>
         )}
-        <SettingsMenu />
+        {/* <SettingsMenu /> */}
       </Drawer>
     </React.Fragment>
   );

@@ -9,6 +9,7 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
           createdAt
           closedAt
           updatedAt
+          number
           assignees {
             edges {
               node {
