@@ -1,0 +1,67 @@
+query {
+  githubRepositories {
+    data {
+      count
+    }
+  }
+  githubVulnerabilities {
+    data {
+      count
+    }
+  }
+  githubPullrequests {
+    data {
+      count
+    }
+  }
+  githubProjects {
+    data {
+      count
+    }
+  }
+  githubMilestones {
+    data {
+      count
+    }
+  }
+  githubLabels {
+    data {
+      count
+    }
+  }
+  githubReleases {
+    data {
+      count
+    }
+  }
+  githubIssues {
+    data {
+      count
+    }
+  }
+  githubWatchers {
+    data {
+      count
+    }
+  }
+  jiraIssues {
+    data {
+      count
+    }
+  }
+  circleciEnvvars {
+    data {
+      count
+    }
+  }
+  circleciInsights {
+    data {
+      count
+    }
+  }
+  circleciPipelines {
+    data {
+      count
+    }
+  }
+}

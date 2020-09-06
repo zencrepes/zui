@@ -43,9 +43,11 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
           {count}
         </Typography>
         <Typography variant="body2" component="p" color="textSecondary">
-          <IconButton aria-label="open" size="small" onClick={onClick}>
-            <SearchIcon fontSize="inherit" />
-          </IconButton>
+          {count > 0 && (
+            <IconButton aria-label="open" size="small" onClick={onClick}>
+              <SearchIcon fontSize="inherit" />
+            </IconButton>
+          )}
           {title}
         </Typography>
       </CardContent>

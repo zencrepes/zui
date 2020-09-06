@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
-import NumberCard from './numberCard';
+import NumberCard from '../../../../../components/numberCard';
 
 const QUICKNUMBERS_QUERY = loader('../../../graphql/getQuickNumbers.graphql');
 
