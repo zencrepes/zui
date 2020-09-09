@@ -96,10 +96,10 @@ const PullRequest: React.FC<Props> = (props: Props) => {
     errorPolicy: 'ignore',
   });
 
-  if (data === undefined || data.githubIssues.data === undefined || data.githubIssues.data.item === null) {
+  if (data === undefined || data.githubPullrequests.data === undefined || data.githubPullrequests.data.item === null) {
     return null;
   }
-  const issue: any = data.githubIssues.data.item;
+  const issue: any = data.githubPullrequests.data.item;
 
   return (
     <DataCard>

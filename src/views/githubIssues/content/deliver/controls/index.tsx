@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 
-import Card from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 
 import { iRootState } from '../../../../../store';
 
@@ -36,7 +36,7 @@ const Controls: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   return (
-    <Card headerTitle="" headerFactTitle="" headerFactValue="">
+    <DataCard>
       <GetAggs
         field="labels.edges.node.name.keyword"
         setDataBuckets={setQueryLabelsAggs}
@@ -55,7 +55,7 @@ const Controls: React.FC<connectedProps> = (props: connectedProps) => {
           <SelectSprint pushNewQuery={pushNewQuery} />
         </Grid>
       </Grid>
-    </Card>
+    </DataCard>
   );
 };
 

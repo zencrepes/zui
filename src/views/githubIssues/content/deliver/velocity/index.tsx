@@ -5,16 +5,10 @@ import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import Typography from '@material-ui/core/Typography';
 
-import Card from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 import VelocityChart from '../../../../../components/charts/chartJS/velocityChart';
 
 import { iRootState } from '../../../../../store';
-
-interface BucketObj {
-  key: string;
-  count: number;
-  docCount: number;
-}
 
 const mapState = (state: iRootState) => ({
   queryVelocity: state.githubIssues.queryVelocity,
@@ -31,9 +25,9 @@ const Velocity: React.FC<connectedProps> = (props: connectedProps) => {
   const velocity: any = queryVelocity;
   if (Object.values(velocity).length === 0) {
     return (
-      <Card headerTitle="Velocity" headerFactTitle="" headerFactValue="">
+      <DataCard title="Velocity">
         <span>Loading data</span>
-      </Card>
+      </DataCard>
     );
   }
 
@@ -60,7 +54,7 @@ const Velocity: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   return (
-    <Card headerTitle="Velocity" headerFactTitle="" headerFactValue="">
+    <DataCard title="Velocity">
       {Object.values(velocity).length > 0 && (
         <React.Fragment>
           <VelocityChart data={chartData} />
@@ -79,7 +73,7 @@ const Velocity: React.FC<connectedProps> = (props: connectedProps) => {
           </Typography>
         </React.Fragment>
       )}
-    </Card>
+    </DataCard>
   );
 };
 

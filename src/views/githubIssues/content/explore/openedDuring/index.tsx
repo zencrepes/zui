@@ -2,7 +2,7 @@ import React from 'react';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 
-import CustomCard from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 import SimpleBar from '../../../../../components/charts/chartJS/simpleBar';
 
 import { createTermFilter, addFilterToQuery } from '../../../../../utils/query';
@@ -11,7 +11,7 @@ const OPENEDDURING_QUERY = loader('../../../graphql/getOpenedDuring.graphql');
 
 interface Props {
   query: any;
-  openQuery: Function;
+  openQuery: (newQuery: any) => void;
 }
 
 const buildBucketQuery = (from: number, to: number | null, query: any) => {
@@ -78,9 +78,9 @@ const OpenedDuring: React.FC<Props> = (props: Props) => {
       labels: buckets.map((b: any) => b.name),
     };
     return (
-      <CustomCard headerTitle="Have been opened during" headerFactTitle="Currently CLOSED" headerFactValue="">
+      <DataCard title="Have been opened during" subtitle="How long have closed issues been opened for?">
         <SimpleBar chartData={chartData} buckets={buckets} openQuery={openQuery} />
-      </CustomCard>
+      </DataCard>
     );
   }
   return <span>Loading data</span>;

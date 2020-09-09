@@ -3,7 +3,9 @@ import * as log from 'loglevel';
 import Keycloak from 'keycloak-js';
 import axios from 'axios';
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink, from } from '@apollo/client';
-import { setContext } from '@apollo/link-context';
+import { setContext } from '@apollo/client/link/context';
+// import { setContext } from '@apollo/link-context';
+import { onError } from '@apollo/client/link/error';
 
 import { Dispatch } from '../store';
 import Dexie from 'dexie';
@@ -31,9 +33,18 @@ const createApolloClient = (ghToken: string) => {
     };
   });
 
+  const errorLink = onError(({ graphQLErrors, networkError, response }) => {
+    if (graphQLErrors)
+      graphQLErrors.map(({ message, locations, path }) =>
+        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
+      );
+
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+  });
+
   const client = new ApolloClient({
     cache: new InMemoryCache(),
-    link: from([(authLink as unknown) as ApolloLink, httpLink]),
+    link: from([(authLink as unknown) as ApolloLink, errorLink, httpLink]),
   });
 
   return client;
@@ -69,7 +80,7 @@ const refreshToken = (keycloak: any) => {
   setInterval(function () {
     keycloak
       .updateToken(30) // Number of seconds prior to expiry
-      .success(() => {
+      .then(() => {
         // console.log(
         //   new Date().toISOString() +
         //     ': successfully got a new token: ' +
@@ -79,13 +90,19 @@ const refreshToken = (keycloak: any) => {
         // );
         localStorage.setItem('token', keycloak.token);
       })
-      .error(() => {
+      .catch(() => {
         console.log('Unable to refresh token');
       });
   }, 60000);
 };
 
-export const global = {
+interface Global {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+
+export const global: Global = {
   state: {
     log: log.noConflict(),
     loading: false,
@@ -256,7 +273,7 @@ export const global = {
               keycloak.onTokenExpired = () => {
                 keycloak
                   .updateToken(30)
-                  .success(() => {
+                  .then(() => {
                     keycloak.loadUserInfo().then((userInfo: any) => {
                       dispatch.global.setUserSession({
                         loggedIn: true,
@@ -268,7 +285,7 @@ export const global = {
                       });
                     });
                   })
-                  .error(() => {
+                  .catch(() => {
                     console.log('Unable to refresh token');
                   });
               };

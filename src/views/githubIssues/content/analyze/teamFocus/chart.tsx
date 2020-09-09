@@ -11,8 +11,8 @@ interface Props {
   query: any;
   dataset: any;
   field: any;
-  setField: Function;
-  openMatrixClick: Function;
+  setField: (value: string) => void;
+  openMatrixClick: (field: string, fieldValue: string, startWeek: string) => void;
   defaultPoints: boolean;
 }
 
@@ -115,7 +115,7 @@ const Chart: React.FC<Props> = (props: Props) => {
         />
       </Grid>
       <Grid item xs={12}>
-        {updatedDataset.length > 5 ? (
+        {updatedDataset.length > 3 ? (
           <MatrixDateChart
             dataset={updatedDataset}
             weeks={emptyCalendarSliced}

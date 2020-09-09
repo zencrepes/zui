@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import Card from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 
 import { iRootState } from '../../../../../store';
 
@@ -41,14 +41,11 @@ const Forecast: React.FC<connectedProps> = (props: connectedProps) => {
 
   const remainingPoints = remaining.length !== 1 ? 0 : remaining[0].count;
   const remainingIssues = remaining.length !== 1 ? 0 : remaining[0].docCount;
+  const remainingCount = defaultPoints ? remainingPoints : remainingIssues;
   const chartUnit = defaultPoints ? 'Points' : 'Issues';
 
   return (
-    <Card
-      headerTitle="Forecast"
-      headerFactTitle={'Remaining ' + chartUnit}
-      headerFactValue={defaultPoints ? remainingPoints : remainingIssues}
-    >
+    <DataCard title="Forecast" subtitle={'Remaining ' + remainingCount + ' ' + chartUnit}>
       <Table aria-label="Velocity Table" size="small">
         <TableHead>
           <TableRow>
@@ -182,7 +179,7 @@ const Forecast: React.FC<connectedProps> = (props: connectedProps) => {
           )}
         </TableBody>
       </Table>
-    </Card>
+    </DataCard>
   );
 };
 

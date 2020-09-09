@@ -6,17 +6,11 @@ import { useQuery } from '@apollo/client';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import Card from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 
 import { iRootState } from '../../../../../store';
 
 const GQL_QUERY = loader('../../../graphql/getParents.graphql');
-
-interface BucketObj {
-  key: string;
-  count: number;
-  docCount: number;
-}
 
 const mapState = (state: iRootState) => ({
   query: state.githubIssues.query,
@@ -44,7 +38,7 @@ const Description: React.FC<connectedProps> = (props: connectedProps) => {
   const milestones = data.githubIssues.data.milestones.nodes;
 
   return (
-    <Card headerTitle="" headerFactTitle="" headerFactValue="">
+    <DataCard>
       <Grid container direction="column" justify="flex-start" alignItems="flex-start" spacing={1}>
         <Grid item>
           <Typography variant="body2" gutterBottom>
@@ -128,7 +122,7 @@ const Description: React.FC<connectedProps> = (props: connectedProps) => {
           )}
         </Grid>
       </Grid>
-    </Card>
+    </DataCard>
   );
 };
 

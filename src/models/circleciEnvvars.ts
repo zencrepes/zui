@@ -9,7 +9,13 @@ declare global {
   }
 }
 
-export const circleciEnvvars = {
+interface CircleciEnvvars {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+
+export const circleciEnvvars: CircleciEnvvars = {
   state: {
     log: {},
     loading: false,

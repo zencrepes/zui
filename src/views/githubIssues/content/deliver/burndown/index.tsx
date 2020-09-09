@@ -5,7 +5,7 @@ import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import Typography from '@material-ui/core/Typography';
 
-import Card from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 import VelocityChart from '../../../../../components/charts/chartJS/velocityChart';
 
 import { iRootState } from '../../../../../store';
@@ -104,14 +104,14 @@ const Burndown: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   return (
-    <Card headerTitle="Burndown" headerFactTitle="" headerFactValue="">
+    <DataCard title="Burndown">
       <VelocityChart data={chartData} />
       {queryVelocityDaily.length > 100 && (
         <Typography variant="caption" display="block" gutterBottom>
           You seem to be having a lot of data points, try narrowing your dataset for better display.
         </Typography>
       )}
-    </Card>
+    </DataCard>
   );
 };
 

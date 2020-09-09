@@ -9,7 +9,13 @@ declare global {
   }
 }
 
-export const circleciPipelines = {
+interface CircleciPipelines {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+
+export const circleciPipelines: CircleciPipelines = {
   state: {
     log: {},
     loading: false,

@@ -9,7 +9,13 @@ declare global {
   }
 }
 
-export const githubLabels = {
+interface GithubLabels {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+
+export const githubLabels: GithubLabels = {
   state: {
     log: {},
     loadFlag: false, // Flag to trigger data modifications in GitHub

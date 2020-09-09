@@ -9,7 +9,13 @@ declare global {
   }
 }
 
-export const githubRepositories = {
+interface GithubRepositories {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+
+export const githubRepositories: GithubRepositories = {
   state: {
     log: {},
     loadFlag: false, // Flag to trigger data modifications in GitHub

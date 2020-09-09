@@ -8,8 +8,13 @@ declare global {
     _env_: any;
   }
 }
+interface GithubReleases {
+  state: any;
+  reducers: any;
+  effects: any;
+}
 
-export const githubReleases = {
+export const githubReleases: GithubReleases = {
   state: {
     log: {},
     loading: false,

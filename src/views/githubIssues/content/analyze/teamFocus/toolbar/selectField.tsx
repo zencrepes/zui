@@ -15,7 +15,7 @@ const aggregationFields = [
 
 interface Props {
   field: string;
-  setField: Function;
+  setField: (value: string) => void;
 }
 
 const SelectField: React.FC<Props> = (props: Props) => {
@@ -32,7 +32,7 @@ const SelectField: React.FC<Props> = (props: Props) => {
           setField(newValue.value);
         }
       }}
-      renderInput={(params) => <TextField {...params} label="Aggregation field" />}
+      renderInput={(params) => <TextField {...params} label="Aggregated field" />}
     />
   );
 };

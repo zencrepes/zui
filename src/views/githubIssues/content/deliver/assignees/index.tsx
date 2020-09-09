@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 
-import Card from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 import GetAggs from '../data/getAggs';
 
 import { iRootState } from '../../../../../store';
@@ -26,7 +26,7 @@ const Assignees: React.FC<connectedProps> = (props: connectedProps) => {
   const [assignees, setAssignees] = React.useState([]);
 
   return (
-    <Card headerTitle="Assignees" headerFactTitle="" headerFactValue="">
+    <DataCard title="Assignees">
       <GetAggs field="assignees.edges.node.login" setDataBuckets={setAssignees} remainingQuery={query} />
 
       <Table aria-label="Labels Table" size="small">
@@ -54,7 +54,7 @@ const Assignees: React.FC<connectedProps> = (props: connectedProps) => {
           <i>and {assignees.length - 20} more...</i>
         </Typography>
       )}
-    </Card>
+    </DataCard>
   );
 };
 

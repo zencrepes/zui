@@ -5,7 +5,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import AggregationTree from '../../../../../components/charts/nivo/aggregationTree';
-import Card from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 import GetAggs from '../data/getAggs';
 
 import { iRootState } from '../../../../../store';
@@ -111,9 +111,9 @@ const RemainingBy: React.FC<connectedProps> = (props: connectedProps) => {
       {!dataset.includes('label:') && (
         <GetAggs field={dataset} setDataBuckets={setDataBuckets} remainingQuery={remainingQuery} />
       )}
-      <Card
-        headerTitle="Remaining"
-        headerFactTitle={
+      <DataCard
+        title="Remaining"
+        subselect={
           <Select
             labelId="select-remaining-by-agg"
             id="select-remaining-by-agg"
@@ -147,7 +147,6 @@ const RemainingBy: React.FC<connectedProps> = (props: connectedProps) => {
             })}
           </Select>
         }
-        headerFactValue=""
       >
         {buckets.length > 0 && (
           <React.Fragment>
@@ -165,7 +164,7 @@ const RemainingBy: React.FC<connectedProps> = (props: connectedProps) => {
             <i>No data available, are all issues closed?</i>
           </span>
         )}
-      </Card>
+      </DataCard>
     </React.Fragment>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 
-import CustomCard from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 
 import SimpleBar from '../../../../../components/charts/chartJS/simpleBar';
 
@@ -11,7 +11,7 @@ const OPENEDSINCE_QUERY = loader('../../../graphql/getOpenedSince.graphql');
 interface Props {
   query: any;
   buckets: Array<any>;
-  openQuery: Function;
+  openQuery: (newQuery: any) => void;
 }
 
 const getBucket = (buckets: Array<any>, key: string) => {
@@ -53,9 +53,9 @@ const OpenedSince: React.FC<Props> = (props: Props) => {
       labels: buckets.filter((b: any) => data.githubIssues[b.key] !== undefined).map((b: any) => b.name),
     };
     return (
-      <CustomCard headerTitle="Have been opened for" headerFactTitle="Currently OPEN" headerFactValue="">
+      <DataCard title="Have been opened for" subtitle="These issues are still OPEN">
         <SimpleBar chartData={chartData} buckets={buckets} openQuery={openQuery} />
-      </CustomCard>
+      </DataCard>
     );
   }
   return <span>Loading data</span>;

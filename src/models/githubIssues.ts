@@ -13,7 +13,13 @@ const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const githubIssues = {
+interface GithubIssues {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+
+export const githubIssues: GithubIssues = {
   state: {
     log: {},
     loadFlag: false, // Flag to trigger data modifications in GitHub

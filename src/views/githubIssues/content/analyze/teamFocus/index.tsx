@@ -3,7 +3,7 @@ import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import CustomCard from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 
 import Chart from './chart';
 
@@ -11,7 +11,7 @@ const ACTIVITYMATRIX_QUERY = loader('../../../graphql/getActivityMatrix.graphql'
 
 interface Props {
   query: any;
-  openMatrixClick: Function;
+  openMatrixClick: (field: string, fieldValue: string, startWeek: string) => void;
   defaultPoints: boolean;
 }
 
@@ -24,18 +24,14 @@ const TeamFocus: React.FC<Props> = (props: Props) => {
       query: JSON.stringify(query),
       field: field,
       dateField: 'closedAt',
-      aggOptions: JSON.stringify({ points: true }), // eslint-disable-line @typescript-eslint/camelcase
+      aggOptions: JSON.stringify({ points: true }),
     },
     fetchPolicy: 'cache-and-network',
   });
   if (data !== undefined) {
     const dataset = data.githubIssues.data.matrix;
     return (
-      <CustomCard
-        headerTitle="Focus Heatmap"
-        headerFactTitle="Number of issues closed per aggregation field and per week"
-        headerFactValue=""
-      >
+      <DataCard title="Focus Heatmap" subtitle="Number of issues closed per aggregated field and per week">
         <Chart
           dataset={dataset}
           field={dataset.field}
@@ -44,7 +40,7 @@ const TeamFocus: React.FC<Props> = (props: Props) => {
           openMatrixClick={openMatrixClick}
           defaultPoints={defaultPoints}
         />
-      </CustomCard>
+      </DataCard>
     );
   }
   return <LinearProgress />;

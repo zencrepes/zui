@@ -8,8 +8,13 @@ declare global {
     _env_: any;
   }
 }
+interface GithubVulnerabilities {
+  state: any;
+  reducers: any;
+  effects: any;
+}
 
-export const githubVulnerabilities = {
+export const githubVulnerabilities: GithubVulnerabilities = {
   state: {
     log: {},
     loading: false,

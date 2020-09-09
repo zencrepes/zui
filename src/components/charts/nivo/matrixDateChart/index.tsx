@@ -4,6 +4,10 @@ import { ResponsiveHeatMapCanvas } from '@nivo/heatmap';
 
 import { format } from 'date-fns';
 
+const formatWeekEnd = (weekStart: string | number | Date) => {
+  return format(new Date(weekStart), 'yyyy, MMM do');
+};
+
 const styles = () =>
   createStyles({
     root: {
@@ -15,9 +19,9 @@ class MatrixDateChart extends Component<any, any> {
   completionWeeks: any = {};
   dataset: any = {};
 
-  formatWeekEnd = (weekStart: string) => {
-    return format(new Date(weekStart), 'yyyy, MMM do');
-  };
+  // formatWeekEnd = (weekStart: string) => {
+  //   return format(new Date(weekStart), 'yyyy, MMM do');
+  // };
 
   cellClick = (e: any) => {
     const { dataset, field, openMatrixClick } = this.props;
@@ -52,19 +56,22 @@ class MatrixDateChart extends Component<any, any> {
             tickRotation: -90,
             legend: '',
             legendOffset: 36,
-            format: (weekStart: string) => this.formatWeekEnd(weekStart),
+            format: function (value) {
+              return formatWeekEnd(value);
+            },
+            // format: (weekStart: string) => this.formatWeekEnd(weekStart),
           }}
           axisLeft={{
-            orient: 'middle',
+            // orient: 'middle',
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
             legend: '',
             legendPosition: 'middle',
             legendOffset: -40,
-            onClick: () => {
-              console.log('On Click');
-            },
+            // onClick: () => {
+            //   console.log('On Click');
+            // },
           }}
           onClick={(e) => {
             this.cellClick(e);

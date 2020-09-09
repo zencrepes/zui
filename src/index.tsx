@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink, from } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import { setContext } from '@apollo/link-context';
-import { onError } from '@apollo/link-error';
+import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
+// import { setContext } from '@apollo/link-context';
+// import { onError } from '@apollo/link-error';
 
 import './index.css';
 import App from './App';
