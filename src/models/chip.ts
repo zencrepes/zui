@@ -1,5 +1,10 @@
 // Represent a GitHub token chip (used for verifying rate limiting)
-export const chip = {
+interface Chip {
+  state: any;
+  reducers: any;
+}
+
+export const chip: Chip = {
   state: {
     limit: 5000,
     cost: 1,

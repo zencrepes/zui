@@ -1,6 +1,12 @@
 import { Dispatch } from '../store';
 
-export const loading = {
+interface Loading {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+
+export const loading: Loading = {
   state: {
     loading: false, // Flag indicating something is loading
     loadingTitle: null, // Title to be displayed

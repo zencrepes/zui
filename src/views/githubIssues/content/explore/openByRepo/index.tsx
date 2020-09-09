@@ -2,7 +2,7 @@ import React from 'react';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 
-import CustomCard from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 
 import AggregationTree from '../../../../../components/charts/nivo/aggregationTree';
 
@@ -10,7 +10,7 @@ const OPENBYREPO_QUERY = loader('../../../graphql/getOpenByRepo.graphql');
 
 interface Props {
   query: any;
-  openQuery: Function;
+  openQuery: (newQuery: any) => void;
 }
 
 const buildByAggClickQuery = (query: any, field: string, value: string) => {
@@ -55,16 +55,14 @@ const OpenByRepo: React.FC<Props> = (props: Props) => {
       buckets = buckets.slice(0, maxBucketsToDisplay);
     }
     return (
-      <CustomCard
-        headerTitle={
+      <DataCard
+        title={
           'Open Issues per Repository' +
           (srcBucketsSize > maxBucketsToDisplay ? ' (top ' + maxBucketsToDisplay + ')' : '')
         }
-        headerFactTitle=""
-        headerFactValue=""
       >
         <AggregationTree buckets={buckets} onAggClick={onAggClick} />
-      </CustomCard>
+      </DataCard>
     );
   }
   return <span>Loading data</span>;

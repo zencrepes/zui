@@ -8,8 +8,12 @@ declare global {
     _env_: any;
   }
 }
-
-export const jiraIssues = {
+interface JiraIssues {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+export const jiraIssues: JiraIssues = {
   state: {
     log: {},
     loading: false,

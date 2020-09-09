@@ -91,25 +91,26 @@ const useStyles = makeStyles(() => ({
 
 interface ActionButton {
   name: string;
-  onClick: Function;
+  onClick: () => void;
   icon?: React.ReactElement;
 }
 
 interface MenuItem {
   name: string;
-  onClick: Function;
+  onClick: () => void;
 }
 
 interface Props {
   title?: string;
   subtitle?: string;
   menuItems?: MenuItem[];
+  subselect?: any;
   actionButtons?: ActionButton[];
   children: any;
 }
 
 const DataCard: React.FC<Props> = (props: Props) => {
-  const { title, subtitle, menuItems, actionButtons, children } = props;
+  const { title, subtitle, menuItems, actionButtons, children, subselect } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const classes = useStyles();
@@ -131,6 +132,8 @@ const DataCard: React.FC<Props> = (props: Props) => {
             <IconButton aria-label="settings" onClick={handleClick}>
               <MoreVertIcon fontSize="small" />
             </IconButton>
+          ) : subselect !== undefined ? (
+            subselect
           ) : null
         }
         title={title}

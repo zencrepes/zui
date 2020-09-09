@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 
-import Card from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 import CompletionBar from '../../../../../components/charts/chartJS/completionBar';
 
 import { iRootState } from '../../../../../store';
@@ -65,9 +65,9 @@ const CurrentCompletion: React.FC<connectedProps> = (props: connectedProps) => {
   const states = data.githubIssues.data.aggregations.buckets;
   if (states.length === 0) {
     return (
-      <Card headerTitle="Completion" headerFactTitle="" headerFactValue="">
+      <DataCard title="Completion">
         <span>No data available</span>
-      </Card>
+      </DataCard>
     );
   }
   const pointsTotal = states.map((s: BucketObj) => s.count).reduce((acc: number, count: number) => acc + count, 0);
@@ -100,9 +100,9 @@ const CurrentCompletion: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   return (
-    <Card headerTitle="Completion" headerFactTitle="" headerFactValue="">
+    <DataCard title="Completion">
       <CompletionBar chartData={chartData} />
-    </Card>
+    </DataCard>
   );
 };
 

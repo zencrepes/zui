@@ -29,7 +29,6 @@ const Dashboard: React.FC<RouteComponentProps> = (props: RouteComponentProps) =>
     });
   };
 
-  console.log(data);
   return (
     <Layout>
       <Grid container spacing={3} direction="row" justify="center" alignItems="center">

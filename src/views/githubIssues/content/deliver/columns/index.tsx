@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 
-import Card from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 import GetAggs from '../data/getAggs';
 
 import { iRootState } from '../../../../../store';
@@ -26,7 +26,7 @@ const Columns: React.FC<connectedProps> = (props: connectedProps) => {
   const [columns, setColumns] = React.useState([]);
 
   return (
-    <Card headerTitle="Project Columns" headerFactTitle="" headerFactValue="">
+    <DataCard title="Project Columns">
       <GetAggs field="projectCards.edges.node.column.name.keyword" setDataBuckets={setColumns} remainingQuery={query} />
 
       <Table aria-label="Velocity Table" size="small">
@@ -54,7 +54,7 @@ const Columns: React.FC<connectedProps> = (props: connectedProps) => {
           <i>and {columns.length - 20} more...</i>
         </Typography>
       )}
-    </Card>
+    </DataCard>
   );
 };
 

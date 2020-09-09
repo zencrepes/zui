@@ -9,7 +9,13 @@ declare global {
   }
 }
 
-export const githubWatchers = {
+interface GithubWatchers {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+
+export const githubWatchers: GithubWatchers = {
   state: {
     log: {},
     loading: false,

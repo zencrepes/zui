@@ -9,7 +9,13 @@ declare global {
   }
 }
 
-export const githubMilestones = {
+interface GithubMilestones {
+  state: any;
+  reducers: any;
+  effects: any;
+}
+
+export const githubMilestones: GithubMilestones = {
   state: {
     log: {},
     loading: false,

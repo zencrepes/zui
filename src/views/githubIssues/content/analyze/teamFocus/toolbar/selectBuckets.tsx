@@ -6,7 +6,7 @@ import Slider from '@material-ui/core/Slider';
 interface Props {
   maxBuckets: number;
   totalBuckets: number;
-  setMaxBuckets: Function;
+  setMaxBuckets: (value: number) => void;
 }
 
 const useStyles = makeStyles({

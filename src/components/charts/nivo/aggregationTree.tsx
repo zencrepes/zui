@@ -12,7 +12,9 @@ const style = {
 class AggregationTree extends Component<any, any> {
   clickIssues = (data: any) => {
     const { onAggClick } = this.props;
-    onAggClick(data.data.name);
+    if (onAggClick !== undefined) {
+      onAggClick(data.data.name);
+    }
   };
 
   truncate = (c: string) => {

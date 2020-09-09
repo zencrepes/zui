@@ -2,7 +2,7 @@ import React from 'react';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 
-import CustomCard from '../../../../../components/customCard';
+import DataCard from '../../../../../components/dataCard';
 
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
@@ -13,7 +13,7 @@ const PRWEEK_QUERY = loader('../../../graphql/getPrsClosedPerWeek.graphql');
 
 interface Props {
   query: any;
-  openWeek: Function;
+  openWeek: (weekData: any) => void;
   defaultPoints: boolean;
 }
 
@@ -23,7 +23,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
   const { data } = useQuery(PRWEEK_QUERY, {
     variables: {
       query: JSON.stringify(query),
-      aggOptions: JSON.stringify({ calendarInterval: 'week', sumField: 'points' }), // eslint-disable-line @typescript-eslint/camelcase
+      aggOptions: JSON.stringify({ calendarInterval: 'week', sumField: 'points' }),
     },
     fetchPolicy: 'cache-and-network',
   });
@@ -85,9 +85,9 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
     };
 
     return (
-      <CustomCard headerTitle="Activity per week" headerFactTitle="" headerFactValue="">
+      <DataCard title="Activity per week">
         <HistoryLine chartData={chartData} dataset={dataseries} openClick={openWeek} />
-      </CustomCard>
+      </DataCard>
     );
   }
   return <span>Loading data</span>;

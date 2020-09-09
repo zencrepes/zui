@@ -8,8 +8,13 @@ declare global {
     _env_: any;
   }
 }
+interface GithubPullrequests {
+  state: any;
+  reducers: any;
+  effects: any;
+}
 
-export const githubPullrequests = {
+export const githubPullrequests: GithubPullrequests = {
   state: {
     log: {},
     loading: false,
