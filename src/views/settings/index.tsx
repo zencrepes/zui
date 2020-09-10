@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 
 import Layout from '../../layout';
 
-const Settings: React.FC<{}> = () => {
+const Settings: React.FC<any> = () => {
   return (
     <Layout>
       <Typography paragraph>This is the settings section</Typography>
