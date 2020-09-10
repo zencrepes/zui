@@ -1,0 +1,14 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  githubIssues {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          title
+        }
+      }
+    }
+  }
+}

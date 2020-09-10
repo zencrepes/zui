@@ -9,6 +9,7 @@ import DataCard from '../../../../../components/dataCard';
 import VelocityChart from '../../../../../components/charts/chartJS/velocityChart';
 
 import { iRootState } from '../../../../../store';
+import SelectAssignees from './selectAssignees';
 
 const mapState = (state: iRootState) => ({
   queryVelocity: state.githubIssues.queryVelocity,
@@ -54,7 +55,7 @@ const Velocity: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   return (
-    <DataCard title="Velocity">
+    <DataCard title="Velocity" subselect={<SelectAssignees />}>
       {Object.values(velocity).length > 0 && (
         <React.Fragment>
           <VelocityChart data={chartData} />

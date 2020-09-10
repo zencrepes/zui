@@ -54,6 +54,9 @@ export const githubIssues: GithubIssues = {
     updateCurrentStep: 0,
     verifiedIssues: [], // Array of issues that were verified in GitHub
 
+    velocityTeams: [],
+    velocitySelectedTeam: 'default',
+
     reposAvailable: [],
 
     networkGraph: {},
@@ -167,6 +170,12 @@ export const githubIssues: GithubIssues = {
     },
     setUpdateTransferSelectedRepoId(state: any, payload: any) {
       return { ...state, updateTransferSelectedRepoId: payload };
+    },
+    setVelocitySelectedTeam(state: any, payload: any) {
+      return { ...state, velocitySelectedTeam: payload };
+    },
+    setVelocityTeams(state: any, payload: any) {
+      return { ...state, velocityTeams: payload };
     },
     setReposAvailable(state: any, payload: any) {
       return { ...state, reposAvailable: payload };
