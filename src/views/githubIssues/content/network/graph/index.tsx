@@ -12,7 +12,6 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import ExploreIcon from '@material-ui/icons/Explore';
 import ClearIcon from '@material-ui/icons/Clear';
 
-import { iRootState } from '../../../../../store';
 import DataCard from '../../../../../components/dataCard';
 
 Cytoscape.use(COSEBilkent);
