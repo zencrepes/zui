@@ -19,12 +19,6 @@ import { Issue } from '../../../../types/github/issue';
 
 import SelectIssue from './selectIssue';
 
-interface ItemEl {
-  id: string;
-  title: string;
-  state: string;
-}
-
 interface Props {
   item: Issue;
   selectable: boolean;

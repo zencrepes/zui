@@ -17,12 +17,6 @@ import { format } from 'date-fns';
 
 import { Pullrequest } from '../../../../types/github/pullrequest';
 
-interface ItemEl {
-  id: string;
-  title: string;
-  state: string;
-}
-
 interface Props {
   item: Pullrequest;
 }

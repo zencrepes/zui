@@ -17,7 +17,7 @@ import DataCard from '../../../../../components/dataCard';
 
 Cytoscape.use(COSEBilkent);
 
-const mapState = (state: iRootState) => ({});
+const mapState = () => ({});
 
 const mapDispatch = (dispatch: any) => ({
   setNetworkGraph: dispatch.githubIssues.setNetworkGraph,
