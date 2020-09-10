@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 
 export interface TitleProps {
   children: React.ReactNode;
-  setOpenEditModal: Function;
-  setLoading: Function;
+  setOpenEditModal: (editModal: boolean) => void;
+  setLoading: (load: boolean) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>

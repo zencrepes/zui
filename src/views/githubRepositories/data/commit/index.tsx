@@ -124,7 +124,6 @@ class Commit extends React.Component<connectedProps> {
           try {
             result = await this.octokit.teams.addOrUpdateRepoPermissionsInOrg({
               org: repo.owner.login,
-              // eslint-disable-next-line @typescript-eslint/camelcase
               team_slug: updateTeamSlug,
               owner: repo.owner.login,
               repo: repo.name,

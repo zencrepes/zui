@@ -22,8 +22,8 @@ import { Facet } from '../../../../global';
 interface Props {
   facets: Array<Facet>;
   showModal: boolean;
-  setShowModal: Function;
-  addRemoveDateFilter: Function;
+  setShowModal: (show: boolean) => void;
+  addRemoveDateFilter: (selectedField: string, selectedOp: string, selectedDate: string) => void;
 }
 
 const useStyles = makeStyles(() => ({

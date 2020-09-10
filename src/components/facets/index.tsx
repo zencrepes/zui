@@ -26,7 +26,7 @@ interface Props {
   unit: string;
   gqlAggregationData: any;
   gqlMetricsFacet: any;
-  pushNewQuery: Function;
+  pushNewQuery: (query: any) => void;
 }
 
 const Facets: React.FC<Props> = (props: Props) => {

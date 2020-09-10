@@ -19,7 +19,7 @@ import Selector from './selector';
 
 interface Props {
   facets: Array<Facet>;
-  addRemoveDateFilter: Function;
+  addRemoveDateFilter: (selectedField: string, selectedOp: string, selectedDate: string) => void;
   query: any;
 }
 

@@ -11,7 +11,7 @@ const ACTIVITYMATRIX_QUERY = loader('./getActivityMatrix.graphql');
 
 interface Props {
   query: any;
-  openMatrixClick: Function;
+  openMatrixClick: (field: string, fieldValue: string, startWeek: string) => void;
 }
 
 const TeamFocus: React.FC<Props> = (props: Props) => {

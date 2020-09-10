@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 
 interface Props {
-  onClick: Function;
+  onClick: () => void;
 }
 
 const SaveButton: React.FC<Props> = (props: Props) => {

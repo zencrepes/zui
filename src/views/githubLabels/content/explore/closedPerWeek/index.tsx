@@ -13,7 +13,7 @@ const GQL_QUERY = loader('./getPerWeek.graphql');
 
 interface Props {
   query: any;
-  openWeek: Function;
+  openWeek: (week: any) => void;
 }
 
 const ClosedPerWeek: React.FC<Props> = (props: Props) => {
@@ -22,7 +22,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
   const { data } = useQuery(GQL_QUERY, {
     variables: {
       query: JSON.stringify(query),
-      aggOptions: JSON.stringify({ calendarInterval: 'week', movingWindow: 4 }), // eslint-disable-line @typescript-eslint/camelcase
+      aggOptions: JSON.stringify({ calendarInterval: 'week', movingWindow: 4 }),
     },
     fetchPolicy: 'cache-and-network',
   });

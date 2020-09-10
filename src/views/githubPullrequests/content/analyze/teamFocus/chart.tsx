@@ -11,8 +11,8 @@ interface Props {
   query: any;
   dataset: any;
   field: any;
-  setField: Function;
-  openMatrixClick: Function;
+  setField: (field: string) => void;
+  openMatrixClick: (field: string, fieldValue: string, startWeek: string) => void;
 }
 
 const getEmptyWeekFromData = (data: any) => {

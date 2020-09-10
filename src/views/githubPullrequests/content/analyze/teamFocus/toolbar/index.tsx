@@ -8,16 +8,16 @@ import SelectBuckets from './selectBuckets';
 import CheckEmpty from './checkEmpty';
 
 interface Props {
-  setField: Function;
+  setField: (field: string) => void;
   field: string;
-  setMaxWeeks: Function;
+  setMaxWeeks: (maxWeeks: number) => void;
   maxWeeks: number;
-  setMaxBuckets: Function;
+  setMaxBuckets: (maxBuckets: number) => void;
   maxBuckets: number;
   totalWeeks: number;
   totalBuckets: number;
   displayEmpty: boolean;
-  setDisplayEmpty: Function;
+  setDisplayEmpty: (displayEmpty: boolean) => void;
 }
 
 const Toolbar: React.FC<Props> = (props: Props) => {

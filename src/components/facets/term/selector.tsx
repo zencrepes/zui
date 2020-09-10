@@ -19,7 +19,7 @@ interface Props {
   selected: boolean;
   defaultPoints: boolean;
   nullValue: string;
-  clickItem: Function;
+  clickItem: (value: any) => void;
   unit: string;
   facet: any;
 }

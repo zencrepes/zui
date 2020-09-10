@@ -2,12 +2,12 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 
 import Layout from './layout';
-import { Facet } from '../../../global';
+import { Facet, FacetAggMetrics } from '../../../global';
 
 interface Props {
   facet: Facet;
   defaultPoints: boolean;
-  updateMetricsRange: Function;
+  updateMetricsRange: (from: number, to: number, facet: Facet, metrics: FacetAggMetrics) => void;
   query: any;
   gqlMetricsFacet: any;
   dataset: string;

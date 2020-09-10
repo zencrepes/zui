@@ -5,7 +5,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 interface Props {
   displayEmpty: boolean;
-  setDisplayEmpty: Function;
+  setDisplayEmpty: (display: boolean) => void;
 }
 
 const useStyles = makeStyles({

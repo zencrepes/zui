@@ -9,7 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import LoadMessage from './loadMessage';
 
 interface Props {
-  cancelLoading: Function;
+  cancelLoading: () => void;
   loadingTitle: string | null;
 }
 

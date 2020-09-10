@@ -21,7 +21,7 @@ interface Facet {
 
 interface Props {
   facets: Facet[];
-  pushNewQuery: Function;
+  pushNewQuery: (query: any) => void;
 }
 
 const mapState = (state: iRootState) => ({

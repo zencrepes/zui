@@ -7,7 +7,7 @@ interface Props {
   value: string;
   displayValue: string;
   filter: any;
-  removeFilter: Function | null;
+  removeFilter?: (filter: any) => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -24,7 +24,7 @@ const Value: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const handleDelete = () => {
-    if (removeFilter !== null) {
+    if (removeFilter !== undefined) {
       if (Array.isArray(filter.content.value)) {
         // In that case we need to create a filter with just the values to remove
         if (filter.content.value.length > 1) {
@@ -45,7 +45,7 @@ const Value: React.FC<Props> = (props: Props) => {
     }
   };
 
-  if (removeFilter !== null) {
+  if (removeFilter !== undefined) {
     if (filter.tag !== undefined) {
       return (
         <Chip

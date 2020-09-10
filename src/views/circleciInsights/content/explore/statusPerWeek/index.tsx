@@ -15,7 +15,7 @@ const GQL_QUERY = loader('./getPerWeek.graphql');
 
 interface Props {
   query: any;
-  openWeek: Function;
+  openWeek: (week: any) => void;
 }
 
 const SuccessPerWeek: React.FC<Props> = (props: Props) => {
@@ -30,7 +30,7 @@ const SuccessPerWeek: React.FC<Props> = (props: Props) => {
     variables: {
       querySuccess: JSON.stringify(successQuery),
       queryFailed: JSON.stringify(failedQuery),
-      aggOptions: JSON.stringify({ calendarInterval: 'day' }), // eslint-disable-line @typescript-eslint/camelcase
+      aggOptions: JSON.stringify({ calendarInterval: 'day' }),
     },
     fetchPolicy: 'cache-and-network',
   });

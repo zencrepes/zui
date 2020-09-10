@@ -205,7 +205,6 @@ class Commit extends React.Component<connectedProps> {
           if (labelNameEnable === true && labelName.length > 1) {
             createPayload = {
               ...createPayload,
-              // eslint-disable-next-line @typescript-eslint/camelcase
               new_name: labelName,
             };
           }

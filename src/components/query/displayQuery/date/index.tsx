@@ -8,7 +8,7 @@ import Value from './value';
 interface Props {
   filter: any;
   facet: Facet;
-  removeFilter: Function | null;
+  removeFilter?: (filter: any) => void;
 }
 
 const useStyles = makeStyles(() => ({

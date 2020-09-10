@@ -9,7 +9,7 @@ import { getFacetKeysInQuery } from '../../../utils/query';
 interface Props {
   facet: Facet;
   defaultPoints: boolean;
-  addRemoveFacet: Function;
+  addRemoveFacet: (key: any, facet: Facet) => void;
   query: any;
   gqlAggregationData: any;
   dataset: string;

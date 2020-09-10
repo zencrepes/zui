@@ -12,8 +12,8 @@ import { SavedQuery } from '../../../global';
 
 interface Props {
   openSaveQueryDialog: boolean;
-  setStateOpenSaveQueryDialog: Function;
-  saveQuery: Function;
+  setStateOpenSaveQueryDialog: (open: boolean) => void;
+  saveQuery: (name: string) => void;
   queries: Array<SavedQuery>;
 }
 

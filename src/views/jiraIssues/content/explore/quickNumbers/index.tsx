@@ -12,7 +12,7 @@ const QUICKNUMBERS_QUERY = loader('./getQuickNumbers.graphql');
 interface Props {
   query: any;
   sevenDaysPrior: string;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const useStyles = makeStyles({

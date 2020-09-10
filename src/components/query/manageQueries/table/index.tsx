@@ -13,8 +13,8 @@ import QueryRow from './queryRow';
 interface Props {
   queries: Array<SavedQuery>;
   facets: Array<Facet>;
-  loadQuery: Function;
-  deleteQuery: Function;
+  loadQuery: (query: any) => void;
+  deleteQuery: (query: any) => void;
 }
 
 const QueriesTable: React.FC<Props> = (props: Props) => {

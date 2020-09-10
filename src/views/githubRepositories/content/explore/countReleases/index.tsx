@@ -4,7 +4,7 @@ import CountsBuckets from '../utils/countsBuckets';
 
 interface Props {
   query: any;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const ReleasesCount: React.FC<Props> = (props: Props) => {

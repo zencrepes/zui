@@ -12,7 +12,7 @@ interface Props {
   count: number;
   title: string;
   query: any;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const useStyles = makeStyles({

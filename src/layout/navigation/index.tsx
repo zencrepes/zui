@@ -28,7 +28,7 @@ import Docs from './docs';
 
 interface Props {
   openDrawer: boolean;
-  setOpenDrawer: Function;
+  setOpenDrawer: (open: boolean) => void;
 }
 
 const drawerWidth = 300;

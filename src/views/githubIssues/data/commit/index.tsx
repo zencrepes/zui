@@ -168,7 +168,6 @@ class Commit extends React.Component<connectedProps> {
           const addPayload: any = {
             owner: issue.repository.owner.login,
             repo: issue.repository.name,
-            // eslint-disable-next-line @typescript-eslint/camelcase
             issue_number: issue.number,
             labels: [updateAddLabelName],
           };
@@ -210,7 +209,6 @@ class Commit extends React.Component<connectedProps> {
           const removePayload: any = {
             owner: issue.repository.owner.login,
             repo: issue.repository.name,
-            // eslint-disable-next-line @typescript-eslint/camelcase
             issue_number: issue.number,
             name: updateAddLabelName,
           };

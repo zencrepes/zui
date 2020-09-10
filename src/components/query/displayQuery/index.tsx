@@ -13,8 +13,8 @@ import Advanced from './advanced';
 
 interface Props {
   query: any;
-  removeFilter: Function | null;
-  replaceFilter: Function | null;
+  removeFilter?: (filter: any) => void;
+  replaceFilter?: (filter: any) => void;
   facets: Array<Facet>;
 }
 
@@ -81,7 +81,7 @@ const DisplayQuery: React.FC<Props> = (props: Props) => {
               return (
                 <React.Fragment key={cpt + 'and'}>
                   <Grid item key={filter.content[0].op + filter.content[0].content.field}>
-                    <Advanced filter={filter} removeFilter={null} replaceFilter={null} />
+                    <Advanced filter={filter} />
                   </Grid>
                   {query.content.length !== cpt && <React.Fragment>{andparam}</React.Fragment>}
                 </React.Fragment>

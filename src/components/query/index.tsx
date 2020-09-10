@@ -22,7 +22,7 @@ interface QueryHandlingType {
   facets: Array<Facet>;
   dexieDb: any;
   dataset: any;
-  setQueries: Function;
+  setQueries: (queries: any[]) => void;
   queries: Array<any>;
 }
 

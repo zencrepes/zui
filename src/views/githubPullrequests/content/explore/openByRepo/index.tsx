@@ -10,7 +10,7 @@ const OPENBYREPO_QUERY = loader('./getOpenByRepo.graphql');
 
 interface Props {
   query: any;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const buildByAggClickQuery = (query: any, field: string, value: string) => {

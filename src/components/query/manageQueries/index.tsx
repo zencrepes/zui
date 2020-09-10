@@ -12,9 +12,9 @@ import QueriesTable from './table';
 
 interface Props {
   openManageQueryDialog: boolean;
-  setStateOpenManageQueryDialog: Function;
-  loadQuery: Function;
-  deleteQuery: Function;
+  setStateOpenManageQueryDialog: (open: boolean) => void;
+  loadQuery: (query: any) => void;
+  deleteQuery: (query: any) => void;
   queries: Array<SavedQuery>;
   facets: Array<Facet>;
 }

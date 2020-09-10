@@ -5,7 +5,7 @@ import Chip from '@material-ui/core/Chip';
 
 interface Props {
   filter: any;
-  replaceFilter: Function | null;
+  replaceFilter?: (filter: any) => void;
 }
 
 const Op: React.FC<Props> = (props: Props) => {
@@ -19,7 +19,7 @@ const Op: React.FC<Props> = (props: Props) => {
       newOp = 'not-in';
     }
     // const newOp = filter.op === 'in' ? 'all' : 'in';
-    if (replaceFilter !== null) {
+    if (replaceFilter !== undefined) {
       replaceFilter({ ...filter, op: newOp });
     }
   };

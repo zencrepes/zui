@@ -17,7 +17,7 @@ import { FacetAggBucket, Facet } from '../../../global';
 interface Props {
   facet: Facet;
   buckets: FacetAggBucket[];
-  clickedItem: Function;
+  clickedItem: (value: any) => void;
   selectedValues: string[];
   defaultPoints: boolean;
   unit: string;

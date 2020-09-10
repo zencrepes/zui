@@ -22,9 +22,9 @@ export interface TableConfig {
 }
 
 export interface TableSort {
-  setSortField: Function;
+  setSortField: (field: string) => void;
   sortField: string;
-  setSortDirection: Function;
+  setSortDirection: (direction: 'asc' | 'desc') => void;
   sortDirection: 'asc' | 'desc';
 }
 

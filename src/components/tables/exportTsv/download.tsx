@@ -5,7 +5,7 @@ import { CSVDownload } from 'react-csv';
 interface Props {
   dataset: any;
   download: boolean;
-  setDownload: Function;
+  setDownload: (download: boolean) => void;
 }
 
 // Harcoding and limiting to 8000 records only for the time being
