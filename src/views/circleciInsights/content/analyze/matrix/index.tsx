@@ -18,7 +18,7 @@ interface Props {
   headerTitle: string;
   aggOptions: any;
   valueField: string;
-  openWeek: Function;
+  openWeek: (week: any) => void;
 }
 
 const CompareJobCost: React.FC<Props> = (props: Props) => {
@@ -28,7 +28,7 @@ const CompareJobCost: React.FC<Props> = (props: Props) => {
     variables: {
       query: JSON.stringify(query),
       compareField: compareField,
-      aggOptions: JSON.stringify(aggOptions), // eslint-disable-line @typescript-eslint/camelcase
+      aggOptions: JSON.stringify(aggOptions),
     },
     fetchPolicy: 'cache-and-network',
   });

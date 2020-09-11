@@ -11,7 +11,7 @@ const GQL_QUERY = loader('./getQuery.graphql');
 interface Props {
   query: any;
   buckets: Array<any>;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const getBucket = (buckets: Array<any>, key: string) => {

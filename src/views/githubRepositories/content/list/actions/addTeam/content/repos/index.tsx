@@ -9,11 +9,6 @@ import DualListBox from 'react-dual-listbox';
 
 import { iRootState } from '../../../../../../../../store';
 
-interface Props {
-  reposAvailable: { value: string; label: string };
-  updateReposSelected: string[];
-}
-
 const useStyles = makeStyles(() =>
   createStyles({
     root: {

@@ -15,7 +15,7 @@ const aggregationFields = [
 
 interface Props {
   field: string;
-  setField: Function;
+  setField: (field: string) => void;
 }
 
 const SelectField: React.FC<Props> = (props: Props) => {

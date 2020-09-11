@@ -1,7 +1,7 @@
-query($query: String) {
+query($query: String, $team: String) {
   githubIssues {
     data(query: $query) {
-      oneWeek: velocity(moving: 1, window: 3) {
+      oneWeek: velocity(moving: 1, window: 3, team: $team) {
         current {
           date
           issues {
@@ -14,7 +14,7 @@ query($query: String) {
           }
         }
       }
-      twoWeeks: velocity(moving: 2, window: 4) {
+      twoWeeks: velocity(moving: 2, window: 4, team: $team) {
         current {
           date
           issues {
@@ -27,7 +27,7 @@ query($query: String) {
           }
         }
       }
-      fourWeeks: velocity(moving: 4, window: 6) {
+      fourWeeks: velocity(moving: 4, window: 6, team: $team) {
         current {
           date
           issues {
@@ -40,7 +40,7 @@ query($query: String) {
           }
         }
       }
-      twelveWeeks: velocity(moving: 12, window: 14) {
+      twelveWeeks: velocity(moving: 12, window: 14, team: $team) {
         current {
           date
           issues {

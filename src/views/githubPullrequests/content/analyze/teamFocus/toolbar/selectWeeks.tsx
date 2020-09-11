@@ -6,7 +6,7 @@ import Slider from '@material-ui/core/Slider';
 interface Props {
   maxWeeks: number;
   totalWeeks: number;
-  setMaxWeeks: Function;
+  setMaxWeeks: (maxWeeks: number) => void;
 }
 
 const useStyles = makeStyles({

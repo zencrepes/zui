@@ -17,7 +17,7 @@ import { Facet } from '../../../global';
 interface Props {
   filter: any;
   selected: boolean;
-  addRemoveDateFilter: Function;
+  addRemoveDateFilter: (selectedField: string, selectedOp: string, selectedDate: string) => void;
   facet: Facet;
 }
 

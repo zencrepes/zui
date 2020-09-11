@@ -10,11 +10,6 @@ import { iRootState } from '../../../../../../../../store';
 import SelectTeam from './selectTeam';
 import SelectPermission from './selectPermission';
 
-interface Props {
-  reposAvailable: { value: string; label: string };
-  updateReposSelected: string[];
-}
-
 const useStyles = makeStyles(() =>
   createStyles({
     root: {

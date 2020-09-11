@@ -9,7 +9,7 @@ import { Typography } from '@material-ui/core';
 interface Props {
   metrics: FacetAggMetrics;
   facet: Facet;
-  updateMetricsRange: Function;
+  updateMetricsRange: (from: number, to: number, facet: Facet, metrics: FacetAggMetrics) => void;
 }
 
 function valueLabelFormat(value: number) {

@@ -8,11 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import { iRootState } from '../../../../../../../../store';
 import CheckPermission from './checkPermission';
 
-interface Props {
-  reposAvailable: { value: string; label: string };
-  updateReposSelected: string[];
-}
-
 interface GitHubRepo {
   id: string;
   name: string;

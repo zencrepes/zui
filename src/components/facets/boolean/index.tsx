@@ -20,7 +20,7 @@ import Selector from './selector';
 
 interface Props {
   facets: Array<Facet>;
-  addRemoveBooleanFilter: Function;
+  addRemoveBooleanFilter: (selection: any, facet: any) => void;
   query: any;
   gqlAggregationData: any;
   dataset: string;

@@ -8,11 +8,6 @@ import DualListBox from 'react-dual-listbox';
 
 import { iRootState } from '../../../../../../../store';
 
-interface Props {
-  labelsAvailable: { value: string; label: string };
-  updateLabelsSelected: string[];
-}
-
 const useStyles = makeStyles(() =>
   createStyles({
     root: {

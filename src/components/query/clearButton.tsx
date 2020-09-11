@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 
 interface Props {
-  onClick: Function;
+  onClick: () => void;
 }
 
 const ClearButton: React.FC<Props> = (props: Props) => {

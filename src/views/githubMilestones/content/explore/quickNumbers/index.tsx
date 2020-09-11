@@ -13,7 +13,7 @@ interface Props {
   query: any;
   thirtyDaysPrior: string;
   ninetyDaysPrior: string;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const useStyles = makeStyles({

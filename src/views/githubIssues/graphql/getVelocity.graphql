@@ -1,7 +1,7 @@
-query($query: String, $moving: Float, $interval: String) {
+query($query: String, $moving: Float, $interval: String, $team: String) {
   githubIssues {
     data(query: $query) {
-      velocity(moving: $moving, interval: $interval) {
+      velocity(moving: $moving, interval: $interval, team: $team) {
         items {
           date
           issues {

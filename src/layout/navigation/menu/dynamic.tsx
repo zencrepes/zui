@@ -30,7 +30,7 @@ const getPlatformIcon = (platform: string) => {
   return <InboxIcon />;
 };
 
-const DynamicMenu: React.FC<{}> = () => {
+const DynamicMenu: React.FC<any> = () => {
   const { data } = useQuery(QUERY_DATASETS, {
     fetchPolicy: 'cache-and-network',
   });

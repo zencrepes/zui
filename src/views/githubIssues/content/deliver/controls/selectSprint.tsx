@@ -14,7 +14,7 @@ import { addFilterToQuery, removeFilterFromQuery, getFilterFromQuery } from '../
 import { sortBucketsByKey } from '../../../../../utils/misc';
 
 interface Props {
-  pushNewQuery: Function;
+  pushNewQuery: (query: any) => void;
 }
 
 interface BucketObj {

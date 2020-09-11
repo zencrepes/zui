@@ -14,7 +14,7 @@ import MetricsSlider from './slider';
 interface Props {
   facet: Facet;
   metrics: FacetAggMetrics;
-  updateMetricsRange: Function;
+  updateMetricsRange: (from: number, to: number, facet: Facet, metrics: FacetAggMetrics) => void;
   defaultPoints: boolean;
 }
 

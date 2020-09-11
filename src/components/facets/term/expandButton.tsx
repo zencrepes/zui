@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 
 interface Props {
-  onClick: Function;
+  onClick: (collapsed: boolean) => void;
   collapsed: boolean;
   length: number;
 }

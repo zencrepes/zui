@@ -13,7 +13,7 @@ interface Props {
   query: any;
   defaultPoints: boolean;
   thirtyDaysPrior: any;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const useStyles = makeStyles({

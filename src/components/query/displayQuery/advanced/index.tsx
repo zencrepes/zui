@@ -6,8 +6,6 @@ import Value from './value';
 
 interface Props {
   filter: any;
-  removeFilter: Function | null;
-  replaceFilter: Function | null;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -28,12 +26,7 @@ const Term: React.FC<Props> = (props: Props) => {
 
   return (
     <div className={classes.root}>
-      <Value
-        value={'Advanced Filter'}
-        displayValue={'Advanced Filter (edit to see)'}
-        removeFilter={null}
-        filter={filter}
-      />
+      <Value value={'Advanced Filter'} displayValue={'Advanced Filter (edit to see)'} filter={filter} />
     </div>
   );
 };

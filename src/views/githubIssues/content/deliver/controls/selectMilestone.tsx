@@ -18,7 +18,7 @@ import { sortBucketsByKey } from '../../../../../utils/misc';
 const GQL_QUERY = loader('../../../graphql/getAggsTermsData.graphql');
 
 interface Props {
-  pushNewQuery: Function;
+  pushNewQuery: (query: any) => void;
 }
 
 interface BucketObj {

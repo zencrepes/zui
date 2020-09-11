@@ -16,6 +16,7 @@ import Labels from './labels';
 import Assignees from './assignees';
 import GetWeeklyVelocity from './data/getWeeklyVelocity';
 import GetDailyVelocity from './data/getDailyVelocity';
+import GetTeams from './data/getTeams';
 
 import { TableConfig } from '../../../../global';
 
@@ -38,6 +39,7 @@ const Deliver: React.FC<Props> = (props: Props) => {
     <React.Fragment>
       <GetWeeklyVelocity />
       <GetDailyVelocity />
+      <GetTeams />
       <Grid container spacing={1} className={classes.root}>
         <Grid item xs={9}>
           <Description />

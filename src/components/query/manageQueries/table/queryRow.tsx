@@ -13,8 +13,8 @@ import DisplayQuery from '../../displayQuery';
 interface Props {
   query: SavedQuery;
   facets: Array<Facet>;
-  loadQuery: Function;
-  deleteQuery: Function;
+  loadQuery: (query: any) => void;
+  deleteQuery: (query: any) => void;
 }
 
 const QueryRow: React.FC<Props> = (props: Props) => {
@@ -35,7 +35,7 @@ const QueryRow: React.FC<Props> = (props: Props) => {
       </TableCell>
       <TableCell scope="row">{query.name}</TableCell>
       <TableCell>
-        <DisplayQuery query={query.query} facets={facets} removeFilter={null} replaceFilter={null} />
+        <DisplayQuery query={query.query} facets={facets} />
       </TableCell>
       <TableCell padding="none">
         <DeleteButton onClick={removeQuery} />

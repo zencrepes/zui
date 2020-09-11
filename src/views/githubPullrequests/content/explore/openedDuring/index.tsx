@@ -11,7 +11,7 @@ const OPENEDDURING_QUERY = loader('./getOpenedDuring.graphql');
 
 interface Props {
   query: any;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const buildBucketQuery = (from: number, to: number | null, query: any) => {

@@ -19,6 +19,7 @@ const mapState = (state: iRootState) => ({
   query: state.githubIssues.query,
   queryCompletion: state.githubIssues.queryCompletion,
   defaultPoints: state.githubIssues.defaultPoints,
+  velocitySelectedTeam: state.githubIssues.velocitySelectedTeam,
 });
 
 const mapDispatch = () => ({});
@@ -26,11 +27,12 @@ const mapDispatch = () => ({});
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
 const Forecast: React.FC<connectedProps> = (props: connectedProps) => {
-  const { query, queryCompletion, defaultPoints } = props;
+  const { query, queryCompletion, defaultPoints, velocitySelectedTeam } = props;
 
   const { data } = useQuery(GQL_QUERY, {
     variables: {
       query: JSON.stringify(query),
+      team: velocitySelectedTeam,
     },
     fetchPolicy: 'cache-and-network',
   });

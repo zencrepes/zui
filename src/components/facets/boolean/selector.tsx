@@ -18,7 +18,7 @@ import { getFacetKeysInQuery } from '../../../utils/query';
 
 interface Props {
   query: any;
-  addRemoveBooleanFilter: Function;
+  addRemoveBooleanFilter: (selection: any, facet: any) => void;
   facet: Facet;
   gqlAggregationData: any;
   dataset: string;

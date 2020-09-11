@@ -11,8 +11,8 @@ import Op from './op';
 interface Props {
   filter: any;
   facet: Facet;
-  removeFilter: Function | null;
-  replaceFilter: Function | null;
+  removeFilter?: (filter: any) => void;
+  replaceFilter?: (filter: any) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({

@@ -8,7 +8,7 @@ import { iRootState } from '../../../../../store';
 const GQL_QUERY = loader('../../../graphql/getAggsTermsData.graphql');
 
 interface Props {
-  setDataBuckets: Function;
+  setDataBuckets: (buckets: any) => void;
   field: string;
   remainingQuery: any;
   disjoint?: boolean;

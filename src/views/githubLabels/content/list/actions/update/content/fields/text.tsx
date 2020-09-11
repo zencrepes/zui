@@ -8,9 +8,9 @@ interface Props {
   label: string;
   placeholder: string;
   textContent: string;
-  setTextContent: Function;
+  setTextContent: (text: string) => void;
   textContentEnable: boolean;
-  setTextContentEnable: Function;
+  setTextContentEnable: (enable: boolean) => void;
   required?: boolean;
 }
 

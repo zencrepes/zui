@@ -19,7 +19,7 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 const ContentTabs: React.FC<connectedProps> = (props: connectedProps) => {
   const { selectedTab, setSelectedTab } = props;
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleChange = (event: React.ChangeEvent<any>, newValue: number) => {
     setSelectedTab(newValue);
   };
 

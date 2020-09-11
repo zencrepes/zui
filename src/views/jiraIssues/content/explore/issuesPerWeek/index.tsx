@@ -13,7 +13,7 @@ const GQL_QUERY = loader('./getPerWeek.graphql');
 
 interface Props {
   query: any;
-  openWeek: Function;
+  openWeek: (week: any) => void;
 }
 
 const ClosedPerWeek: React.FC<Props> = (props: Props) => {

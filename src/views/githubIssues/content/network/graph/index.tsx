@@ -12,12 +12,11 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import ExploreIcon from '@material-ui/icons/Explore';
 import ClearIcon from '@material-ui/icons/Clear';
 
-import { iRootState } from '../../../../../store';
 import DataCard from '../../../../../components/dataCard';
 
 Cytoscape.use(COSEBilkent);
 
-const mapState = (state: iRootState) => ({});
+const mapState = () => ({});
 
 const mapDispatch = (dispatch: any) => ({
   setNetworkGraph: dispatch.githubIssues.setNetworkGraph,

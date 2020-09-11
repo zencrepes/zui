@@ -5,7 +5,7 @@ import Chip from '@material-ui/core/Chip';
 
 interface Props {
   filter: any;
-  removeFilter: Function | null;
+  removeFilter?: (filter: any) => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -22,12 +22,12 @@ const Value: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const handleDelete = () => {
-    if (removeFilter !== null) {
+    if (removeFilter !== undefined) {
       removeFilter(filter);
     }
   };
 
-  if (removeFilter !== null) {
+  if (removeFilter !== undefined) {
     return (
       <Chip
         size="small"

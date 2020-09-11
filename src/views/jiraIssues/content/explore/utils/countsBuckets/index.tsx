@@ -11,7 +11,7 @@ const GQL_QUERY = loader('./getQuery.graphql');
 
 interface Props {
   query: any;
-  openQuery: Function;
+  openQuery: (query: any) => void;
   countField: string;
   headerTitle: string;
   headerFactTitle: string;

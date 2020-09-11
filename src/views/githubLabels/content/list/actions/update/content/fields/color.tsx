@@ -8,10 +8,10 @@ import { SketchPicker } from 'react-color';
 
 interface Props {
   labelColor: string;
-  setLabelColor: Function;
+  setLabelColor: (color: string) => void;
   labelColorEnable: boolean;
   required?: boolean;
-  setLabelColorEnable: Function;
+  setLabelColorEnable: (enable: boolean) => void;
 }
 
 const useStyles = makeStyles(() =>

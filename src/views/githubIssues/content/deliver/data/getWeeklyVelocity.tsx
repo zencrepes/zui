@@ -10,6 +10,7 @@ const GQL_QUERY_VELOCITY = loader('../../../graphql/getVelocity.graphql');
 
 const mapState = (state: iRootState) => ({
   defaultPoints: state.githubIssues.defaultPoints,
+  velocitySelectedTeam: state.githubIssues.velocitySelectedTeam,
   query: state.githubIssues.query,
 });
 
@@ -20,13 +21,14 @@ const mapDispatch = (dispatch: any) => ({
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
 const GetWeeklyVelocity: React.FC<connectedProps> = (props: connectedProps) => {
-  const { query, setQueryVelocity } = props;
+  const { query, setQueryVelocity, velocitySelectedTeam } = props;
 
   const { data } = useQuery(GQL_QUERY_VELOCITY, {
     variables: {
       query: JSON.stringify(query),
       moving: 4,
       interval: 'week',
+      team: velocitySelectedTeam,
     },
   });
 

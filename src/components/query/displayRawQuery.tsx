@@ -25,9 +25,9 @@ import 'brace/theme/github';
 import { Facet } from '../../global';
 
 interface Props {
-  query: object;
+  query: any;
   facets: Array<Facet>;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const useStyles = makeStyles({

@@ -9,7 +9,7 @@ const GQL_QUERY = loader('./gqlQuery.graphql');
 
 interface Props {
   query: any;
-  openQuery: Function;
+  openQuery: (query: any) => void;
 }
 
 const buildByAggClickQuery = (query: any, field: string, value: string) => {
