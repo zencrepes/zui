@@ -34,42 +34,35 @@ Overture gracefully provides the VM instance hosting dev & prod and the slack ch
 
 ## Introduction
 
-This repository will focus only on the UI code itself, to find out more about the product in general (features, questions) please refer to zencrepes repo (https://github.com/zencrepes/zencrepes).
+This repository will focus only on the UI code itself. ZenCrepes's UI is a React codebase reaching out to a GraphQL API (https://github.com/zencrepes/zapi) for its data.
 
-ZenCrepes's UI is a React codebase reaching out to a GraphQL API (https://github.com/zencrepes/zapi) for its data.
+# Documentation
 
-## Get Started
+You can find ZenCrepes documentation on [docs.zencrepes.io](https://docs.zencrepes.io/), issues should be created [here](https://github.com/zencrepes/zencrepes/issues)
 
-### Environment Variables
+This readme only contains developer-focused details.
 
-| Variable        | Default                       | Description                                                            |
-| --------------- | ----------------------------- | ---------------------------------------------------------------------- |
-| API_URL         | http://127.0.0.1:5000/graphql | Url of ZenCrepes GraphQL API                                           |
-| AUTH0_DISABLED  | true                          | Disable the use of Auth0 as an authentication / authorization provider |
-| AUTH0_DOMAIN    | zencrepes.auth0.com           | Auth0 domain                                                           |
-| AUTH0_CLIENT_ID | ---                           | Auth0 client ID                                                        |
-| AUTH0_AUDIENCE  | http://localhost:3000         | Auth0 audience (ZenCrpes GraphQL API)                                  |
-
-NOTE: Auth0 is not implemented yet.
-
-In dev mode, those environment files are specified in a `.env` file at the root of the repo.
-
-### Docker
-
-Docker images are automatically built and pushed to Docker Hub (https://hub.docker.com/orgs/zencrepes)
-
-### Development
+## Development
 
 First clone the repository, then:
 
 ```bash
 yarn
-yarn run start:dev
+# Without Keycloak
+KEYCLOAK_DISABLED=true yarn run start:dev
+# With Keycloak
+KEYCLOAK_DISABLED=false yarn run start:dev
 ```
+
+## Reach-out
+
+Feel free to reach out on [slack](http://slack.overture.bio/), ZenCrepes has a dedicated channel on `#app_zencrepes`.
+
+Overture gracefully provides the VM instance hosting dev & prod and the slack channel. ZenCrepes is not an Overture project.
 
 ## Dev Guidelines
 
-The UI is using Material-UI, considering the resources constraints in developing ZenCrepes, please try avoid any custom styling and stay as close as possible to Material-UI styling.
+The UI is using Material-UI, considering resources constraints in developing ZenCrepes, please try to avoid any custom styling and stay as close as possible to Material-UI styling.
 
 ### Queries
 
@@ -176,3 +169,17 @@ Each "view" aims at having its own model while a global model is available for c
 Views represent the various datsets available for querying, each view MUST be independeant from each-other.
 
 Components are reusasble pieces of code, they must not connect to redux and must not import elements from the views.
+
+### Quick start notes
+
+```bash
+docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.9.0
+docker run --link d5209bc62a88:elasticsearch -p 5601:5601 docker.elastic.co/kibana/kibana:7.9.0
+docker run -p 6379:6379 redis
+docker run -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin keycloak-config
+
+cd zapi; KEYCLOAK_DISABLED=false KEYCLOAK_ROLE=zencrepes-data yarn run start:dev
+cd zui; KEYCLOAK_DISABLED=false yarn run start:dev
+cd zqueue; yarn run start:dev
+
+```
