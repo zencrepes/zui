@@ -3,6 +3,8 @@ FROM node:alpine as builder
 
 ARG APP_VERSION_ARG=latest
 
+ENV APP_VERSION=$APP_VERSION_ARG
+
 WORKDIR /app
 COPY package.json .
 COPY yarn.lock .
@@ -12,6 +14,8 @@ RUN yarn run build
 
 # => Run container
 FROM nginx:1.15.2-alpine
+
+ARG APP_VERSION_ARG=latest
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
