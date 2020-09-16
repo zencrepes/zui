@@ -25,6 +25,7 @@ import DynamicMenu from './menu/dynamic';
 import Login from './login/index';
 import GitHub from './github';
 import Docs from './docs';
+import Version from './version';
 
 interface Props {
   openDrawer: boolean;
@@ -170,13 +171,10 @@ const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
         <Divider />
         <DashboardMenu />
         <Divider />
-        {(loggedIn === true || authDisabled === true) && (
-          <React.Fragment>
-            <DynamicMenu />
-            <Divider />
-          </React.Fragment>
-        )}
+        {(loggedIn === true || authDisabled === true) && <DynamicMenu />}
+        <Divider />
         {/* <SettingsMenu /> */}
+        <Version />
       </Drawer>
     </React.Fragment>
   );
