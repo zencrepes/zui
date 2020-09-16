@@ -1,5 +1,8 @@
 # https://www.freecodecamp.org/news/how-to-implement-runtime-environment-variables-with-create-react-app-docker-and-nginx-7f9d42a91d70/
 FROM node:alpine as builder
+
+ARG APP_VERSION_ARG=latest
+
 WORKDIR /app
 COPY package.json .
 COPY yarn.lock .
@@ -22,6 +25,9 @@ EXPOSE 80
 
 # Copy .env file and shell script to container
 WORKDIR /usr/share/nginx/html
+
+ENV APP_VERSION=$APP_VERSION_ARG
+
 COPY ./env.sh .
 COPY .env .
 
