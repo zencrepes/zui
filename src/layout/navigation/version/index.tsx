@@ -33,22 +33,22 @@ const DynamicMenu: React.FC<any> = () => {
           </a>
         )}{' '}
         UI:
-        {process.env.APP_VERSION === 'latest' ||
-        process.env.APP_VERSION === 'develop' ||
-        process.env.APP_VERSION === '' ||
-        process.env.APP_VERSION === undefined ? (
+        {window._env_.APP_VERSION === 'latest' ||
+        window._env_.APP_VERSION === 'develop' ||
+        window._env_.APP_VERSION === '' ||
+        window._env_.APP_VERSION === undefined ? (
           <a href="https://github.com/zencrepes/zui" target="_blank" rel="noopener noreferrer">
-            {process.env.APP_VERSION === undefined || process.env.APP_VERSION === ''
+            {window._env_.APP_VERSION === undefined || window._env_.APP_VERSION === ''
               ? 'develop'
-              : process.env.APP_VERSION}
+              : window._env_.APP_VERSION}
           </a>
         ) : (
           <a
-            href={'https://github.com/zencrepes/zui/releases/tag/' + process.env.APP_VERSION}
+            href={'https://github.com/zencrepes/zui/releases/tag/' + window._env_.APP_VERSION}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {process.env.APP_VERSION}
+            {window._env_.APP_VERSION}
           </a>
         )}{' '}
       </i>
