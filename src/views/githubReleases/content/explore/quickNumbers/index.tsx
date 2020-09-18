@@ -73,13 +73,13 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
   const cards = [
     {
       key: 1,
-      count: data.githubReleases.currentQuery.items.totalCount,
+      count: data.githubReleases.currentQuery.count,
       query: query,
       title: 'In current query',
     },
     {
       key: 2,
-      count: data.githubReleases.thirtyDays.items.totalCount,
+      count: data.githubReleases.thirtyDays.count,
       query: buildQuery(query, thirtyDays),
       title: 'Created in the last 30 days',
     },

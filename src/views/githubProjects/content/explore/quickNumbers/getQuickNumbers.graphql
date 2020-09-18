@@ -1,19 +1,13 @@
 query($currentQuery: String, $thirtyDays: String, $inactive: String) {
   githubProjects {
     currentQuery: data(query: $currentQuery) {
-      items {
-        totalCount
-      }
+      count
     }
     thirtyDays: data(query: $thirtyDays) {
-      items {
-        totalCount
-      }
+      count
     }
     inactive: data(query: $inactive) {
-      items {
-        totalCount
-      }
+      count
     }
   }
 }

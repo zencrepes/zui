@@ -1,19 +1,13 @@
 query($queryVulns: String, $dismissedVulns: String, $oldVulns: String) {
   githubVulnerabilities {
     queryVulns: data(query: $queryVulns) {
-      items {
-        totalCount
-      }
+      count
     }
     dismissedVulns: data(query: $dismissedVulns) {
-      items {
-        totalCount
-      }
+      count
     }
     oldVulns: data(query: $oldVulns) {
-      items {
-        totalCount
-      }
+      count
     }
   }
 }
