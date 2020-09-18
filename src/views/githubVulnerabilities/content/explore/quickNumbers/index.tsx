@@ -69,19 +69,19 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
   const cards = [
     {
       key: 1,
-      count: data.githubVulnerabilities.queryVulns.items.totalCount,
+      count: data.githubVulnerabilities.queryVulns.count,
       query: query,
       title: 'In current query',
     },
     {
       key: 2,
-      count: data.githubVulnerabilities.oldVulns.items.totalCount,
+      count: data.githubVulnerabilities.oldVulns.count,
       query: buildQuery(query, oldVulns),
       title: 'Older than 30 days',
     },
     {
       key: 3,
-      count: data.githubVulnerabilities.dismissedVulns.items.totalCount,
+      count: data.githubVulnerabilities.dismissedVulns.count,
       query: buildQuery(query, dismissedVulns),
       title: 'Dismissed alerts',
     },
