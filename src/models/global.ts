@@ -380,7 +380,7 @@ export const global: Global = {
       dispatch.global.logOutUser();
     },
 
-    async doLogOutAuthError(payload: any, rootState: any) {
+    async doLogOutAuthError() {
       console.log('doLogOutAuthError');
       if (!window.location.href.includes('/login')) {
         window.location.href = '/login?authError';

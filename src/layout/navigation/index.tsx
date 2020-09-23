@@ -108,7 +108,7 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
   const theme = useTheme();
-  const { loggedIn, authDisabled, openDrawer, setOpenDrawer, keycloak, authError } = props;
+  const { loggedIn, authDisabled, openDrawer, setOpenDrawer } = props;
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
