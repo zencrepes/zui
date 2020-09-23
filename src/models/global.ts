@@ -243,7 +243,12 @@ export const global: Global = {
       logger.info('Logger initialized');
       dispatch.global.setLog(logger);
 
-      if (rootState.global.authDisabled !== true && rootState.global.keycloak === null) {
+      // Note: If current page is the login page, we simply don't instantiate keycloak, except if it's a callback (thus presence of session_state)
+      if (
+        rootState.global.authDisabled !== true &&
+        rootState.global.keycloak === null &&
+        (!window.location.href.includes('/login') || window.location.href.includes('&session_state='))
+      ) {
         // https://stackoverflow.com/questions/41017287/cannot-use-new-with-expression-typescript
         const keycloak = Keycloak({
           url: window._env_.KEYCLOAK_AUTH_SERVER_URL,
@@ -257,7 +262,20 @@ export const global: Global = {
             silentCheckSsoRedirectUri: window._env_.KEYCLOAK_AUDIENCE + '/silent-check-sso.html',
           })
           .then((authenticated: boolean) => {
-            if (authenticated === true && rootState.global.loggedIn === false && rootState.global.keycloak === null) {
+            // If user is not authenticated, then we redirect the user to the login page
+            // but only if he's not already on the login page
+            if (authenticated === false) {
+              logger.info(
+                'User is currently not authenticated, redirecting the user from: ' +
+                  window.location.href +
+                  ' to: /login',
+              );
+              window.location.href = '/login';
+            } else if (
+              authenticated === true &&
+              rootState.global.loggedIn === false &&
+              rootState.global.keycloak === null
+            ) {
               refreshToken(keycloak);
               keycloak.loadUserInfo().then((userInfo: any) => {
                 dispatch.global.setUserSession({
@@ -271,6 +289,7 @@ export const global: Global = {
               });
               //https://stackoverflow.com/questions/43422542/keycloak-js-automatic-token-refesh
               keycloak.onTokenExpired = () => {
+                logger.info('Token expired');
                 keycloak
                   .updateToken(30)
                   .then(() => {
@@ -322,8 +341,6 @@ export const global: Global = {
                     dispatch.global.setGithubToken(null);
                   });
               }
-            } else {
-              dispatch.global.setKeycloak(keycloak);
             }
           });
       }
@@ -337,7 +354,6 @@ export const global: Global = {
         clientId: window._env_.KEYCLOAK_CLIENT_ID,
       });
       keycloak.init({ onLoad: 'login-required' }).then((authenticated) => {
-        console.log(authenticated);
         if (authenticated === true) {
           keycloak.loadUserInfo().then((userInfo: any) => {
             dispatch.global.setUserSession({
@@ -364,15 +380,10 @@ export const global: Global = {
       dispatch.global.logOutUser();
     },
 
-    async doLogOutAuthError(payload: any, rootState: any) {
-      // Note: This is not a log-out, just a way to force the UI to re-login.      console.log(rootState.global.keycloak);
-      if (rootState.global.keycloak === null) {
-        dispatch.global.initApp();
-      } else {
-        rootState.global.keycloakLogOut({
-          redirectUri: window._env_.ROOT_URL + '/login?authError',
-        });
-        dispatch.global.logOutUserAuth();
+    async doLogOutAuthError() {
+      console.log('doLogOutAuthError');
+      if (!window.location.href.includes('/login')) {
+        window.location.href = '/login?authError';
       }
     },
 
@@ -394,18 +405,11 @@ export const global: Global = {
             redirectUri: window._env_.ROOT_URL + '/login?expiredToken',
           });
         });
-
-      // if (rootState.global.keycloak === null) {
-      //   dispatch.global.initApp();
-      // } else {
-      //   rootState.global.keycloakLogOut({
-      //     redirectUri: window._env_.ROOT_URL + '/login?expiredToken',
-      //   });
-      //   dispatch.global.logOutUserAuth();
-      // }
     },
 
     async deleteKeycloakProfile(payload: any, rootState: any) {
+      console.log('deleteKeycloakProfile');
+
       // Note: This is not a log-out, just a way to force the UI to re-login.
       if (rootState.global.keycloak !== null) {
         console.log('User self delete keycloak profile');

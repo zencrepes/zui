@@ -84,16 +84,23 @@ const SimpleRow: React.FC<Props> = (props: Props) => {
             } else if (col.fieldType === 'array') {
               cellValue = <span>{value.length}</span>;
             } else if (col.fieldType === 'microchart') {
-              cellValue = (
-                <MicroBarChart
-                  data={value.data.map((d: any) => d.count)}
-                  tooltip
-                  tipOffset={[0, 20]}
-                  tipTemplate={(d: any, i: any) => value.tooltips[i]}
-                  hoverColor="rgb(161,130,214)"
-                  fillColor={value.fillColor}
-                />
-              );
+              const commitsCpt = value.data
+                .map((d: any) => d.count)
+                .reduce((acc: number, count: number) => acc + count, 0);
+              if (commitsCpt > 0) {
+                cellValue = (
+                  <MicroBarChart
+                    data={value.data.map((d: any) => d.count)}
+                    tooltip
+                    tipOffset={[0, 20]}
+                    tipTemplate={(d: any, i: any) => value.tooltips[i]}
+                    hoverColor="rgb(161,130,214)"
+                    fillColor={value.fillColor}
+                  />
+                );
+              } else {
+                cellValue = <span>None in 12 months</span>;
+              }
             } else if (col.fieldType === 'rowarray') {
               if (value.length > 0) {
                 const nodes = value.map((t: any) => getObjectValue(t, col.subfield, undefined)).sort();

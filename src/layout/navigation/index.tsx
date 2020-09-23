@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 
 import clsx from 'clsx';
 
-import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
-
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -105,12 +103,12 @@ const mapState = (state: iRootState) => ({
 
 const mapDispatch = () => ({});
 
-type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & RouteComponentProps & Props;
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;
 
 const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
   const classes = useStyles();
   const theme = useTheme();
-  const { loggedIn, authDisabled, openDrawer, setOpenDrawer, keycloak, authError } = props;
+  const { loggedIn, authDisabled, openDrawer, setOpenDrawer } = props;
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -120,14 +118,8 @@ const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
     setOpenDrawer(false);
   };
 
-  // The redirect there is only active is auth is not disabled and user not logged in
-  // But this should only happen after keycloak has been initiated (otherwise the user gets redirecte right away to login)
   return (
     <React.Fragment>
-      {loggedIn === false && keycloak !== null && authDisabled !== true && authError === false && (
-        <Redirect to="/login" />
-      )}
-
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -180,4 +172,4 @@ const Navigation: React.FC<connectedProps> = (props: connectedProps) => {
   );
 };
 
-export default withRouter(connect(mapState, mapDispatch)(Navigation));
+export default connect(mapState, mapDispatch)(Navigation);

@@ -43,11 +43,19 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 
   if (networkError !== undefined && String(networkError).includes('403')) {
-    store.dispatch.global.doLogOutAuthError();
+    // We know that if the user never logged out, we don't want to do anything here
+    // Otherwise it conflicts with the regular login flow
+    if (store.getState().global.loggedIn) {
+      store.dispatch.global.doLogOutAuthError();
+    }
   }
 
   if (networkError !== undefined && String(networkError).includes('401')) {
-    store.dispatch.global.doLogOutExpiredToken();
+    // This was causing an infinite loop when the 401 error was legitimate (user never logged in)
+    // Adding a check to see if the user was recorded as logged-in
+    if (store.getState().global.loggedIn) {
+      store.dispatch.global.doLogOutExpiredToken();
+    }
   }
 });
 
