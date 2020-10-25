@@ -21,6 +21,7 @@ import JiraIssues from './views/jiraIssues';
 import CircleciEnvvars from './views/circleciEnvvars';
 import CircleciPipelines from './views/circleciPipelines';
 import CircleciInsights from './views/circleciInsights';
+import TestingStates from './views/testingStates';
 import Login from './views/login';
 
 const mapState = () => ({});
@@ -56,6 +57,7 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
           <Route exact path="/circleciEnvvars" render={() => <CircleciEnvvars />} />
           <Route exact path="/circleciPipelines" render={() => <CircleciPipelines />} />
           <Route exact path="/circleciInsights" render={() => <CircleciInsights />} />
+          <Route exact path="/testingStates" render={() => <TestingStates />} />
         </Switch>
       </Router>
     </div>

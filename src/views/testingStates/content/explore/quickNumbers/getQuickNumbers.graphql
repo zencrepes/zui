@@ -1,0 +1,13 @@
+query($currentQuery: String, $thirtyDays: String, $inactive: String) {
+  testingStates {
+    currentQuery: data(query: $currentQuery) {
+      count
+    }
+    thirtyDays: data(query: $thirtyDays) {
+      count
+    }
+    inactive: data(query: $inactive) {
+      count
+    }
+  }
+}

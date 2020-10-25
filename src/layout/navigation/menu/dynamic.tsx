@@ -12,6 +12,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import GraphicEqIcon from '@material-ui/icons/GraphicEq';
 
 import AdapterLink from '../../../utils/adapterLink';
 
@@ -26,6 +27,8 @@ const getPlatformIcon = (platform: string) => {
     return <BugReportIcon />;
   } else if (platform === 'circleci') {
     return <FitnessCenterIcon />;
+  } else if (platform === 'testing') {
+    return <GraphicEqIcon />;
   }
   return <InboxIcon />;
 };

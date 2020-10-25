@@ -14,6 +14,7 @@ import { jiraIssues } from './jiraIssues';
 import { circleciEnvvars } from './circleciEnvvars';
 import { circleciPipelines } from './circleciPipelines';
 import { circleciInsights } from './circleciInsights';
+import { testingStates } from './testingStates';
 
 export interface RootModel {
   global: typeof global;
@@ -32,6 +33,7 @@ export interface RootModel {
   circleciEnvvars: typeof circleciEnvvars;
   circleciPipelines: typeof circleciPipelines;
   circleciInsights: typeof circleciInsights;
+  testingStates: typeof testingStates;
 }
 
 export const models: RootModel = {
@@ -51,4 +53,5 @@ export const models: RootModel = {
   circleciEnvvars,
   circleciPipelines,
   circleciInsights,
+  testingStates,
 };

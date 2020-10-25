@@ -1,0 +1,33 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: testingStates {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          createdAt
+          name
+          version
+          dependencies {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                version
+                url
+              }
+            }
+          }
+          state
+          url
+          runTotal
+          runSuccess
+          runFailure
+          runDuration
+        }
+      }
+    }
+  }
+}
