@@ -31,7 +31,7 @@ const TermFacet: React.FC<Props> = (props: Props) => {
       query: JSON.stringify(query),
       aggOptions: JSON.stringify({ points: defaultPoints, disjoint: true }),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined && data[dataset].data.aggregations.buckets.length > 0) {
     return (

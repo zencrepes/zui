@@ -62,7 +62,7 @@ const OpenedDuring: React.FC<Props> = (props: Props) => {
       bucketQueryF: JSON.stringify(getBucket(buckets, 'bucketQueryF')),
       bucketQueryG: JSON.stringify(getBucket(buckets, 'bucketQueryG')),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
     const chartData = {

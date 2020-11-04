@@ -25,7 +25,7 @@ const CheckPermission: React.FC<connectedProps> = (props: connectedProps) => {
   const { updateTransferSelectedRepoId, setUpdateTransferSelectedRepoViewerPermission, setEditDisableNext } = props;
 
   const { data } = useQuery(GQL_QUERY, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
     variables: {
       repoId: updateTransferSelectedRepoId,
     },

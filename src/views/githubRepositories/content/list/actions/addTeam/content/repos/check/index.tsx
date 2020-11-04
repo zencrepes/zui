@@ -29,7 +29,7 @@ const ReposCheck: React.FC<connectedProps> = (props: connectedProps) => {
     variables: {
       query: JSON.stringify(query),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   if (data !== undefined) {

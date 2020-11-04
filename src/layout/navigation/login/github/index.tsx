@@ -8,7 +8,7 @@ const GQL_QUERY = loader('./getUser.graphql');
 
 const GithubLogin: React.FC<any> = () => {
   const { data } = useQuery(GQL_QUERY, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   if (data === undefined) {

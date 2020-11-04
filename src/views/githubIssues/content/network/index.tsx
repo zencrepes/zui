@@ -38,7 +38,7 @@ const Network: React.FC<connectedProps> = (props: connectedProps) => {
       query: JSON.stringify(query),
       rootNodes: updateIssuesSelected.map((i: any) => i.id),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {

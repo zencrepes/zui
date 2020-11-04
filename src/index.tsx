@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink, from } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloLink, from } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
 // import { setContext } from '@apollo/link-context';
 // import { onError } from '@apollo/link-error';
 
@@ -18,7 +19,10 @@ window.store = store;
 
 const API_URL = window._env_.API_URL !== undefined ? window._env_.API_URL : 'http://127.0.0.1:5000/graphql';
 
-const httpLink: any = createHttpLink({
+// const httpLink: any = createHttpLink({
+//   uri: API_URL,
+// });
+const httpLink: any = new BatchHttpLink({
   uri: API_URL,
 });
 
@@ -59,6 +63,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
+// See: https://www.apollographql.com/docs/react/caching/cache-configuration/#generating-unique-identifiers
+// ZenCrepes API is not returning ids for everything which is causing an issue for Apollo Client 3
+// It is causing issues with InMemoryCache, disabling caching for now
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: from([(authLink as unknown) as ApolloLink, errorLink, httpLink]),

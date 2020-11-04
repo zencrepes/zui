@@ -56,7 +56,7 @@ const SelectMilestone: React.FC<connectedProps> = (props: connectedProps) => {
       query: JSON.stringify(query),
       aggOptions: JSON.stringify({ points: false, disjoint: true, tag: 'plan' }),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data === undefined) {
     return null;

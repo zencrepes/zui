@@ -62,7 +62,7 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
       sevenDaysCreated: JSON.stringify(buildQuery(query, sevenDaysAll)),
       sevenDaysClosed: JSON.stringify(buildQuery(query, sevenDaysFailed)),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   if (data === undefined) {

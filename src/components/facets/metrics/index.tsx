@@ -21,7 +21,7 @@ const MetricsFacet: React.FC<Props> = (props: Props) => {
       field: facet.field,
       query: JSON.stringify(query),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
     return (

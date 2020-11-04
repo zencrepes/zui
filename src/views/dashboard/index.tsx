@@ -14,7 +14,7 @@ const Dashboard: React.FC<RouteComponentProps> = (props: RouteComponentProps) =>
   const { history } = props;
 
   const { data } = useQuery(DATASET_QUERY, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   if (data === undefined) {

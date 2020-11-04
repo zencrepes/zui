@@ -65,7 +65,7 @@ const GithubVulneratbilities: React.FC<connectedProps> = (props: connectedProps)
   });
 
   const { data } = useQuery(GQL_GETCONFIG, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   if (data === undefined) {

@@ -45,7 +45,7 @@ const SelectTeam: React.FC<connectedProps> = (props: connectedProps) => {
   const selectedOrgs: string[] = updateReposSelected.map((r: any) => r.owner.login);
 
   const { data } = useQuery(GQL_QUERY, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
     variables: {
       orgLogin: selectedOrgs[0],
     },

@@ -25,7 +25,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
       query: JSON.stringify(query),
       aggOptions: JSON.stringify({ calendarInterval: 'week', sumField: 'points' }),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
     // Normalize the dataset (x points might not be the same)
