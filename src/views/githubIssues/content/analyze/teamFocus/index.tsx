@@ -26,7 +26,7 @@ const TeamFocus: React.FC<Props> = (props: Props) => {
       dateField: 'closedAt',
       aggOptions: JSON.stringify({ points: true }),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
     const dataset = data.githubIssues.data.matrix;

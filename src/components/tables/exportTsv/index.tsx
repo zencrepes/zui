@@ -41,7 +41,7 @@ const ExportTsv: React.FC<Props> = (props: Props) => {
       sortField: tableSort.sortField,
       sortDirection: tableSort.sortDirection,
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
     skip: download === false, // Do not run the query if the download flag is set to false
   });
 

@@ -38,7 +38,7 @@ const GetAggs: React.FC<connectedProps> = (props: connectedProps) => {
       sortField: 'title.keyword',
       sortDirection: 'asc',
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {

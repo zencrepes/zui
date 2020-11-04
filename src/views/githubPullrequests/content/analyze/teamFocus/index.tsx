@@ -24,7 +24,7 @@ const TeamFocus: React.FC<Props> = (props: Props) => {
       field: field,
       dateField: 'createdAt',
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
     const dataset = data.githubPullrequests.data.activity;

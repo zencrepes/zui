@@ -65,7 +65,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
       sortField: sortField,
       sortDirection: sortDirection,
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
     const totalCount = data.dataset.data.count;

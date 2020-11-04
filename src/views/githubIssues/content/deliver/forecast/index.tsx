@@ -34,7 +34,7 @@ const Forecast: React.FC<connectedProps> = (props: connectedProps) => {
       query: JSON.stringify(query),
       team: velocitySelectedTeam,
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   const remaining: any = queryCompletion.filter((q: any) => q.key === 'OPEN');
   if (data === undefined || queryCompletion.length <= 0) {

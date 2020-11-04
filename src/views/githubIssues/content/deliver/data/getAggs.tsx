@@ -37,7 +37,7 @@ const GetAggs: React.FC<connectedProps> = (props: connectedProps) => {
         tag: tag === undefined ? undefined : tag,
       }),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {

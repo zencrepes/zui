@@ -24,7 +24,7 @@ const ClosedPerWeek: React.FC<Props> = (props: Props) => {
       query: JSON.stringify(query),
       aggOptions: JSON.stringify({ calendarInterval: 'week', sumField: 'credits_used' }),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
     const dataserie = data.circleciInsights.data.aggregations.buckets;

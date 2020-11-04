@@ -32,7 +32,7 @@ const SuccessPerWeek: React.FC<Props> = (props: Props) => {
       queryFailed: JSON.stringify(failedQuery),
       aggOptions: JSON.stringify({ calendarInterval: 'day' }),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
     // Normalize the dataset (x points might not be the same)

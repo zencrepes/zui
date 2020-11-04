@@ -60,7 +60,7 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
       oldVulns: JSON.stringify(buildQuery(query, oldVulns)),
       dismissedVulns: JSON.stringify(buildQuery(query, dismissedVulns)),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   if (data === undefined) {

@@ -8,7 +8,7 @@ const QUERY_DATASETS = loader('./getVersion.graphql');
 
 const DynamicMenu: React.FC<any> = () => {
   const { data } = useQuery(QUERY_DATASETS, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   if (data === undefined) {

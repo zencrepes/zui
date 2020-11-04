@@ -59,6 +59,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
+// See: https://www.apollographql.com/docs/react/caching/cache-configuration/#generating-unique-identifiers
+// ZenCrepes API is not returning ids for everything which is causing an issue for Apollo Client 3
+// It is causing issues with InMemoryCache, disabling caching for now
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: from([(authLink as unknown) as ApolloLink, errorLink, httpLink]),

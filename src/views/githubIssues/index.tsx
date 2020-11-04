@@ -50,7 +50,7 @@ const GithubIssues: React.FC<connectedProps> = (props: connectedProps) => {
   const { updateQueryIfDifferent, setConfigFacets, location, history } = props;
 
   const { data } = useQuery(GQL_CONFIG, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   const pushNewQuery = (modifiedQuery: any) => {

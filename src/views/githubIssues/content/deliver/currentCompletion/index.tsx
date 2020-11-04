@@ -49,7 +49,7 @@ const CurrentCompletion: React.FC<connectedProps> = (props: connectedProps) => {
       query: JSON.stringify(query),
       aggOptions: JSON.stringify({ points: true }),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {

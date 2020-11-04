@@ -72,7 +72,7 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
       openPrsInClosedMilestones: JSON.stringify(buildQuery(query, openPrsInClosedMilestones)),
       oldPrs: JSON.stringify(buildQuery(query, oldPrs)),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   if (data === undefined) {

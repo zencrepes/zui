@@ -19,7 +19,7 @@ const ReposCheck: React.FC<connectedProps> = (props: connectedProps) => {
   const { setReposAvailable } = props;
 
   const { data } = useQuery(gqlRepos, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {

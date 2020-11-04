@@ -30,7 +30,7 @@ const CompareJobCost: React.FC<Props> = (props: Props) => {
       compareField: compareField,
       aggOptions: JSON.stringify(aggOptions),
     },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
     // Normalize the dataset (x points might not be the same)
