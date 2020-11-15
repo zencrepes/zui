@@ -14,6 +14,7 @@ import NavTabs from './navTabs';
 import Content from './content';
 import FacetsHoc from './facets';
 import Query from './query';
+import PointsSwitch from './pointsSwitch';
 
 const GQL_GETCONFIG = loader('./getConfig.graphql');
 
@@ -84,7 +85,14 @@ const GithubWatchers: React.FC<connectedProps> = (props: connectedProps) => {
                 <Query facets={facets} />
               </Grid>
               <Grid item xs={12} sm className={classes.fullWidth}>
-                <NavTabs />
+                <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={2}>
+                  <Grid item xs={12} sm container>
+                    <NavTabs />
+                  </Grid>
+                  <Grid item>
+                    <PointsSwitch />
+                  </Grid>
+                </Grid>
               </Grid>
               <Grid item xs={12} sm className={classes.fullWidth}>
                 <Content tableConfig={tableConfig} />

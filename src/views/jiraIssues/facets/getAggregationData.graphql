@@ -1,7 +1,7 @@
-query($field: String!, $query: String) {
+query($field: String!, $query: String, $aggOptions: String) {
   jiraIssues {
     data(query: $query) {
-      aggregations(field: $field) {
+      aggregations(field: $field, aggOptions: $aggOptions) {
         field
         buckets {
           count

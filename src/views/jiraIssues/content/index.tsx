@@ -5,6 +5,7 @@ import { iRootState } from '../../../store';
 import { TableConfig } from '../../../global';
 
 import Explore from './explore';
+import Analyze from './analyze';
 import List from './list';
 
 const mapState = (state: iRootState) => ({
@@ -26,6 +27,8 @@ const Content: React.FC<connectedProps> = (props: connectedProps) => {
   switch (selectedTab) {
     case 'explore':
       return <Explore />;
+    case 'analyze':
+      return <Analyze />;
     case 'list':
       return <List tableConfig={tableConfig} />;
     default:

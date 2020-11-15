@@ -1,0 +1,21 @@
+query($query: String, $field: String!, $dateField: String!, $aggOptions: String) {
+  jiraIssues {
+    data(query: $query) {
+      matrix(dateField: $dateField, field: $field, aggOptions: $aggOptions) {
+        field
+        fromWeekStart
+        toWeekStart
+        buckets {
+          key
+          docCount
+          sum
+          weeks {
+            weekStart
+            docCount
+            sum
+          }
+        }
+      }
+    }
+  }
+}

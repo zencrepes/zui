@@ -39,6 +39,9 @@ export const jiraIssues: JiraIssues = {
     setSelectedTab(state: any, payload: any) {
       return { ...state, selectedTab: payload };
     },
+    setDefaultPoints(state: any, payload: any) {
+      return { ...state, defaultPoints: payload };
+    },
     setTablePaginationRowsPerPage(state: any, payload: any) {
       // Whenever we change the number of rows per page, we also reset all to default
       return {
