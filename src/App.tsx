@@ -22,6 +22,7 @@ import CircleciEnvvars from './views/circleciEnvvars';
 import CircleciPipelines from './views/circleciPipelines';
 import CircleciInsights from './views/circleciInsights';
 import TestingStates from './views/testingStates';
+import BambooRuns from './views/bambooRuns';
 import Login from './views/login';
 
 const mapState = () => ({});
@@ -58,6 +59,7 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
           <Route exact path="/circleciPipelines" render={() => <CircleciPipelines />} />
           <Route exact path="/circleciInsights" render={() => <CircleciInsights />} />
           <Route exact path="/testingStates" render={() => <TestingStates />} />
+          <Route exact path="/bambooRuns" render={() => <BambooRuns />} />
         </Switch>
       </Router>
     </div>
