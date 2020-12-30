@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
-import { format, startOfWeek, startOfMonth } from 'date-fns';
+import { startOfWeek, startOfMonth } from 'date-fns';
 
 import CustomCard from '../../../../../components/customCard';
 import FailureChart from './failureChart';
