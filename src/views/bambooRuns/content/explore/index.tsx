@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 import PerWeek from './perWeek';
+import FailureEvolution from './failureEvolution';
 import QuickNumbers from './quickNumbers';
 
 import { iRootState } from '../../../../store';
@@ -63,20 +64,38 @@ const Explore: React.FC<connectedProps> = (props: connectedProps) => {
   Results in the query repeating over and over, therefore, moving this one level up
   */
   const thirtyDaysPrior = sub(new Date(), { days: 30 }).toISOString();
-  const ninetyDaysPrior = sub(new Date(), { days: 90 }).toISOString();
 
   return (
     <Grid container spacing={3} className={classes.root}>
       <Grid item xs={12}>
-        <QuickNumbers
-          query={query}
-          thirtyDaysPrior={thirtyDaysPrior}
-          ninetyDaysPrior={ninetyDaysPrior}
-          openQuery={openQuery}
-        />
+        <QuickNumbers query={query} thirtyDaysPrior={thirtyDaysPrior} openQuery={openQuery} />
       </Grid>
       <Grid item xs={12}>
         <PerWeek query={query} openWeek={openWeek} />
+      </Grid>
+      <Grid item xs={6}>
+        <FailureEvolution
+          query={query}
+          headerTitle={'Failure rate over the past 12 days'}
+          timeWindowPrior={sub(new Date(), { days: 12 }).toISOString()}
+          interval={'day'}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <FailureEvolution
+          query={query}
+          headerTitle={'Failure rate over the past 12 weeks'}
+          timeWindowPrior={sub(new Date(), { days: 84 }).toISOString()}
+          interval={'week'}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <FailureEvolution
+          query={query}
+          headerTitle={'Failure rate over the past 12 months'}
+          timeWindowPrior={sub(new Date(), { days: 365 }).toISOString()}
+          interval={'month'}
+        />
       </Grid>
     </Grid>
   );

@@ -12,7 +12,6 @@ const QUICKNUMBERS_QUERY = loader('./getQuickNumbers.graphql');
 interface Props {
   query: any;
   thirtyDaysPrior: string;
-  ninetyDaysPrior: string;
   openQuery: (query: any) => void;
 }
 
@@ -48,21 +47,15 @@ const buildQuery = (sourceQuery: any, additionalData: any) => {
 };
 
 const QuickNumbers: React.FC<Props> = (props: Props) => {
-  const { query, thirtyDaysPrior, ninetyDaysPrior, openQuery } = props;
+  const { query, thirtyDaysPrior, openQuery } = props;
   const classes = useStyles();
 
-  const thirtyDays = [{ op: '>=', content: { field: 'createdAt', value: thirtyDaysPrior } }];
-
-  const inactive = [
-    { op: '<=', content: { field: 'createdAt', value: ninetyDaysPrior } },
-    { op: 'in', content: { field: 'isArchived', value: ['false'] } },
-  ];
+  const thirtyDays = [{ op: '>=', content: { field: 'startedAt', value: thirtyDaysPrior } }];
 
   const { data } = useQuery(QUICKNUMBERS_QUERY, {
     variables: {
       currentQuery: JSON.stringify(query),
       thirtyDays: JSON.stringify(buildQuery(query, thirtyDays)),
-      inactive: JSON.stringify(buildQuery(query, inactive)),
     },
     fetchPolicy: 'network-only',
   });
@@ -75,26 +68,14 @@ const QuickNumbers: React.FC<Props> = (props: Props) => {
       key: 1,
       count: data.bambooRuns.currentQuery.count,
       query: query,
-      title: 'In current query',
+      title: 'Runs in current query',
     },
     {
       key: 2,
       count: data.bambooRuns.thirtyDays.count,
       query: buildQuery(query, thirtyDays),
-      title: 'Updated in the last 30 days',
+      title: 'Runs in the last 30 days',
     },
-    // {
-    //   key: 3,
-    //   count: data.bambooRuns.inactive.items.totalCount,
-    //   query: buildQuery(query, inactive),
-    //   title: 'Have mismatched colors (TO BE ADDED)',
-    // },
-    // {
-    //   key: 4,
-    //   count: data.bambooRuns.inactive.items.totalCount,
-    //   query: buildQuery(query, inactive),
-    //   title: 'Colors used across states (TO BE ADDED)',
-    // },
   ];
 
   return (

@@ -56,7 +56,7 @@ class MatrixDateChart extends Component<any, any> {
             tickRotation: -90,
             legend: '',
             legendOffset: 36,
-            format: function (value) {
+            format: function (value: any) {
               return formatWeekEnd(value);
             },
             // format: (weekStart: string) => this.formatWeekEnd(weekStart),
@@ -73,7 +73,7 @@ class MatrixDateChart extends Component<any, any> {
             //   console.log('On Click');
             // },
           }}
-          onClick={(e) => {
+          onClick={(e: any) => {
             this.cellClick(e);
           }}
         />

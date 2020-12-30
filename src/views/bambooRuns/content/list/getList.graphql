@@ -6,26 +6,28 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
         totalCount
         nodes {
           id
-          createdAt
-          name
-          version
-          dependencies {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                version
-                url
-              }
+          key
+          plan {
+            id
+            name
+            shortKey
+            project {
+              id
+              name
             }
           }
-          state
-          url
+          startedAt
+          completedAt
+          name
+          number
+          duration
           runTotal
           runSuccess
           runFailure
-          runDuration
+          runSkipped
+          runQuarantined
+          state
+          successful
         }
       }
     }

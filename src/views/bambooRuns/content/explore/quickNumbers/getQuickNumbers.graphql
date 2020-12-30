@@ -6,8 +6,5 @@ query($currentQuery: String, $thirtyDays: String, $inactive: String) {
     thirtyDays: data(query: $thirtyDays) {
       count
     }
-    inactive: data(query: $inactive) {
-      count
-    }
   }
 }

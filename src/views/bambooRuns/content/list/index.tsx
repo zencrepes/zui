@@ -3,15 +3,12 @@ import { connect } from 'react-redux';
 import { loader } from 'graphql.macro';
 
 import { useQuery } from '@apollo/client';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 
 import { iRootState } from '../../../../store';
 import { TableConfig, TableSort, TablePaginationType } from '../../../../global';
 
-import ComplexTable from '../../../../components/tables/complex';
+import SimpleTable from '../../../../components/tables/simple';
 import ExportTsv from '../../../../components/tables/exportTsv';
-import StateWide from './stateWide';
 
 const GQL_QUERY = loader('./getList.graphql');
 
@@ -90,11 +87,12 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
 
     return (
       <React.Fragment>
-        <ComplexTable
+        <SimpleTable
           totalCount={totalCount}
           tableConfig={tableConfig}
           tableSort={tableSort}
           tablePagination={tablePagination}
+          items={nodes}
           exportTsv={
             <ExportTsv
               gqlQuery={GQL_QUERY}
@@ -104,17 +102,7 @@ const List: React.FC<connectedProps> = (props: connectedProps) => {
               tableSort={tableSort}
             />
           }
-        >
-          {nodes.map((item: any) => {
-            return (
-              <TableRow key={item.id}>
-                <TableCell component="th" scope="row">
-                  <StateWide item={item} />
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </ComplexTable>
+        />
       </React.Fragment>
     );
   }

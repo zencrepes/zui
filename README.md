@@ -166,9 +166,9 @@ Each "view" aims at having its own model while a global model is available for c
 
 ### Views and Components
 
-Views represent the various datsets available for querying, each view MUST be independeant from each-other.
+Views represent the various datasets available for querying, each view MUST be independent from each-other.
 
-Components are reusasble pieces of code, they must not connect to redux and must not import elements from the views.
+Components are reusable pieces of code, they must not connect to redux and must not import elements from the views.
 
 ### Quick start notes
 
@@ -178,8 +178,15 @@ docker run --link d5209bc62a88:elasticsearch -p 5601:5601 docker.elastic.co/kiba
 docker run -p 6379:6379 redis
 docker run -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin keycloak-config
 
+With Keycloak:
 cd zapi; KEYCLOAK_DISABLED=false KEYCLOAK_ROLE=zencrepes-data yarn run start:dev
 cd zui; KEYCLOAK_DISABLED=false yarn run start:dev
+cd zqueue; yarn run start:dev
+
+
+Without Keycloak:
+cd zapi; KEYCLOAK_DISABLED=true yarn run start:dev
+cd zui; KEYCLOAK_DISABLED=true yarn run start:dev
 cd zqueue; yarn run start:dev
 
 ```

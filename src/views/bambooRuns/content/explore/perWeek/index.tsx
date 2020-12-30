@@ -7,7 +7,7 @@ import CustomCard from '../../../../../components/customCard';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
-import HistoryLine from '../../../../../components/charts/chartJS/historyLine';
+import HistoryLineDual from './historyLineDual';
 
 const GQL_QUERY = loader('./getPerWeek.graphql');
 
@@ -37,46 +37,57 @@ const PerWeek: React.FC<Props> = (props: Props) => {
     }
 
     const dataseriesSuccess: Array<any> = [];
+    const dataseriesFailure: Array<any> = [];
+    const dataseriesTotal: Array<any> = [];
+    const dataseriesPrctFailure: Array<any> = [];
     // Prep the data
     for (const x of datapoints) {
-      const startedAt = data.bambooRuns.data.allRuns.buckets.find((item: any) => item.keyAsString === x);
+      const startedAtSuccess = data.bambooRuns.data.allRuns.buckets.find((item: any) => item.keyAsString === x);
       dataseriesSuccess.push({
         state: x,
-        startedAt: startedAt !== undefined ? startedAt.sum : 0,
+        startedAt: startedAtSuccess !== undefined ? startedAtSuccess.sum : 0,
       });
-    }
 
-    const dataseriesFailure: Array<any> = [];
-    // Prep the data
-    for (const x of datapoints) {
-      const startedAt = data.bambooRuns.data.failedRuns.buckets.find((item: any) => item.keyAsString === x);
+      const startedAtFailed = data.bambooRuns.data.failedRuns.buckets.find((item: any) => item.keyAsString === x);
       dataseriesFailure.push({
         state: x,
-        startedAt: startedAt !== undefined ? startedAt.sum : 0,
+        startedAt: startedAtFailed !== undefined ? startedAtFailed.sum : 0,
+      });
+
+      dataseriesTotal.push({
+        state: x,
+        startedAt: startedAtFailed.sum + startedAtSuccess.sum,
+      });
+
+      dataseriesPrctFailure.push({
+        state: x,
+        startedAt: Math.round((startedAtFailed.sum * 100) / (startedAtFailed.sum + startedAtSuccess.sum)),
       });
     }
 
     const chartData = {
       datasets: [
         {
-          label: 'Successful (count)',
-          data: dataseriesSuccess.map((item: any) => item.startedAt),
+          label: 'Failure rate (%)',
+          data: dataseriesPrctFailure.map((item: any) => item.startedAt),
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          type: 'line',
+          pointRadius: 0,
+          pointHitRadius: 5,
+          fill: false,
+          yAxisID: 'yright',
+        },
+        {
+          label: 'Executed tests',
+          data: dataseriesTotal.map((item: any) => item.startedAt),
           backgroundColor: 'rgb(54, 162, 235)',
           borderColor: 'rgb(54, 162, 235)',
           pointRadius: 0,
           pointHitRadius: 5,
           type: 'bar',
           fill: false,
-        },
-        {
-          label: 'Failed (count)',
-          data: dataseriesFailure.map((item: any) => item.startedAt),
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          pointRadius: 0,
-          pointHitRadius: 5,
-          type: 'bar',
-          fill: false,
+          yAxisID: 'yleft',
         },
       ],
       labels: dataseriesSuccess.map((item: any) => format(parseISO(item.state), 'LLL do yyyy')),
@@ -84,7 +95,7 @@ const PerWeek: React.FC<Props> = (props: Props) => {
 
     return (
       <CustomCard headerTitle="Tests Executed per week" headerFactTitle="" headerFactValue="">
-        <HistoryLine chartData={chartData} dataset={dataseriesSuccess} openClick={openWeek} />
+        <HistoryLineDual chartData={chartData} dataset={dataseriesSuccess} openClick={openWeek} />
       </CustomCard>
     );
   }
