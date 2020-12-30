@@ -1,0 +1,35 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: bambooRuns {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          key
+          plan {
+            id
+            name
+            shortKey
+            project {
+              id
+              name
+            }
+          }
+          startedAt
+          completedAt
+          name
+          number
+          duration
+          runTotal
+          runSuccess
+          runFailure
+          runSkipped
+          runQuarantined
+          state
+          successful
+        }
+      }
+    }
+  }
+}

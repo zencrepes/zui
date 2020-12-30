@@ -27,7 +27,7 @@ const getPlatformIcon = (platform: string) => {
     return <BugReportIcon />;
   } else if (platform === 'circleci') {
     return <FitnessCenterIcon />;
-  } else if (platform === 'testing') {
+  } else if (platform === 'testing' || platform === 'bamboo') {
     return <GraphicEqIcon />;
   }
   return <InboxIcon />;

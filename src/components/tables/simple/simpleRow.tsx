@@ -81,6 +81,8 @@ const SimpleRow: React.FC<Props> = (props: Props) => {
               cellValue = <span>{JSON.stringify(value)}</span>;
             } else if (col.fieldType === 'date' && value !== null) {
               cellValue = <span>{format(new Date(value), 'eee MMM d, yyyy')}</span>;
+            } else if (col.fieldType === 'datetime' && value !== null) {
+              cellValue = <span>{format(new Date(value), 'eee MMM d, yyyy - HH:mm XX')}</span>;
             } else if (col.fieldType === 'array') {
               cellValue = <span>{value.length}</span>;
             } else if (col.fieldType === 'microchart') {
