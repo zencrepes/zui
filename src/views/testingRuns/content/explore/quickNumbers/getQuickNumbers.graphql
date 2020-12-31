@@ -1,5 +1,5 @@
 query($currentQuery: String, $thirtyDays: String) {
-  bambooRuns {
+  testingRuns {
     currentQuery: data(query: $currentQuery) {
       count
     }

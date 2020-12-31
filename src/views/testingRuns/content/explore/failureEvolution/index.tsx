@@ -107,7 +107,7 @@ const buildDataset = (data: any, emptyCalendar: Array<string>) => {
 const FailureEvolution: React.FC<Props> = (props: Props) => {
   const { query, timeWindowPrior, headerTitle, interval } = props;
 
-  const timeWindow = [{ op: '>=', content: { field: 'startedAt', value: timeWindowPrior } }];
+  const timeWindow = [{ op: '>=', content: { field: 'createdAt', value: timeWindowPrior } }];
 
   const { data } = useQuery(GQL_QUERY, {
     variables: {
@@ -117,7 +117,7 @@ const FailureEvolution: React.FC<Props> = (props: Props) => {
     fetchPolicy: 'network-only',
   });
   if (data !== undefined) {
-    const dataset = data.bambooRuns.data.failurerate;
+    const dataset = data.testingRuns.data.failurerate;
     let emptyCalendar: Array<string> = getEmptyWeekCalendar(
       new Date(dataset.fromDateStart),
       new Date(dataset.toDateStart),
