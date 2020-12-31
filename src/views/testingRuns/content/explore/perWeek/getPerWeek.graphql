@@ -1,0 +1,24 @@
+query($query: String, $aggOptionsAllRuns: String, $aggOptionsFailedRuns: String) {
+  testingRuns {
+    data(query: $query) {
+      allRuns: aggregations(field: "createdAt", aggType: "date_histogram", aggOptions: $aggOptionsAllRuns) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          moving
+          sum
+        }
+      }
+      failedRuns: aggregations(field: "createdAt", aggType: "date_histogram", aggOptions: $aggOptionsFailedRuns) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          moving
+          sum
+        }
+      }
+    }
+  }
+}

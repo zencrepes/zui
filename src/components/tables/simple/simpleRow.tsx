@@ -132,11 +132,15 @@ const SimpleRow: React.FC<Props> = (props: Props) => {
               }
             } else if (col.linkField !== null) {
               const link = getObjectValue(item, col.linkField, undefined);
-              cellValue = (
-                <a href={link} className={classes.link} target="_blank" rel="noopener noreferrer">
-                  {value}
-                </a>
-              );
+              if (link !== null && link !== '') {
+                cellValue = (
+                  <a href={link} className={classes.link} target="_blank" rel="noopener noreferrer">
+                    {value}
+                  </a>
+                );
+              } else {
+                cellValue = <span>{value}</span>;
+              }
             } else {
               cellValue = <span>{value}</span>;
             }
