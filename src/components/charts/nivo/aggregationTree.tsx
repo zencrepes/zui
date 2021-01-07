@@ -30,7 +30,6 @@ class AggregationTree extends Component<any, any> {
     const chartData = {
       name: 'dataset',
       count: 10,
-      color: 'hsl(67, 70%, 50%)',
       children: buckets.map((v: any) => {
         return { name: v.key, count: v.docCount };
       }),
@@ -43,37 +42,17 @@ class AggregationTree extends Component<any, any> {
     return (
       <div className={classes.root}>
         <ResponsiveTreeMap
-          root={this.buildDataset()}
+          data={this.buildDataset()}
           identity="name"
           value="count"
-          innerPadding={3}
-          outerPadding={3}
           leavesOnly={true}
-          margin={{
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          }}
-          label={(e: any) => this.truncate(e.name)}
-          labelFormat=""
-          labelSkipSize={40}
-          labelTextColor={{
-            from: 'color',
-            modifiers: [['darker', 1.2]],
-          }}
-          colorBy="name"
-          colors={{
-            scheme: 'pastel1',
-          }}
-          borderColor={{
-            from: 'color',
-            modifiers: [['darker', 0.3]],
-          }}
-          animate={true}
+          margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+          label={(e: any) => this.truncate(e.data.name)}
+          labelSkipSize={12}
+          labelTextColor={{ from: 'color', modifiers: [['darker', 1.2]] }}
+          parentLabelTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+          borderColor={{ from: 'color', modifiers: [['darker', 0.1]] }}
           onClick={this.clickIssues}
-          motionStiffness={90}
-          motionDamping={11}
         />
       </div>
     );
