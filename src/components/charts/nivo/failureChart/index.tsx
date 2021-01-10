@@ -111,6 +111,14 @@ class FailureChart extends Component<any, any> {
             legend: '',
             legendPosition: 'middle',
             legendOffset: -40,
+            format: function (value: any) {
+              // This filler is there to ensure there are always at least 10 lines in the chart
+              // This clears the line name
+              if (value.includes('-EMPTYFILLER-')) {
+                return '';
+              }
+              return value;
+            },
           }}
           cellOpacity={1}
           cellBorderColor={'#a4a3a5'}
