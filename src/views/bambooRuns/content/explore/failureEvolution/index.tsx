@@ -101,6 +101,17 @@ const buildDataset = (data: any, emptyCalendar: Array<string>) => {
     }
     dataset.push(formattedBucket);
   }
+  // We want the chart to include at least 10 series to avoid layout issues
+  const missingSeries = 10 - dataset.length;
+  if (missingSeries > 0) {
+    for (let i = 0; i < missingSeries; i++) {
+      const newSerie: any = { serie: '-EMPTYFILLER-' + i, avg: -1 };
+      for (const week of emptyCalendar) {
+        newSerie[week] = -1;
+      }
+      dataset.push(newSerie);
+    }
+  }
   return dataset;
 };
 
