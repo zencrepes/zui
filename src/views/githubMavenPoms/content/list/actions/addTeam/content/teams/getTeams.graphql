@@ -1,0 +1,21 @@
+query($orgLogin: String!) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+  organization(login: $orgLogin) {
+    viewerCanAdminister
+    teams(first: 100) {
+      totalCount
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+}
