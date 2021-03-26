@@ -27,6 +27,19 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
               version
             }
           }
+          lastCommitMainBranch {
+            pushedDate
+            messageHeadline
+            author {
+              date
+              email
+              user {
+                name
+                id
+                login
+              }
+            }
+          }
           repositoryTopics {
             totalCount
             edges {
