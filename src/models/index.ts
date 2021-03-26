@@ -4,6 +4,7 @@ import { chip } from './chip';
 import { githubPullrequests } from './githubPullrequests';
 import { githubVulnerabilities } from './githubVulnerabilities';
 import { githubRepositories } from './githubRepositories';
+import { githubMavenPoms } from './githubMavenPoms';
 import { githubWatchers } from './githubWatchers';
 import { githubLabels } from './githubLabels';
 import { githubMilestones } from './githubMilestones';
@@ -25,6 +26,7 @@ export interface RootModel {
   githubPullrequests: typeof githubPullrequests;
   githubVulnerabilities: typeof githubVulnerabilities;
   githubRepositories: typeof githubRepositories;
+  githubMavenPoms: typeof githubMavenPoms;
   githubWatchers: typeof githubWatchers;
   githubLabels: typeof githubLabels;
   githubMilestones: typeof githubMilestones;
@@ -47,6 +49,7 @@ export const models: RootModel = {
   githubPullrequests,
   githubVulnerabilities,
   githubRepositories,
+  githubMavenPoms,
   githubWatchers,
   githubLabels,
   githubMilestones,

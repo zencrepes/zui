@@ -17,6 +17,7 @@ import GithubMilestones from './views/githubMilestones';
 import GithubProjects from './views/githubProjects';
 import GithubReleases from './views/githubReleases';
 import GithubIssues from './views/githubIssues';
+import GithubMavenPoms from './views/githubMavenPoms';
 import JiraIssues from './views/jiraIssues';
 import CircleciEnvvars from './views/circleciEnvvars';
 import CircleciPipelines from './views/circleciPipelines';
@@ -55,6 +56,7 @@ const App: React.FC<connectedProps> = (props: connectedProps) => {
           <Route exact path="/githubProjects" render={() => <GithubProjects />} />
           <Route exact path="/githubReleases" render={() => <GithubReleases />} />
           <Route exact path="/githubIssues" render={() => <GithubIssues />} />
+          <Route exact path="/githubMavenPoms" render={() => <GithubMavenPoms />} />
           <Route exact path="/jiraIssues" render={() => <JiraIssues />} />
           <Route exact path="/circleciEnvvars" render={() => <CircleciEnvvars />} />
           <Route exact path="/circleciPipelines" render={() => <CircleciPipelines />} />

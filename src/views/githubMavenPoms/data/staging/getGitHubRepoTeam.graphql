@@ -1,0 +1,20 @@
+query($nodesArray: [ID!]!, $orgLogin: String!, $teamSlug: String!) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+  organization(login: $orgLogin) {
+    team(slug: $teamSlug) {
+      id
+      viewerCanAdminister
+    }
+  }
+  nodes(ids: $nodesArray) {
+    ... on Repository {
+      id
+      viewerPermission
+    }
+  }
+}

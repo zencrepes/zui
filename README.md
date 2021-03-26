@@ -173,8 +173,8 @@ Components are reusable pieces of code, they must not connect to redux and must 
 ### Quick start notes
 
 ```bash
-docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.9.0
-docker run --link d5209bc62a88:elasticsearch -p 5601:5601 docker.elastic.co/kibana/kibana:7.9.0
+docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+docker run --link d5209bc62a88:elasticsearch -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.2
 docker run -p 6379:6379 redis
 docker run -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin keycloak-config
 

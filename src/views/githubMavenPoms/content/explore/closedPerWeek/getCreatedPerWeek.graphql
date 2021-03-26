@@ -1,0 +1,14 @@
+query($query: String, $aggOptions: String) {
+  githubMavenPoms {
+    data(query: $query) {
+      pushedAt: aggregations(field: "pushedAt", aggType: "date_histogram", aggOptions: $aggOptions) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          moving
+        }
+      }
+    }
+  }
+}

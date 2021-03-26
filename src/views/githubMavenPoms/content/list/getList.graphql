@@ -1,0 +1,60 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: githubMavenPoms {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          createdAt
+          pushedAt
+          isArchived
+          name
+          url
+          owner {
+            login
+            url
+          }
+          defaultBranchRef {
+            name
+          }
+          description
+          pom {
+            artifactId
+            version 
+            parent {
+              artifactId 
+              version
+            }
+          }
+          lastCommitMainBranch {
+            pushedDate
+            messageHeadline
+            author {
+              date
+              email
+              user {
+                name
+                id
+                login
+              }
+            }
+          }
+          repositoryTopics {
+            totalCount
+            edges {
+              node {
+                id
+                topic {
+                  id
+                  name
+                }
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
