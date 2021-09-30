@@ -141,6 +141,17 @@ const SimpleRow: React.FC<Props> = (props: Props) => {
               } else {
                 cellValue = <span>{value}</span>;
               }
+            } else if (col.fieldType === 'longstring') {
+              // Limit the string length to 30 characters
+              if (value.length > 30) {
+                cellValue = (
+                  <span>
+                    {value.slice(0, 15)}...{value.slice(-5)}
+                  </span>
+                );
+              } else {
+                cellValue = <span>{value}</span>;
+              }
             } else {
               cellValue = <span>{value}</span>;
             }
