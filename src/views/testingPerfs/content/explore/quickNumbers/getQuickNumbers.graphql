@@ -1,0 +1,10 @@
+query($currentQuery: String, $thirtyDays: String) {
+  testingPerfs {
+    currentQuery: data(query: $currentQuery) {
+      count
+    }
+    thirtyDays: data(query: $thirtyDays) {
+      count
+    }
+  }
+}

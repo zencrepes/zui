@@ -1,0 +1,14 @@
+query($field: String!, $query: String) {
+  testingPerfs {
+    data(query: $query) {
+      aggregations(field: $field) {
+        field
+        buckets {
+          docCount
+          key
+          count
+        }
+      }
+    }
+  }
+}

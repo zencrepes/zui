@@ -1,0 +1,15 @@
+query($query: String) {
+  testingPerfs {
+    data(query: $query) {
+      items {
+        nodes {
+          id
+          name
+          rampUp
+          startedAt
+        }
+      }
+    }
+  }
+}
+
