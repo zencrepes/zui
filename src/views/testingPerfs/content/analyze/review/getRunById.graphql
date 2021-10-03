@@ -1,0 +1,53 @@
+query($selectedRunId: String!) {
+  testingPerfs {
+    data {
+      item(id: $selectedRunId) {
+        id
+        name
+        rampUp
+        duration
+        startedAt
+        platform {
+          vendor
+          tenant
+          region
+        }
+        resources {
+          edges {
+            node {
+              id
+              name
+              image
+              size
+            }
+          }
+        }
+        runs {
+          edges {
+            node {
+              id
+              name
+              userCount              
+              statistics {
+                transaction
+                sampleCount
+                errorCount
+                errorPct
+                meanResTime
+                medianResTime
+                maxResTime
+                pct1ResTime
+                pct2ResTime
+                pct3ResTime
+                throughput
+                receivedKBytesPerSec
+                sentKBytesPerSec
+              }              
+            }
+          }
+        }
+        url
+      }
+    }
+  }
+}

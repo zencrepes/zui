@@ -1,0 +1,40 @@
+query($query: String, $selectedTransaction: String) {
+  testingPerfs {
+    data(query: $query) {
+      transactions: aggregations(field: "transactions.edges.node.name") {
+        field
+        buckets {
+          docCount
+          key
+          count
+        }
+      }
+      items(transaction: $selectedTransaction) {
+        nodes {
+          id
+          name
+          rampUp
+          startedAt
+          runs {
+            edges {
+              node {
+                statistics {
+                  transaction
+                  sampleCount
+                  meanResTime
+                  pct1ResTime
+                  pct2ResTime
+                  pct3ResTime
+                  throughput
+                  errorCount
+                }
+                userCount
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
