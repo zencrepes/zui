@@ -2,6 +2,9 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
+
 interface Run {
   id: string;
   name: string;
@@ -21,7 +24,7 @@ const SelectRun: React.FC<Props> = (props: Props) => {
     <Autocomplete
       id="combo-box-field"
       options={availableRuns}
-      getOptionLabel={(option) => option.startedAt + ' - ' + option.name}
+      getOptionLabel={(option) => format(parseISO(option.startedAt), 'LLL do yyyy HH:MM') + ' - ' + option.name}
       value={availableRuns.find((v: any) => v.value === selectedRunId)}
       style={{ width: 500 }}
       onChange={(event: any, newValue: any | null) => {

@@ -113,7 +113,7 @@ const UsersCapacity: React.FC<Props> = (props: Props) => {
 
     const chartData = {
       datasets: [...dataLines, ...[warningLine], ...[errorLine]],
-      labels: reports.map((report: any) => format(parseISO(report.startedAt), 'LLL do yyyy')),
+      labels: reports.map((report: any) => format(parseISO(report.startedAt), 'LLL do yyyy HH:MM')),
     };
 
     return (

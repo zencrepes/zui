@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import LaunchIcon from '@material-ui/icons/Launch';
 
 import CustomCard from '../../../../../../components/customCard';
 
@@ -17,6 +19,7 @@ interface Run {
   startedAt: string;
   resources: any;
   platform: any;
+  url: string;
 }
 
 interface Props {
@@ -34,7 +37,22 @@ const ResourcesTable: React.FC<Props> = (props: Props) => {
   const { run } = props;
 
   return (
-    <CustomCard headerTitle="Execution environment" headerFactTitle="" headerFactValue="">
+    <CustomCard
+      headerTitle="Execution environment"
+      headerFactTitle={
+        <Button
+          variant="outlined"
+          size="small"
+          aria-label="Open source URL"
+          href={run.url}
+          target="_blank"
+          startIcon={<LaunchIcon />}
+        >
+          Open source
+        </Button>
+      }
+      headerFactValue=""
+    >
       <Typography variant="subtitle2" gutterBottom>
         Performed on {run.platform.vendor} ({run.platform.region})
       </Typography>
