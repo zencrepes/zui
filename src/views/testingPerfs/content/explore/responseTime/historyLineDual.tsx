@@ -59,6 +59,14 @@ class HistoryLineDual extends Component<any, any> {
           position: 'nearest',
           mode: 'index',
           intersect: false,
+          callbacks: {
+            title: (tooltipItem: any, data: any) => {
+              return data.reports[tooltipItem[0].index];
+            },
+            footer: (tooltipItem: any, data: any) => {
+              return 'Date: ' + data.labels[tooltipItem[0].index];
+            },
+          },
         },
         plugins: {
           datalabels: {
