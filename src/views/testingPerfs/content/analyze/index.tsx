@@ -43,7 +43,7 @@ const Analyze: React.FC<connectedProps> = (props: connectedProps) => {
   if (data !== undefined && data.testingPerfs.data.items.nodes.length > 0) {
     const availableRuns = data.testingPerfs.data.items.nodes
       .slice()
-      .sort((a: any, b: any) => a.startedAt - b.startedAt);
+      .sort((a: any, b: any) => new Date(a.startedAt) - new Date(b.startedAt));
     const lastRun = availableRuns[availableRuns.length - 1];
     if (selectedRunId === '') {
       setSelectedRunId(lastRun.id);
