@@ -44,7 +44,7 @@ const Review: React.FC<Props> = (props: Props) => {
             {perfRun.name}
           </Typography>
           <Typography variant="h6" gutterBottom>
-            {format(parseISO(perfRun.startedAt), 'LLL do yyyy HH:MM')}
+            {format(parseISO(perfRun.startedAt), 'LLL do yyyy HH:mm')}
           </Typography>
         </Grid>
         <Grid item xs={12}>
