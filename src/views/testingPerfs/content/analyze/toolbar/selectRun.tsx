@@ -24,7 +24,7 @@ const SelectRun: React.FC<Props> = (props: Props) => {
     <Autocomplete
       id="combo-box-field"
       options={availableRuns}
-      getOptionLabel={(option) => format(parseISO(option.startedAt), 'LLL do yyyy HH:MM') + ' - ' + option.name}
+      getOptionLabel={(option) => format(parseISO(option.startedAt), 'LLL do yyyy HH:mm') + ' - ' + option.name}
       value={availableRuns.find((v: any) => v.value === selectedRunId)}
       style={{ width: 500 }}
       onChange={(event: any, newValue: any | null) => {
