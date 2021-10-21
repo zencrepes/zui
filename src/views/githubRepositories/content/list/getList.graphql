@@ -28,6 +28,9 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
           isArchived
           isPrivate
           currentYearMasterCommits
+          refs {
+            totalCount
+          }
           recentCommitsMaster {
             name
             target {
