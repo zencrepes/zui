@@ -63,6 +63,15 @@ query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection
               }
             }
           }
+          branchProtectionRules {
+            totalCount
+            edges {
+              node {
+                id
+                pattern
+              }
+            }
+          }
         }
       }
     }
