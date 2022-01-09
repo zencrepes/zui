@@ -15,6 +15,87 @@ interface TestingPerfs {
   effects: any;
 }
 
+const comparisonTableColumns = [
+  {
+    id: 'sampleCount',
+    name: 'Samples',
+    type: 'count',
+    visible: true,
+    description: 'Number of samples in the transaction',
+  },
+  {
+    id: 'errorCount',
+    name: 'Errors',
+    type: 'count',
+    visible: true,
+    description: 'Number of samples in the transaction that resulted in an error',
+  },
+  {
+    id: 'errorPct',
+    name: 'Error %',
+    type: 'count',
+    visible: false,
+    description: 'Percentage of the samples in the transaction transaction which returned an error',
+  },
+  {
+    id: 'minResTime',
+    name: 'Min',
+    type: 'responseTime',
+    visible: false,
+    description: 'Lowest response time across all samples of the transaction',
+  },
+  {
+    id: 'maxResTime',
+    name: 'Max',
+    type: 'responseTime',
+    visible: false,
+    description: 'Highest response time across all samples of the transaction',
+  },
+  {
+    id: 'meanResTime',
+    name: 'Mean',
+    type: 'responseTime',
+    visible: true,
+    description: 'The average response time across all samples of the transaction',
+  },
+  {
+    id: 'medianResTime',
+    name: 'Median',
+    type: 'responseTime',
+    visible: false,
+    description:
+      'Number which divides the samples into two equal halves. Half of the smaples are higher than this value while the other half is lower',
+  },
+  {
+    id: 'pct1ResTime',
+    name: '90%',
+    type: 'responseTime',
+    visible: true,
+    description: '90% of the samples are below that value',
+  },
+  {
+    id: 'pct2ResTime',
+    name: '95%',
+    type: 'responseTime',
+    visible: true,
+    description: '95% of the samples are below that value',
+  },
+  {
+    id: 'pct3ResTime',
+    name: '99%',
+    type: 'responseTime',
+    visible: true,
+    description: '99% of the samples are below that value',
+  },
+  {
+    id: 'throughput',
+    name: 'Throughput',
+    type: 'count',
+    visible: true,
+    description: 'Number of samples processsed per second across the transaction',
+  },
+];
+
 export const testingPerfs: TestingPerfs = {
   state: {
     log: {},
@@ -30,6 +111,18 @@ export const testingPerfs: TestingPerfs = {
     tablePaginationOffset: 0,
     tablePaginationLimit: 25,
     defaultPoints: false,
+
+    comparisonTableColumns: comparisonTableColumns,
+    comparisonTableHideCompare: false,
+    compareAvailableQueries: [],
+    compareAvailableProfiles: [],
+    compareReferenceQuerySelected: {},
+    compareReferenceProfileSelected: '',
+    compareReferenceData: {},
+    compareComparisonQuerySelected: {},
+    compareComparisonData: {},
+
+    openComparisonTableConfigModal: false,
   },
   reducers: {
     setLog(state: any, payload: any) {
@@ -67,6 +160,36 @@ export const testingPerfs: TestingPerfs = {
     },
     setQueries(state: any, payload: any) {
       return { ...state, queries: payload };
+    },
+    setCompareAvailableQueries(state: any, payload: any) {
+      return { ...state, compareAvailableQueries: payload };
+    },
+    setComparisonTableColumns(state: any, payload: any) {
+      return { ...state, comparisonTableColumns: payload };
+    },
+    setCompareAvailableProfiles(state: any, payload: any) {
+      return { ...state, compareAvailableProfiles: payload };
+    },
+    setCompareReferenceQuerySelected(state: any, payload: any) {
+      return { ...state, compareReferenceQuerySelected: payload };
+    },
+    setCompareComparisonQuerySelected(state: any, payload: any) {
+      return { ...state, compareComparisonQuerySelected: payload };
+    },
+    setCompareReferenceProfileSelected(state: any, payload: any) {
+      return { ...state, compareReferenceProfileSelected: payload };
+    },
+    setOpenComparisonTableConfigModal(state: any, payload: any) {
+      return { ...state, openComparisonTableConfigModal: payload };
+    },
+    setCompareReferenceData(state: any, payload: any) {
+      return { ...state, compareReferenceData: payload };
+    },
+    setCompareComparisonData(state: any, payload: any) {
+      return { ...state, compareComparisonData: payload };
+    },
+    setComparisonTableHideCompare(state: any, payload: any) {
+      return { ...state, comparisonTableHideCompare: payload };
     },
   },
   effects: (dispatch: Dispatch) => ({

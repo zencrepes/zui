@@ -9,7 +9,7 @@ query($query: String, $selectedTransaction: String) {
           count
         }
       }
-      items(transaction: $selectedTransaction) {
+      items(from: 0, size: 100, orderBy: { direction: desc, field: "startedAt" }, transaction: $selectedTransaction) {
         nodes {
           id
           name
