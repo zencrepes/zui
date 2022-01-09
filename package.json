@@ -79,7 +79,7 @@
     "lint:ci": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}'",
     "start": "react-scripts start",
     "start:dev": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts start",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "build": "react-scriptsbuild",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
