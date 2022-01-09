@@ -1,0 +1,6 @@
+mutation($id: String!, $username: String) {
+  enableTestingsPerfsRuns(id: $id, username: $username) {
+    id
+    name
+  }
+}

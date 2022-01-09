@@ -6,6 +6,7 @@ import { TableConfig } from '../../../global';
 
 import Explore from './explore';
 import Analyze from './analyze';
+import Compare from './compare';
 import List from './list';
 
 const mapState = (state: iRootState) => ({
@@ -29,6 +30,8 @@ const Content: React.FC<connectedProps> = (props: connectedProps) => {
       return <Explore />;
     case 'analyze':
       return <Analyze />;
+    case 'compare':
+      return <Compare />;
     case 'list':
       return <List tableConfig={tableConfig} />;
     default:

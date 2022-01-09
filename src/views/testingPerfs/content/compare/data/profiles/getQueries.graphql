@@ -4,9 +4,14 @@ query($query: String) {
       items(size: 100) {
         nodes {
           id
-          name
-          rampUp
-          startedAt
+          runs {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
         }
       }
     }

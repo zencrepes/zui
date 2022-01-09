@@ -1,14 +1,17 @@
-query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!, $includeDisabled: Boolean) {
   dataset: testingPerfs {
     data(query: $query) {
       count
-      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }, includeDisabled: $includeDisabled) {
         totalCount
         nodes {
           id
           startedAt
           name
           duration
+          disabled
+          disabled_by
+          disabled_date
         }
       }
     }
