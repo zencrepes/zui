@@ -43,7 +43,8 @@ const SelectCompareRun: React.FC<connectedProps> = (props: connectedProps) => {
           ? null
           : compareComparisonQuerySelected
       }
-      style={{ width: 500 }}
+      size="small"
+      style={{ width: 450 }}
       onChange={(event: any, newValue: any | null) => {
         if (newValue !== null) {
           setCompareComparisonQuerySelected(newValue);

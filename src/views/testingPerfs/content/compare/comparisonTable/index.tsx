@@ -30,6 +30,7 @@ const mapState = (state: iRootState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
+  setLoading: dispatch.global.setLoading,
   setComparisonTableHideCompare: dispatch.testingPerfs.setComparisonTableHideCompare,
   setCompareReferenceQuerySelected: dispatch.testingPerfs.setCompareReferenceQuerySelected,
   setOpenComparisonTableConfigModal: dispatch.testingPerfs.setOpenComparisonTableConfigModal,
@@ -85,6 +86,7 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
     setCompareComparisonData,
     setComparisonTableHideCompare,
     comparisonTableHideCompare,
+    setLoading,
   } = props;
 
   let refQuery = {};
@@ -97,7 +99,7 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
     compareQuery = compareComparisonQuerySelected.query;
   }
 
-  const { data } = useQuery(GQL_QUERY, {
+  const { data, loading } = useQuery(GQL_QUERY, {
     variables: {
       query: JSON.stringify(query),
       referenceQuery: JSON.stringify(refQuery),
@@ -112,9 +114,31 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
       setCompareReferenceData(data.testingPerfs.data.reference);
       setCompareComparisonData(data.testingPerfs.data.comparison);
     }
+    if (loading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
   });
 
-  if (data !== undefined && data.testingPerfs.data.reference !== null && data.testingPerfs.data.comparison !== null) {
+  if (
+    !loading &&
+    data !== undefined &&
+    (data.testingPerfs.data.reference === null || data.testingPerfs.data.comparison === null)
+  ) {
+    return (
+      <CustomCard headerTitle="Results" headerFactTitle="" headerFactValue="">
+        <span>The selected query did not return any workable data, try selecting a different dataset</span>
+      </CustomCard>
+    );
+  }
+
+  if (
+    !loading &&
+    data !== undefined &&
+    data.testingPerfs.data.reference !== null &&
+    data.testingPerfs.data.comparison !== null
+  ) {
     const reference = data.testingPerfs.data.reference;
     const transactions = [...reference.transactions].sort();
     const comparison = data.testingPerfs.data.comparison;

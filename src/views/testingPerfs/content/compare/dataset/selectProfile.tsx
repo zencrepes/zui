@@ -47,7 +47,8 @@ const SelectProfile: React.FC<connectedProps> = (props: connectedProps) => {
       options={compareAvailableProfiles}
       getOptionLabel={(option) => option}
       value={compareReferenceProfileSelected.length === 0 ? null : compareReferenceProfileSelected}
-      style={{ width: 500 }}
+      size="small"
+      style={{ width: 450 }}
       onChange={(event: any, newValue: any | null) => {
         if (newValue !== null) {
           setCompareReferenceProfileSelected(newValue);

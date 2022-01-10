@@ -41,7 +41,7 @@ const Query: React.FC<connectedProps> = (props: connectedProps) => {
   const buildQueries: Query[] = [];
   if (data !== undefined) {
     for (const run of data.testingPerfs.data.items.nodes) {
-      const queryName = 'Single Run: ' + format(parseISO(run.startedAt), 'LLL do yyyy HH:mm') + ' - ' + run.name;
+      const queryName = 'Run: ' + format(parseISO(run.startedAt), 'yyyy-MM-dd HH:mm') + ' - ' + run.name;
       buildQueries.push({
         id: queryName,
         name: queryName,
@@ -60,7 +60,7 @@ const Query: React.FC<connectedProps> = (props: connectedProps) => {
       });
     }
     for (const image of data.testingPerfs.data.dockerImages.buckets) {
-      const queryName = 'Docker Container: ' + image.key;
+      const queryName = 'Image: ' + image.key;
       buildQueries.push({
         id: queryName,
         name: queryName,
@@ -80,7 +80,7 @@ const Query: React.FC<connectedProps> = (props: connectedProps) => {
     }
 
     for (const savedQuery of queries) {
-      const queryName = 'Saved Query: ' + savedQuery.name;
+      const queryName = 'Query: ' + savedQuery.name;
       buildQueries.push({
         id: queryName,
         name: queryName,

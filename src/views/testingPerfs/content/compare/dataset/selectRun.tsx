@@ -35,7 +35,8 @@ const SelectRun: React.FC<connectedProps> = (props: connectedProps) => {
       options={compareAvailableQueries}
       getOptionLabel={(option) => option.name}
       value={Object.keys(compareReferenceQuerySelected).length === 0 ? null : compareReferenceQuerySelected}
-      style={{ width: 500 }}
+      size="small"
+      style={{ width: 450 }}
       onChange={(event: any, newValue: any | null) => {
         if (newValue !== null) {
           setCompareReferenceQuerySelected(newValue);

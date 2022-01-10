@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
+import Download from './download';
+
 interface Props {
   dataset: any;
 }
@@ -49,6 +51,7 @@ const DatasetView: React.FC<Props> = (props: Props) => {
               <TableCell>Run Name</TableCell>
               <TableCell>Started</TableCell>
               <TableCell align="right">Duration</TableCell>
+              <TableCell>d/l</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -59,6 +62,9 @@ const DatasetView: React.FC<Props> = (props: Props) => {
                 </TableCell>
                 <TableCell>{format(parseISO(run.startedAt), 'LLL do yyyy - HH:mm')}</TableCell>
                 <TableCell align="right">{convertTime(run.duration)}</TableCell>
+                <TableCell>
+                  <Download id={run.id} />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

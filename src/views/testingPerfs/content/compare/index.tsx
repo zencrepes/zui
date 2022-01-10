@@ -11,6 +11,7 @@ import Profiles from './data/profiles';
 import Config from './config';
 import Reference from './reference';
 import Comparison from './comparison';
+import Loading from './loading';
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +30,9 @@ const Compare: React.FC = () => {
       <Grid container spacing={1} className={classes.root}>
         <Grid item xs={12}>
           <Dataset />
+        </Grid>
+        <Grid item xs={12}>
+          <Loading />
         </Grid>
         <Grid item xs={12}>
           <ComparisonTable />
