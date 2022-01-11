@@ -35,6 +35,16 @@ const DatasetView: React.FC<Props> = (props: Props) => {
     return acc;
   }, []);
 
+  grouppedResources.sort((a: any, b: any) => {
+    if (a.image < b.image) {
+      return -1;
+    }
+    if (a.image > b.image) {
+      return 1;
+    }
+    return 0;
+  });
+
   return (
     <>
       <Toolbar>
