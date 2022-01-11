@@ -239,49 +239,41 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
                   </TableCell>
                   {comparisonTableColumns
                     .filter((c: any) => c.visible === true)
+                    .map((col: any) => {
+                      const refValue = reference.average.find(
+                        (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
+                      ).value;
+                      const compValue = comparison.average.find(
+                        (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
+                      ).value;
+                      let compDiff = 0;
+                      if (refValue === 0 && compValue === 0) {
+                        compDiff = 0;
+                      } else if (compValue === 0) {
+                        compDiff = refValue;
+                      } else {
+                        compDiff = 1 - refValue / compValue;
+                      }
+                      return {
+                        ...col,
+                        refValue: Math.round(refValue),
+                        compValue: Math.round(compValue),
+                        compDiff: Math.round(compDiff * 100),
+                      };
+                    })
                     .map((col: any) => (
                       <React.Fragment key={col.id}>
-                        <TableCell align="right">
-                          {Math.round(
-                            reference.average.find(
-                              (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
-                            ).value,
-                          )}
-                        </TableCell>
+                        <TableCell align="right">{col.refValue}</TableCell>
                         {!comparisonTableHideCompare && (
                           <>
-                            <TableCell align="right">
-                              {Math.round(
-                                comparison.average.find(
-                                  (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
-                                ).value,
-                              )}
-                            </TableCell>
+                            <TableCell align="right">{col.compValue}</TableCell>
                             <TableCell
                               align="right"
                               style={{
-                                backgroundColor: colorGradient(
-                                  1 -
-                                    reference.average.find(
-                                      (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
-                                    ).value /
-                                      comparison.average.find(
-                                        (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
-                                      ).value,
-                                ),
+                                backgroundColor: colorGradient(col.compDiff),
                               }}
                             >
-                              {Math.round(
-                                (1 -
-                                  reference.average.find(
-                                    (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
-                                  ).value /
-                                    comparison.average.find(
-                                      (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
-                                    ).value) *
-                                  100,
-                              )}
-                              %
+                              {col.compDiff}%
                             </TableCell>
                           </>
                         )}
