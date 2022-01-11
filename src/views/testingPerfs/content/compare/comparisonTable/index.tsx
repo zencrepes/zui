@@ -49,25 +49,47 @@ const useStyles = makeStyles({
   },
 });
 
-const colorGradient = (value: number) => {
-  if (value < -0.5) {
-    return '#ff0000';
-  } else if (value < -0.2) {
-    return '#e06666';
-  } else if (value < -0.1) {
-    return '#ea9999';
-  } else if (value < 0) {
-    return '#f4c7c3';
-  } else if (value > 0.5) {
-    return '#6aa74f';
-  } else if (value > 0.2) {
-    return '#92c47c';
-  } else if (value > 0.1) {
-    return '#b5d8a7';
-  } else if (value > 0) {
-    return '#b5d8a6';
+const colorGradient = (value: number, invert = false) => {
+  if (invert === true) {
+    if (value < -0.5) {
+      return '#ff0000';
+    } else if (value < -0.2) {
+      return '#e06666';
+    } else if (value < -0.1) {
+      return '#ea9999';
+    } else if (value < 0) {
+      return '#f4c7c3';
+    } else if (value > 0.5) {
+      return '#6aa74f';
+    } else if (value > 0.2) {
+      return '#92c47c';
+    } else if (value > 0.1) {
+      return '#b5d8a7';
+    } else if (value > 0) {
+      return '#b5d8a6';
+    } else {
+      return '#fff';
+    }
   } else {
-    return '#fff';
+    if (value < -0.5) {
+      return '#6aa74f';
+    } else if (value < -0.2) {
+      return '#92c47c';
+    } else if (value < -0.1) {
+      return '#b5d8a7';
+    } else if (value < 0) {
+      return '#b5d8a6';
+    } else if (value > 0.5) {
+      return '#ff0000';
+    } else if (value > 0.2) {
+      return '#e06666';
+    } else if (value > 0.1) {
+      return '#ea9999';
+    } else if (value > 0) {
+      return '#f4c7c3';
+    } else {
+      return '#fff';
+    }
   }
 };
 
@@ -258,7 +280,7 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
                         ...col,
                         refValue: Math.round(refValue),
                         compValue: Math.round(compValue),
-                        compDiff: Math.round(compDiff * 100),
+                        compDiff: compDiff,
                       };
                     })
                     .map((col: any) => (
@@ -270,10 +292,13 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
                             <TableCell
                               align="right"
                               style={{
-                                backgroundColor: colorGradient(col.compDiff),
+                                backgroundColor:
+                                  col.id === 'throughput'
+                                    ? colorGradient(col.compDiff)
+                                    : colorGradient(col.compDiff, true),
                               }}
                             >
-                              {col.compDiff}%
+                              {Math.round(col.compDiff * 100)}%
                             </TableCell>
                           </>
                         )}
