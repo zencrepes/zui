@@ -40,6 +40,7 @@ const Query: React.FC<connectedProps> = (props: connectedProps) => {
 
   const buildQueries: Query[] = [];
   if (data !== undefined) {
+    const runs: Query[] = [];
     for (const run of data.testingPerfs.data.items.nodes) {
       const queryName = 'Run: ' + format(parseISO(run.startedAt), 'yyyy-MM-dd HH:mm') + ' - ' + run.name;
       buildQueries.push({
@@ -59,6 +60,16 @@ const Query: React.FC<connectedProps> = (props: connectedProps) => {
         },
       });
     }
+    buildQueries.sort((a: Query, b: Query) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+
     for (const image of data.testingPerfs.data.dockerImages.buckets) {
       const queryName = 'Image: ' + image.key;
       buildQueries.push({

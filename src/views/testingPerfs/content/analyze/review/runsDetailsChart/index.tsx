@@ -59,7 +59,7 @@ const RunsDetailsChart: React.FC<Props> = (props: Props) => {
         fill: false,
       };
     }),
-    labels: run.runs.edges.map((run: any) => run.node.userCount),
+    labels: run.runs.edges.map((run: any) => run.node.name),
   };
 
   return (

@@ -61,7 +61,7 @@ class HistoryLineDual extends Component<any, any> {
               position: 'bottom',
               scaleLabel: {
                 display: true,
-                labelString: 'Users per run',
+                labelString: 'Profiles',
               },
             },
           ],

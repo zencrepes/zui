@@ -45,29 +45,29 @@ const UsersCapacity: React.FC<Props> = (props: Props) => {
   if (data !== undefined) {
     const reports = data.testingPerfs.data.items.nodes;
 
-    const availableUsers = reports
+    const availableProfiles = reports
       .reduce((acc: string[], u: any) => {
         for (const run of u.runs.edges) {
-          if (!acc.includes(run.node.userCount)) {
-            acc.push(run.node.userCount);
+          if (!acc.includes(run.node.name)) {
+            acc.push(run.node.name);
           }
         }
         return acc;
       }, [])
       .sort();
 
-    const dataLines = availableUsers.map((userCount: number) => {
+    const dataLines = availableProfiles.map((runProfile: string) => {
       const color = randomColor({
         luminosity: 'light',
         format: 'rgb', // e.g. 'rgb(225,200,20)'
-        seed: userCount + 'seed',
+        seed: runProfile + 'seed',
       });
       return {
         type: 'line',
-        label: userCount + ' users',
+        label: runProfile,
         data: reports.map((report: any) => {
           // Find the run containing that number of users
-          const selectedRun = report.runs.edges.find((run: any) => run.node.userCount === userCount);
+          const selectedRun = report.runs.edges.find((run: any) => run.node.name === runProfile);
           if (selectedRun === undefined) {
             return null;
           } else {

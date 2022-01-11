@@ -84,7 +84,7 @@ const RunsChart: React.FC<Props> = (props: Props) => {
         yAxisID: 'yright',
       },
     ],
-    labels: run.runs.edges.map((run: any) => run.node.userCount),
+    labels: run.runs.edges.map((run: any) => run.node.name),
   };
 
   return (

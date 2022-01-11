@@ -116,6 +116,8 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
     }
     if (loading) {
       setLoading(true);
+      setCompareReferenceData({});
+      setCompareComparisonData({});
     } else {
       setLoading(false);
     }
