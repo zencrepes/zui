@@ -136,7 +136,6 @@ class FailureChart extends Component<any, any> {
             textColor,
             onHover,
             onLeave,
-            theme,
           }: any) => {
             if (value === -1) {
               return (

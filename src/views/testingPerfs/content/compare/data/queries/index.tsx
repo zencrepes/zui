@@ -40,7 +40,6 @@ const Query: React.FC<connectedProps> = (props: connectedProps) => {
 
   const buildQueries: Query[] = [];
   if (data !== undefined) {
-    const runs: Query[] = [];
     for (const run of data.testingPerfs.data.items.nodes) {
       const queryName = 'Run: ' + format(parseISO(run.startedAt), 'yyyy-MM-dd HH:mm') + ' - ' + run.name;
       buildQueries.push({
