@@ -23,6 +23,16 @@ const SelectRun: React.FC<connectedProps> = (props: connectedProps) => {
     if (Object.keys(compareReferenceQuerySelected).length === 0 && compareAvailableQueries.length > 0) {
       setCompareReferenceQuerySelected(compareAvailableQueries[0]);
     }
+
+    // If the selected query is not present in the list of available queries, we default to the first query in the array
+    if (
+      compareAvailableQueries.length > 0 &&
+      compareReferenceQuerySelected !== undefined &&
+      Object.keys(compareReferenceQuerySelected).length > 0 &&
+      compareAvailableQueries.find((q: any) => q.name === compareReferenceQuerySelected.name) === undefined
+    ) {
+      setCompareReferenceQuerySelected(compareAvailableQueries[0]);
+    }
   });
 
   if (compareAvailableQueries.length === 0) {

@@ -27,6 +27,16 @@ const SelectCompareRun: React.FC<connectedProps> = (props: connectedProps) => {
         setCompareComparisonQuerySelected(compareAvailableQueries[0]);
       }
     }
+
+    // If the selected query is not present in the list of available queries, we default to the first query in the array
+    if (
+      compareAvailableQueries.length > 0 &&
+      compareComparisonQuerySelected !== undefined &&
+      Object.keys(compareComparisonQuerySelected).length > 0 &&
+      compareAvailableQueries.find((q: any) => q.name === compareComparisonQuerySelected.name) === undefined
+    ) {
+      setCompareComparisonQuerySelected(compareAvailableQueries[0]);
+    }
   });
 
   if (compareAvailableQueries.length === 0) {

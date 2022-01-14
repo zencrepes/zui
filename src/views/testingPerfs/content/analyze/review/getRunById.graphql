@@ -7,6 +7,10 @@ query($selectedRunId: String!) {
         rampUp
         duration
         startedAt
+        description
+        analysis
+        analysis_date
+        analysis_by
         platform {
           vendor
           tenant

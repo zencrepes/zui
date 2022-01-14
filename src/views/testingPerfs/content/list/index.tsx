@@ -24,7 +24,7 @@ const GQL_QUERY_ENABLE_RUN = loader('./enableRun.graphql');
 
 const mapState = (state: iRootState) => ({
   query: state.global.query,
-  userName: state.testingPerfs.userName,
+  userName: state.global.userName,
   tablePaginationRowsPerPage: state.testingPerfs.tablePaginationRowsPerPage,
   tablePaginationCurrentPage: state.testingPerfs.tablePaginationCurrentPage,
   tablePaginationOffset: state.testingPerfs.tablePaginationOffset,

@@ -1,0 +1,14 @@
+query($query: String, $aggOptions: String) {
+  testingPerfs {
+    data(query: $query) {
+      startedAt: aggregations(field: "startedAt", aggType: "date_histogram", aggOptions: $aggOptions) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          moving
+        }
+      }
+    }
+  }
+}

@@ -1,13 +1,12 @@
 import React from 'react';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
-import format from 'date-fns/format';
-import parseISO from 'date-fns/parseISO';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
+import Details from './details';
+import Analysis from './analysis';
 import RunsTable from './runsTable';
 import RunsChart from './runsChart';
 import RunsDetailsChart from './runsDetailsChart';
@@ -29,7 +28,7 @@ const Review: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const { selectedRunId } = props;
 
-  const { data } = useQuery(GQL_QUERY, {
+  const { data, refetch } = useQuery(GQL_QUERY, {
     variables: {
       selectedRunId: selectedRunId,
     },
@@ -40,12 +39,14 @@ const Review: React.FC<Props> = (props: Props) => {
     return (
       <Grid container spacing={3} className={classes.root}>
         <Grid item xs={12}>
-          <Typography variant="h5" gutterBottom>
-            {perfRun.name}
-          </Typography>
-          <Typography variant="h6" gutterBottom>
-            {format(parseISO(perfRun.startedAt), 'LLL do yyyy HH:mm')}
-          </Typography>
+          <Grid container spacing={3} direction="row" justify="flex-start" alignItems="flex-start">
+            <Grid item xs={6} style={{ textAlign: 'left' }}>
+              <Details run={perfRun} refetch={refetch} />
+            </Grid>
+            <Grid item xs={6} style={{ textAlign: 'left' }}>
+              <Analysis run={perfRun} refetch={refetch} />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={3} direction="row" justify="flex-start" alignItems="flex-start">

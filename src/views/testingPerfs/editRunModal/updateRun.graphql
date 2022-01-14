@@ -1,0 +1,5 @@
+mutation($id: String!, $username: String, $description: String, $analysis: String) {
+  updateTestingsPerfsRun(id: $id, username: $username, description: $description, analysis: $analysis) {
+    id
+  }
+}

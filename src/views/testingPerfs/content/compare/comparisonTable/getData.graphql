@@ -9,6 +9,13 @@ query($query: String, $referenceQuery: String, $comparisonQuery: String, $select
           name
           startedAt
           duration
+          verified
+          verified_by
+          verified_date
+          analysis
+          analysis_by
+          analysis_date
+          description
           rampUp
           platform {
             vendor
@@ -49,6 +56,13 @@ query($query: String, $referenceQuery: String, $comparisonQuery: String, $select
           startedAt
           duration
           rampUp
+          verified
+          verified_by
+          verified_date
+          analysis
+          analysis_by
+          analysis_date
+          description
           platform {
             vendor
             tenant

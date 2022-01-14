@@ -27,6 +27,9 @@ const SelectProfile: React.FC<connectedProps> = (props: connectedProps) => {
     if (!compareAvailableProfiles.includes(compareReferenceProfileSelected)) {
       setCompareReferenceProfileSelected(compareAvailableProfiles[0]);
     }
+    if (compareAvailableProfiles.length > 0 && !compareAvailableProfiles.includes(compareReferenceProfileSelected)) {
+      setCompareReferenceProfileSelected(compareAvailableProfiles[0]);
+    }
   });
 
   if (compareAvailableProfiles.length === 0) {

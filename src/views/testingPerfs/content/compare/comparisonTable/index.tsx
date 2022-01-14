@@ -34,8 +34,7 @@ const mapDispatch = (dispatch: any) => ({
   setComparisonTableHideCompare: dispatch.testingPerfs.setComparisonTableHideCompare,
   setCompareReferenceQuerySelected: dispatch.testingPerfs.setCompareReferenceQuerySelected,
   setOpenComparisonTableConfigModal: dispatch.testingPerfs.setOpenComparisonTableConfigModal,
-  setCompareReferenceData: dispatch.testingPerfs.setCompareReferenceData,
-  setCompareComparisonData: dispatch.testingPerfs.setCompareComparisonData,
+  setCompareData: dispatch.testingPerfs.setCompareData,
 });
 
 const GQL_QUERY = loader('./getData.graphql');
@@ -104,8 +103,7 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
     compareComparisonQuerySelected,
     comparisonTableColumns,
     setOpenComparisonTableConfigModal,
-    setCompareReferenceData,
-    setCompareComparisonData,
+    setCompareData,
     setComparisonTableHideCompare,
     comparisonTableHideCompare,
     setLoading,
@@ -133,13 +131,11 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
 
   useEffect(() => {
     if (data !== undefined && data.testingPerfs.data.reference !== null && data.testingPerfs.data.comparison !== null) {
-      setCompareReferenceData(data.testingPerfs.data.reference);
-      setCompareComparisonData(data.testingPerfs.data.comparison);
+      setCompareData(data.testingPerfs.data);
     }
     if (loading) {
       setLoading(true);
-      setCompareReferenceData({});
-      setCompareComparisonData({});
+      setCompareData({ comparison: {}, reference: {} });
     } else {
       setLoading(false);
     }
@@ -180,6 +176,7 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
             <Tooltip title="Show or hide comparison dataset">
               <IconButton
                 aria-label="show or hide comparison dataset"
+                color={comparisonTableHideCompare ? 'secondary' : 'default'}
                 onClick={() => {
                   comparisonTableHideCompare
                     ? setComparisonTableHideCompare(false)

@@ -6,8 +6,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 
 interface Props {
   dataset: any;
@@ -46,35 +44,30 @@ const DatasetView: React.FC<Props> = (props: Props) => {
   });
 
   return (
-    <>
-      <Toolbar>
-        <Typography variant="h6">Resources included in the analysis</Typography>
-      </Toolbar>
-      <TableContainer>
-        <Table size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Image</TableCell>
-              <TableCell>Size</TableCell>
-              <TableCell>Runs</TableCell>
+    <TableContainer>
+      <Table size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Image</TableCell>
+            <TableCell>Size</TableCell>
+            <TableCell>Runs</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {grouppedResources.map((resource: any) => (
+            <TableRow key={resource.uid}>
+              <TableCell component="th" scope="row">
+                {resource.name}
+              </TableCell>
+              <TableCell>{resource.image}</TableCell>
+              <TableCell>{resource.size}</TableCell>
+              <TableCell>{resource.runs}</TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {grouppedResources.map((resource: any) => (
-              <TableRow key={resource.uid}>
-                <TableCell component="th" scope="row">
-                  {resource.name}
-                </TableCell>
-                <TableCell>{resource.image}</TableCell>
-                <TableCell>{resource.size}</TableCell>
-                <TableCell>{resource.runs}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

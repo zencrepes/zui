@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Tooltip from '@material-ui/core/Tooltip';
 
-const GQL_QUERY = loader('./getRunById.graphql');
+const GQL_QUERY = loader('../getRunById.graphql');
 
 interface Props {
   id: string;
@@ -27,7 +27,6 @@ const DatasetView: React.FC<Props> = (props: Props) => {
     a.href = URL.createObjectURL(file);
     a.download = `${id}.json`;
     a.click();
-    console.log(data);
   }
 
   return (

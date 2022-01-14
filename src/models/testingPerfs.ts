@@ -106,6 +106,8 @@ export const testingPerfs: TestingPerfs = {
     query: {},
     queries: [],
 
+    analyzeSelectedRunId: '',
+
     tablePaginationRowsPerPage: 25,
     tablePaginationCurrentPage: 0,
     tablePaginationOffset: 0,
@@ -118,11 +120,25 @@ export const testingPerfs: TestingPerfs = {
     compareAvailableProfiles: [],
     compareReferenceQuerySelected: {},
     compareReferenceProfileSelected: '',
+    compareData: {},
     compareReferenceData: {},
     compareComparisonQuerySelected: {},
     compareComparisonData: {},
 
     openComparisonTableConfigModal: false,
+
+    openEditRunModal: false,
+    openEditRunId: '',
+    openEditRun: {},
+    openEditRunOnSuccess: () => {
+      console.log('onSuccess is empty');
+    }, // Function to be executed on load Success
+    openEditRunOnCancel: () => {
+      console.log('onSuccess is empty');
+    }, // Function to be executed on load Cancel
+    openEditRunOnFailure: () => {
+      console.log('onSuccess is empty');
+    }, // Function to be executed on load Failure
   },
   reducers: {
     setLog(state: any, payload: any) {
@@ -133,6 +149,9 @@ export const testingPerfs: TestingPerfs = {
     },
     setSelectedTab(state: any, payload: any) {
       return { ...state, selectedTab: payload };
+    },
+    setAnalyzeSelectedRunId(state: any, payload: any) {
+      return { ...state, analyzeSelectedRunId: payload };
     },
     setTablePaginationRowsPerPage(state: any, payload: any) {
       // Whenever we change the number of rows per page, we also reset all to default
@@ -182,6 +201,9 @@ export const testingPerfs: TestingPerfs = {
     setOpenComparisonTableConfigModal(state: any, payload: any) {
       return { ...state, openComparisonTableConfigModal: payload };
     },
+    setCompareData(state: any, payload: any) {
+      return { ...state, compareData: payload };
+    },
     setCompareReferenceData(state: any, payload: any) {
       return { ...state, compareReferenceData: payload };
     },
@@ -190,6 +212,24 @@ export const testingPerfs: TestingPerfs = {
     },
     setComparisonTableHideCompare(state: any, payload: any) {
       return { ...state, comparisonTableHideCompare: payload };
+    },
+    setOpenEditRunModal(state: any, payload: any) {
+      return { ...state, openEditRunModal: payload };
+    },
+    setOpenEditRunId(state: any, payload: any) {
+      return { ...state, openEditRunId: payload };
+    },
+    setOpenEditRun(state: any, payload: any) {
+      return { ...state, openEditRun: payload };
+    },
+    setOpenEditRunOnSuccess(state: any, payload: any) {
+      return { ...state, openEditRunOnSuccess: payload };
+    },
+    setOpenEditRunOnCancel(state: any, payload: any) {
+      return { ...state, openEditRunOnCancel: payload };
+    },
+    setOpenEditRunOnFailure(state: any, payload: any) {
+      return { ...state, openEditRunOnFailure: payload };
     },
   },
   effects: (dispatch: Dispatch) => ({
