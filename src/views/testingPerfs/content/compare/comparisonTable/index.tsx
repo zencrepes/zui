@@ -259,14 +259,18 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
                   {comparisonTableColumns
                     .filter((c: any) => c.visible === true)
                     .map((col: any) => {
-                      const refValue = reference.average.find(
+                      let refValue = reference.average.find(
                         (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
-                      ).value;
-                      const compValue = comparison.average.find(
+                      );
+                      refValue = refValue !== undefined ? refValue.value : '';
+                      let compValue = comparison.average.find(
                         (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
-                      ).value;
-                      let compDiff = 0;
-                      if (refValue === 0 && compValue === 0) {
+                      );
+                      compValue = compValue !== undefined ? compValue.value : '';
+                      let compDiff: number | string = 0;
+                      if (refValue === '' || compValue === '') {
+                        compDiff = '';
+                      } else if (refValue === 0 && compValue === 0) {
                         compDiff = 0;
                       } else if (compValue === 0) {
                         compDiff = refValue;
@@ -275,8 +279,8 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
                       }
                       return {
                         ...col,
-                        refValue: Math.round(refValue),
-                        compValue: Math.round(compValue),
+                        refValue: refValue === '' ? '' : Math.round(refValue),
+                        compValue: compValue === '' ? '' : Math.round(compValue),
                         compDiff: compDiff,
                       };
                     })
