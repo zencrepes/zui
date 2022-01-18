@@ -37,14 +37,12 @@ query($query: String, $referenceQuery: String, $comparisonQuery: String, $select
           statisticsKey
           transaction
           value
-        }
-        values {
-          id
-          name
-          startedAt
-          statisticsKey
-          transaction
-          value
+          runs {
+            id
+            name
+            startedAt
+            value
+          }
         }
       }
       comparison: average(profileId: $selectedProfile, averageQuery: $comparisonQuery) {
@@ -83,14 +81,12 @@ query($query: String, $referenceQuery: String, $comparisonQuery: String, $select
           statisticsKey
           transaction
           value
-        }
-        values {
-          id
-          name
-          startedAt
-          statisticsKey
-          transaction
-          value
+          runs {
+            id
+            name
+            startedAt
+            value
+          }
         }
       }
     } 

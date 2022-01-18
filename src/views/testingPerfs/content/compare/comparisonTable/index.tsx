@@ -19,6 +19,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { iRootState } from '../../../../../store';
 import CustomCard from '../../../../../components/customCard';
+import CompareCell from './compareCell';
 
 const mapState = (state: iRootState) => ({
   query: state.testingPerfs.query,
@@ -259,37 +260,36 @@ const ComparisonTable: React.FC<connectedProps> = (props: connectedProps) => {
                   {comparisonTableColumns
                     .filter((c: any) => c.visible === true)
                     .map((col: any) => {
-                      let refValue = reference.average.find(
+                      const refValue = reference.average.find(
                         (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
                       );
-                      refValue = refValue !== undefined ? refValue.value : '';
-                      let compValue = comparison.average.find(
+                      const compValue = comparison.average.find(
                         (v: any) => v.transaction === transaction && v.statisticsKey === col.id,
                       );
-                      compValue = compValue !== undefined ? compValue.value : '';
                       let compDiff: number | string = 0;
-                      if (refValue === '' || compValue === '') {
+                      if (refValue.value === undefined || compValue.value === undefined) {
                         compDiff = '';
-                      } else if (refValue === 0 && compValue === 0) {
+                      } else if (refValue.value === 0 && compValue.value === 0) {
                         compDiff = 0;
-                      } else if (compValue === 0) {
-                        compDiff = refValue;
+                      } else if (compValue.value === 0) {
+                        compDiff = refValue.value;
                       } else {
-                        compDiff = 1 - refValue / compValue;
+                        compDiff = 1 - refValue.value / compValue.value;
                       }
                       return {
                         ...col,
-                        refValue: refValue === '' ? '' : Math.round(refValue),
-                        compValue: compValue === '' ? '' : Math.round(compValue),
+                        refAverage: refValue,
+                        compAverage: compValue,
                         compDiff: compDiff,
                       };
                     })
                     .map((col: any) => (
                       <React.Fragment key={col.id}>
-                        <TableCell align="right">{col.refValue}</TableCell>
+                        {/* <TableCell align="right">{Math.round(col.refAverage.value)}</TableCell> */}
+                        <CompareCell data={col.refAverage} />
                         {!comparisonTableHideCompare && (
                           <>
-                            <TableCell align="right">{col.compValue}</TableCell>
+                            <CompareCell data={col.compAverage} />
                             <TableCell
                               align="right"
                               style={{
