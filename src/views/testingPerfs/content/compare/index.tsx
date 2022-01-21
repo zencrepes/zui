@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Dataset from './dataset';
 import ComparisonTable from './comparisonTable';
+import Evolution from './evolution';
 
 import Queries from './data/queries';
 import Profiles from './data/profiles';
@@ -35,6 +36,9 @@ const Compare: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <ComparisonTable />
+        </Grid>
+        <Grid item xs={12}>
+          <Evolution />
         </Grid>
         <Grid item xs={12}>
           <Summary />

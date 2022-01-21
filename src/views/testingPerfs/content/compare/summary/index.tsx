@@ -30,8 +30,8 @@ const Reference: React.FC<connectedProps> = (props: connectedProps) => {
     return null;
   }
 
+  // Update the store state without reloading the data from the backend
   const updateRunField = (id: string, field: string, value: any) => {
-    // console.log('Updating run field: ' + field + ' with value: ', value);
     const newReferenceDataset = {
       reference: {
         ...compareData.reference,
