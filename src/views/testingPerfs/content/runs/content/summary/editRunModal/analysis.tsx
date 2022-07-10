@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
-import { iRootState } from '../../../store';
+import { iRootState } from '../../../../../../../store';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -24,21 +24,21 @@ const mapDispatch = (dispatch: any) => ({
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
-const Description: React.FC<connectedProps> = (props: connectedProps) => {
+const Analysis: React.FC<connectedProps> = (props: connectedProps) => {
   const { openEditRun, setOpenEditRun } = props;
   const classes = useStyles();
 
   const updateText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOpenEditRun({ ...openEditRun, description: event.target.value });
+    setOpenEditRun({ ...openEditRun, analysis: event.target.value });
   };
 
-  if (openEditRun.description !== undefined) {
+  if (openEditRun.analysis !== undefined) {
     return (
       <TextField
-        id="description-text"
+        id="analysis-text"
         className={classes.textarea}
-        label="Run Description"
-        value={openEditRun.description === null ? '' : openEditRun.description}
+        value={openEditRun.analysis === null ? '' : openEditRun.analysis}
+        label="Run Analysis"
         onChange={updateText}
         multiline
         rows={10}
@@ -49,4 +49,4 @@ const Description: React.FC<connectedProps> = (props: connectedProps) => {
 
   return null;
 };
-export default connect(mapState, mapDispatch)(Description);
+export default connect(mapState, mapDispatch)(Analysis);

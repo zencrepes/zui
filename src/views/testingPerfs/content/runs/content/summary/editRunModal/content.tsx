@@ -15,7 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
-import { iRootState } from '../../../store';
+import { iRootState } from '../../../../../../../store';
 
 import Description from './description';
 import Analysis from './analysis';
@@ -54,10 +54,14 @@ const mapDispatch = (dispatch: any) => ({
   setOpenEditRun: dispatch.testingPerfs.setOpenEditRun,
 });
 
-type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
+interface Props {
+  updateRunField: (field: string, value: any) => void;
+}
+
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;
 
 const EditRunModal: React.FC<connectedProps> = (props: connectedProps) => {
-  const { openEditRunId, setOpenEditRunModal, setOpenEditRun } = props;
+  const { openEditRunId, setOpenEditRunModal, setOpenEditRun, updateRunField } = props;
   const classes = useStyles();
 
   const { data, loading } = useQuery(GQL_QUERY, {
@@ -92,10 +96,10 @@ const EditRunModal: React.FC<connectedProps> = (props: connectedProps) => {
           </Typography>
           <Grid container spacing={1} className={classes.gridRoot} justify="flex-start" alignItems="flex-start">
             <Grid item xs={12}>
-              <Description />
+              <Analysis />
             </Grid>
             <Grid item xs={12}>
-              <Analysis />
+              <Description />
             </Grid>
           </Grid>
         </DialogContent>
@@ -103,7 +107,7 @@ const EditRunModal: React.FC<connectedProps> = (props: connectedProps) => {
           <Button onClick={handleClose} color="primary" autoFocus>
             Close
           </Button>
-          <ApplyButton sourceRun={run} />
+          <ApplyButton sourceRun={run} updateRunField={updateRunField} />
         </DialogActions>
       </>
     );

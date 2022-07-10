@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Dialog from '@material-ui/core/Dialog';
 
-import { iRootState } from '../../../store';
+import { iRootState } from '../../../../../../../store';
 
 import Content from './content';
 
@@ -15,10 +15,14 @@ const mapDispatch = (dispatch: any) => ({
   setOpenEditRunModal: dispatch.testingPerfs.setOpenEditRunModal,
 });
 
-type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
+interface Props {
+  updateRunField: (field: string, value: any) => void;
+}
+
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;
 
 const EditRunModal: React.FC<connectedProps> = (props: connectedProps) => {
-  const { openEditRunModal, setOpenEditRunModal } = props;
+  const { openEditRunModal, setOpenEditRunModal, updateRunField } = props;
 
   const handleClose = () => {
     setOpenEditRunModal(false);
@@ -33,7 +37,7 @@ const EditRunModal: React.FC<connectedProps> = (props: connectedProps) => {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <Content />
+        <Content updateRunField={updateRunField} />
       </Dialog>
     </React.Fragment>
   );

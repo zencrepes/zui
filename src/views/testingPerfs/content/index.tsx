@@ -6,6 +6,7 @@ import { TableConfig } from '../../../global';
 
 import Explore from './explore';
 import Analyze from './analyze';
+import Runs from './runs';
 import Compare from './compare';
 import List from './list';
 
@@ -28,9 +29,11 @@ const Content: React.FC<connectedProps> = (props: connectedProps) => {
   switch (selectedTab) {
     case 'explore':
       return <Explore />;
+    case 'runs':
+      return <Runs />;
     case 'analyze':
       return <Analyze />;
-    case 'compare':
+    case 'transactions':
       return <Compare />;
     case 'list':
       return <List tableConfig={tableConfig} />;

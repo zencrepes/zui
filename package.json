@@ -40,7 +40,7 @@
     "add": "^2.0.6",
     "axios": "^0.20.0",
     "brace": "^0.11.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "chartjs-chart-treemap": "^0.2.3",
     "cytoscape": "^3.15.2",
     "cytoscape-cose-bilkent": "^4.1.0",

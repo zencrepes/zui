@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 
 import Button from '@material-ui/core/Button';
 
-import { iRootState } from '../../../store';
+import { iRootState } from '../../../../../../../store';
 
 const GQL_UPDATE_RUN = loader('./updateRun.graphql');
 
@@ -24,12 +24,21 @@ const mapDispatch = (dispatch: any) => ({
 
 interface Props {
   sourceRun: any;
+  updateRunField: (field: string, value: any) => void;
 }
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;
 
 const ApplyButton: React.FC<connectedProps> = (props: connectedProps) => {
-  const { openEditRun, setOpenEditRunModal, sourceRun, username, openEditRunOnSuccess, openEditRunOnFailure } = props;
+  const {
+    openEditRun,
+    setOpenEditRunModal,
+    sourceRun,
+    username,
+    openEditRunOnSuccess,
+    openEditRunOnFailure,
+    updateRunField,
+  } = props;
 
   console.log('sourceRun', sourceRun);
   console.log('openEditRun', openEditRun);
@@ -50,6 +59,8 @@ const ApplyButton: React.FC<connectedProps> = (props: connectedProps) => {
         analysis: openEditRun.analysis,
       },
       update() {
+        updateRunField('analysis', openEditRun.analysis);
+        updateRunField('description', openEditRun.description);
         setOpenEditRunModal(false);
         openEditRunOnSuccess();
       },

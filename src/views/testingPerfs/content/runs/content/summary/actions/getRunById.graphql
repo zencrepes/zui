@@ -1,0 +1,10 @@
+query($id: String!) {
+  testingPerfs {
+    data {
+      item(id: $id) {
+        id
+        _source
+      }
+    }
+  }
+}
