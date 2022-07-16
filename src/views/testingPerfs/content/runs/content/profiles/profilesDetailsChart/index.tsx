@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 
 import CustomCard from '../../../../../../../components/customCard';
 
@@ -6,6 +7,7 @@ import HistoryLineDual from './historyLineDual';
 import SelectMetric from './selectMetric';
 
 import randomColor from 'randomcolor';
+import FilterTransactions from './filterTransactions';
 
 interface Run {
   id: string;
@@ -20,6 +22,7 @@ interface Props {
 
 const ProfilesDetailsChart: React.FC<Props> = (props: Props) => {
   const [selectedMetric, setSelectedMetric] = React.useState<string>('meanResTime');
+  const [filteredTransactions, setFilteredTransactions] = React.useState<string>('');
   const { run } = props;
 
   // Get list of available transactions from the first run
@@ -42,23 +45,26 @@ const ProfilesDetailsChart: React.FC<Props> = (props: Props) => {
     .sort();
 
   const chartData = {
-    datasets: availableTransactions.map((t: string) => {
-      const color = randomColor({
-        luminosity: 'light',
-        format: 'rgb', // e.g. 'rgb(225,200,20)'
-        seed: t,
-      });
-      return {
-        type: 'line',
-        label: t,
-        data: run.runs.edges.map((r: any) =>
-          Math.round(r.node.statistics.find((s: any) => s.transaction === t)[selectedMetric]),
-        ),
-        backgroundColor: color,
-        borderColor: color,
-        fill: false,
-      };
-    }),
+    datasets: availableTransactions
+      .filter((t: string) => t.includes(filteredTransactions))
+      .slice(0, 20)
+      .map((t: string) => {
+        const color = randomColor({
+          luminosity: 'light',
+          format: 'rgb', // e.g. 'rgb(225,200,20)'
+          seed: t,
+        });
+        return {
+          type: 'line',
+          label: t,
+          data: run.runs.edges.map((r: any) =>
+            Math.round(r.node.statistics.find((s: any) => s.transaction === t)[selectedMetric]),
+          ),
+          backgroundColor: color,
+          borderColor: color,
+          fill: false,
+        };
+      }),
     labels: run.runs.edges.map((run: any) => run.node.name),
   };
 
@@ -66,11 +72,22 @@ const ProfilesDetailsChart: React.FC<Props> = (props: Props) => {
     <CustomCard
       headerTitle="Detailed metrics per transaction"
       headerFactTitle={
-        <SelectMetric
-          availableMetrics={availableMetrics}
-          selectedMetric={selectedMetric}
-          setSelectedMetric={setSelectedMetric}
-        />
+        <Grid container spacing={1} direction="row" justify="flex-start" alignItems="flex-start">
+          <Grid item xs={6}>
+            <SelectMetric
+              availableMetrics={availableMetrics}
+              selectedMetric={selectedMetric}
+              setSelectedMetric={setSelectedMetric}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FilterTransactions
+              availableTransactions={availableTransactions}
+              filteredTransactions={filteredTransactions}
+              setFilteredTransactions={setFilteredTransactions}
+            />
+          </Grid>
+        </Grid>
       }
       headerFactValue=""
     >

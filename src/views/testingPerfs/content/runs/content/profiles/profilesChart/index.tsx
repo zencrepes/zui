@@ -102,7 +102,7 @@ const ProfilesChart: React.FC<Props> = (props: Props) => {
 
   return (
     <CustomCard
-      headerTitle="Capacity"
+      headerTitle={' '}
       headerFactTitle={
         <SelectTransaction
           availableTransactions={availableTransactions}

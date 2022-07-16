@@ -8,7 +8,7 @@ interface Props {
   selectedMetric: string;
 }
 
-const SelectTransaction: React.FC<Props> = (props: Props) => {
+const SelectMetric: React.FC<Props> = (props: Props) => {
   const { availableMetrics, setSelectedMetric } = props;
 
   return (
@@ -27,4 +27,4 @@ const SelectTransaction: React.FC<Props> = (props: Props) => {
     />
   );
 };
-export default SelectTransaction;
+export default SelectMetric;

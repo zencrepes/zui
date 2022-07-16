@@ -11,6 +11,7 @@ const mapState = (state: iRootState) => ({
   runs: state.testingPerfs.runs,
   selectedRunData: state.testingPerfs.selectedRunData,
   transactionMetrics: state.testingPerfs.transactionMetrics,
+  selectedRunProfile: state.testingPerfs.selectedRunProfile,
 });
 
 const mapDispatch = (dispatch: any) => ({
@@ -20,7 +21,7 @@ const mapDispatch = (dispatch: any) => ({
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
 const Statistics: React.FC<connectedProps> = (props: connectedProps) => {
-  const { runs, selectedRunData, transactionMetrics } = props;
+  const { runs, selectedRunData, transactionMetrics, selectedRunProfile } = props;
 
   if (runs.length === 0 || selectedRunData.length === 0) {
     return null;
@@ -86,7 +87,6 @@ const Statistics: React.FC<connectedProps> = (props: connectedProps) => {
       return 0;
     });
 
-  console.log(transactions);
   return (
     <>
       <Grid container spacing={1}>
@@ -97,6 +97,7 @@ const Statistics: React.FC<connectedProps> = (props: connectedProps) => {
               transaction={t}
               selectedRun={selectedRunData}
               transactionMetrics={transactionMetrics}
+              selectedRunProfile={selectedRunProfile}
             />
           </Grid>
         ))}

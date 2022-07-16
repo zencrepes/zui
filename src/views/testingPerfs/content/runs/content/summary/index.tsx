@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
@@ -7,23 +7,36 @@ import { iRootState } from '../../../../../../store';
 
 import Resources from './resources';
 import Details from './details';
-import Profiles from './profiles';
 import Analysis from './analysis';
 import Description from './description';
 import EditRunModal from './editRunModal';
 
 const mapState = (state: iRootState) => ({
   selectedRunData: state.testingPerfs.selectedRunData,
+  selectedRunProfile: state.testingPerfs.selectedRunProfile,
 });
 
 const mapDispatch = (dispatch: any) => ({
   setSelectedRunData: dispatch.testingPerfs.setSelectedRunData,
+  setSelectedRunProfile: dispatch.testingPerfs.setSelectedRunProfile,
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
 const Summary: React.FC<connectedProps> = (props: connectedProps) => {
-  const { selectedRunData, setSelectedRunData } = props;
+  const { selectedRunData, setSelectedRunData, selectedRunProfile, setSelectedRunProfile } = props;
+
+  useEffect(() => {
+    if (
+      selectedRunData !== undefined &&
+      selectedRunData !== null &&
+      Object.keys(selectedRunData).length > 0 &&
+      selectedRunProfile === '' &&
+      selectedRunData.runs.edges[0] !== undefined
+    ) {
+      setSelectedRunProfile(selectedRunData.runs.edges[0].node.name);
+    }
+  });
 
   if (selectedRunData === undefined || selectedRunData === null || Object.keys(selectedRunData).length === 0) {
     return null;

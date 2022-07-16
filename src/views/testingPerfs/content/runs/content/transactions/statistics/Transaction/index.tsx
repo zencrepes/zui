@@ -25,6 +25,7 @@ interface Props {
   transaction: any;
   selectedRun: any;
   transactionMetrics: any;
+  selectedRunProfile: string;
 }
 
 const getTrend = (metric: any, transaction: any, selectedRun: any, compareType: string) => {
@@ -67,7 +68,7 @@ const getTrend = (metric: any, transaction: any, selectedRun: any, compareType: 
 };
 
 const Transaction: React.FC<Props> = (props: Props) => {
-  const { transaction, selectedRun, transactionMetrics } = props;
+  const { transaction, selectedRun, transactionMetrics, selectedRunProfile } = props;
 
   // Append velocity data to the transaction
   const velocityWindow = 3;
@@ -96,11 +97,7 @@ const Transaction: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <CustomCard
-      headerTitle={transaction.name}
-      headerFactTitle={format(parseISO(selectedRun.startedAt), 'LLL do yyyy HH:mm') + ' - ' + selectedRun.name}
-      headerFactValue=""
-    >
+    <CustomCard headerTitle={transaction.name} headerFactTitle={'Profile: ' + selectedRunProfile} headerFactValue="">
       <TableContainer>
         <Table aria-label="Metrics" size="small">
           <TableHead>

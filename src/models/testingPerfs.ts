@@ -61,7 +61,7 @@ const transactionMetrics = [
     name: 'Mean',
     metric: 'ms',
     type: 'responseTime',
-    visible: true,
+    visible: false,
     description: 'The average response time across all samples of the transaction',
   },
   {
@@ -69,7 +69,7 @@ const transactionMetrics = [
     name: 'Median',
     metric: 'ms',
     type: 'responseTime',
-    visible: false,
+    visible: true,
     description:
       'Number which divides the samples into two equal halves. Half of the smaples are higher than this value while the other half is lower',
   },

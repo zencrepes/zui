@@ -47,7 +47,7 @@ const ProfilesTable: React.FC<Props> = (props: Props) => {
 
   return (
     <CustomCard
-      headerTitle="Run metrics"
+      headerTitle={' '}
       headerFactTitle={
         <SelectTransaction
           availableTransactions={availableTransactions}
