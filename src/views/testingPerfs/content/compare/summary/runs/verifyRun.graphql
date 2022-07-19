@@ -1,5 +1,0 @@
-mutation($id: String!, $username: String) {
-  verifyTestingsPerfsRuns(id: $id, username: $username) {
-    id
-  }
-}

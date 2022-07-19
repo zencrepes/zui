@@ -19,6 +19,7 @@ import { iRootState } from '../../../../../../../store';
 
 import Description from './description';
 import Analysis from './analysis';
+import Group from './group';
 import ApplyButton from './applyButton';
 
 const GQL_QUERY = loader('./getRunById.graphql');
@@ -55,7 +56,7 @@ const mapDispatch = (dispatch: any) => ({
 });
 
 interface Props {
-  updateRunField: (field: string, value: any) => void;
+  updateRunField: (content: { field: string; value: any }[]) => void;
 }
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;
@@ -85,7 +86,6 @@ const EditRunModal: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   if (!loading && data) {
-    console.log(data);
     const run = data.testingPerfs.data.item;
     return (
       <>
@@ -95,6 +95,9 @@ const EditRunModal: React.FC<connectedProps> = (props: connectedProps) => {
             Run started on: {format(parseISO(run.startedAt), 'LLL do yyyy - HH:mm')}
           </Typography>
           <Grid container spacing={1} className={classes.gridRoot} justify="flex-start" alignItems="flex-start">
+            <Grid item xs={12}>
+              <Group />
+            </Grid>
             <Grid item xs={12}>
               <Analysis />
             </Grid>

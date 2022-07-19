@@ -190,3 +190,9 @@ cd zui; KEYCLOAK_DISABLED=true yarn run start:dev
 cd zqueue; yarn run start:dev
 
 ```
+
+Dump data between two nodes without using cluster sync:
+
+```
+elasticdump --input=http://localhost:10200/t_perfs_ --output=http://localhost:9200/t_perfs_
+```

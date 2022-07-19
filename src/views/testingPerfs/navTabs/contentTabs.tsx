@@ -27,8 +27,6 @@ const ContentTabs: React.FC<connectedProps> = (props: connectedProps) => {
     <Tabs value={selectedTab} onChange={handleChange} indicatorColor="primary" textColor="primary">
       <Tab label="Explore" value="explore" />
       <Tab label="Runs" value="runs" />
-      <Tab label="Analyze" value="analyze" />
-      <Tab label="Transactions" value="transactions" />
       <Tab label="List" value="list" />
     </Tabs>
   );

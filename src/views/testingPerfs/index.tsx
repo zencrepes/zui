@@ -14,7 +14,6 @@ import NavTabs from './navTabs';
 import Content from './content';
 import FacetsHoc from './facets';
 import Query from './query';
-import EditRunModal from './content/runs/content/summary/editRunModal';
 
 const GQL_GETCONFIG = loader('./getConfig.graphql');
 

@@ -1,8 +1,5 @@
 import React from 'react';
 
-import format from 'date-fns/format';
-import parseISO from 'date-fns/parseISO';
-
 import CustomCard from '../../../../../../../../components/customCard';
 
 import TableContainer from '@material-ui/core/TableContainer';
@@ -20,18 +17,27 @@ import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 import TrendingFlatIcon from '@material-ui/icons/TrendingFlat';
 
 import TransactionChart from './transactionChart';
+import SelectProfile from './selectProfile';
 
 interface Props {
   transaction: any;
   selectedRun: any;
   transactionMetrics: any;
   selectedRunProfile: string;
+  availableProfiles: string[];
+  setSelectedRunProfile: (value: string) => void;
 }
 
 const getTrend = (metric: any, transaction: any, selectedRun: any, compareType: string) => {
   const selectedTransactionIdx = transaction.runs.findIndex((t: any) => t.run.id === selectedRun.id);
   let currentValue = 0;
   let compareToValue = 0;
+
+  //Only compare if there are 5 runs in the dataset
+  if (transaction.runs.length < 5) {
+    return <TableCell key={metric.id} align="center"></TableCell>;
+  }
+
   if (compareType === 'run') {
     currentValue = transaction.runs[selectedTransactionIdx].statistics[metric.id];
     compareToValue = transaction.runs[selectedTransactionIdx].velocityStatistics[metric.id];
@@ -68,7 +74,14 @@ const getTrend = (metric: any, transaction: any, selectedRun: any, compareType: 
 };
 
 const Transaction: React.FC<Props> = (props: Props) => {
-  const { transaction, selectedRun, transactionMetrics, selectedRunProfile } = props;
+  const {
+    transaction,
+    selectedRun,
+    transactionMetrics,
+    selectedRunProfile,
+    availableProfiles,
+    setSelectedRunProfile,
+  } = props;
 
   // Append velocity data to the transaction
   const velocityWindow = 3;
@@ -90,14 +103,25 @@ const Transaction: React.FC<Props> = (props: Props) => {
     }),
   };
 
+  // This run get a grey circle in the chart
   const selectedTransactionRun = updatedTransaction.runs.find((t: any) => t.run.id === selectedRun.id);
 
   if (selectedTransactionRun === undefined) {
-    return null;
+    return <span>The selected run: {selectedRun.id} is not in the list of runs used for comparison</span>;
   }
 
   return (
-    <CustomCard headerTitle={transaction.name} headerFactTitle={'Profile: ' + selectedRunProfile} headerFactValue="">
+    <CustomCard
+      headerTitle={transaction.name}
+      headerFactTitle={
+        <SelectProfile
+          availableProfiles={availableProfiles}
+          selectedProfile={selectedRunProfile}
+          setSelectedRunProfile={setSelectedRunProfile}
+        />
+      }
+      headerFactValue=""
+    >
       <TableContainer>
         <Table aria-label="Metrics" size="small">
           <TableHead>

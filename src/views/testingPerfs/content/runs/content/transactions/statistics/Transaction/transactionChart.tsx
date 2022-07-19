@@ -1,6 +1,5 @@
 import React, { Component } from 'react'; // let's also import Component
 import { createStyles, withStyles } from '@material-ui/core/styles';
-import randomColor from 'randomcolor';
 
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';

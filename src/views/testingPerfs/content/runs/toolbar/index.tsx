@@ -22,8 +22,6 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 const Toolbar: React.FC<connectedProps> = (props: connectedProps) => {
   const { availableRuns, selectedRunId, setSelectedRunId } = props;
 
-  console.log(availableRuns);
-  console.log(selectedRunId);
   if (availableRuns.length === 0 || selectedRunId === '') {
     return null;
   }

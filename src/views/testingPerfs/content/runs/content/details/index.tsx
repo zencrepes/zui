@@ -47,7 +47,6 @@ const Details: React.FC<connectedProps> = (props: connectedProps) => {
     return null;
   }
 
-  console.log(selectedRunData);
   const availableProfiles = selectedRunData.runs.edges.map((r: any) => r.node.name);
 
   const profileData = selectedRunData.runs.edges

@@ -16,16 +16,19 @@ const mapState = (state: iRootState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   setSelectedRun: dispatch.testingPerfs.setSelectedRun,
+  setSelectedRunProfile: dispatch.testingPerfs.setSelectedRunProfile,
 });
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
 const Statistics: React.FC<connectedProps> = (props: connectedProps) => {
-  const { runs, selectedRunData, transactionMetrics, selectedRunProfile } = props;
+  const { runs, selectedRunData, transactionMetrics, selectedRunProfile, setSelectedRunProfile } = props;
 
   if (runs.length === 0 || selectedRunData.length === 0) {
     return null;
   }
+
+  const availableProfiles = selectedRunData.runs.edges.map((r: any) => r.node.name);
 
   // Create an Array of all available transactions across all runs
   const transactions = runs
@@ -98,6 +101,8 @@ const Statistics: React.FC<connectedProps> = (props: connectedProps) => {
               selectedRun={selectedRunData}
               transactionMetrics={transactionMetrics}
               selectedRunProfile={selectedRunProfile}
+              availableProfiles={availableProfiles}
+              setSelectedRunProfile={setSelectedRunProfile}
             />
           </Grid>
         ))}

@@ -4,6 +4,7 @@ query($id: String!) {
       item(id: $id) {
         id
         name
+        group
         description
         analysis
         startedAt

@@ -1,7 +1,7 @@
 query($query: String, $transactions: [String!], $profileName: String) {
   testingPerfs {
     data(query: $query) {
-      items(transactions: $transactions, profileName: $profileName) {
+      items(transactions: $transactions, profileName: $profileName, orderBy: { direction: desc, field: "startedAt" }) {
         nodes {
           id
           name

@@ -11,11 +11,10 @@ import Edit from './actions/edit';
 
 interface Props {
   run: any;
-  updateRunField: (field: string, value: any) => void;
 }
 
 const Analysis: React.FC<Props> = (props: Props) => {
-  const { run, updateRunField } = props;
+  const { run } = props;
 
   return (
     <CustomCard headerTitle="Run Description" headerFactTitle={<Edit run={run} />} headerFactValue="">

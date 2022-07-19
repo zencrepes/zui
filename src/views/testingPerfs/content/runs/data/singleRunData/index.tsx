@@ -30,7 +30,6 @@ const SingleRunData: React.FC<connectedProps> = (props: connectedProps) => {
 
   useEffect(() => {
     if (data !== undefined) {
-      console.log(data.testingPerfs.data.item);
       setSelectedRunData(data.testingPerfs.data.item);
     }
     if (loading) {

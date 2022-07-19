@@ -11,7 +11,7 @@ interface Props {
   run: any;
   verifyRun: any;
   unverifyRun: any;
-  updateRunField: any;
+  updateRunField: (content: { field: string; value: any }[]) => void;
 }
 
 const DatasetView: React.FC<Props> = (props: Props) => {
@@ -36,14 +36,14 @@ const DatasetView: React.FC<Props> = (props: Props) => {
             unverifyRun({
               variables: { id: run.id },
               update() {
-                updateRunField('verified', false);
+                updateRunField([{ field: 'verified', value: false }]);
               },
             });
           } else {
             verifyRun({
               variables: { id: run.id },
               update() {
-                updateRunField('verified', true);
+                updateRunField([{ field: 'verified', value: true }]);
               },
             });
           }

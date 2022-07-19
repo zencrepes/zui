@@ -43,15 +43,15 @@ const Summary: React.FC<connectedProps> = (props: connectedProps) => {
   }
 
   // Update the store state without reloading the data from the backend
-  const updateRunField = (field: string, value: any) => {
+  const updateRunField = (content: { field: string; value: any }[]) => {
     const newRunData = {
       ...selectedRunData,
     };
-    newRunData[field] = value;
+    for (const c of content) {
+      newRunData[c.field] = c.value;
+    }
     setSelectedRunData(newRunData);
   };
-
-  console.log(selectedRunData);
 
   return (
     <>
@@ -61,13 +61,13 @@ const Summary: React.FC<connectedProps> = (props: connectedProps) => {
           <Details run={selectedRunData} updateRunField={updateRunField} />
         </Grid>
         <Grid item xs={6} style={{ textAlign: 'left' }}>
-          <Analysis run={selectedRunData} updateRunField={updateRunField} />
+          <Analysis run={selectedRunData} />
         </Grid>
         <Grid item xs={6}>
           <Resources resources={selectedRunData.resources.edges} />
         </Grid>
         <Grid item xs={6} style={{ textAlign: 'left' }}>
-          <Description run={selectedRunData} updateRunField={updateRunField} />
+          <Description run={selectedRunData} />
         </Grid>
       </Grid>
     </>

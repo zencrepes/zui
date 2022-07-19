@@ -34,9 +34,12 @@ const AvailableRuns: React.FC<connectedProps> = (props: connectedProps) => {
       const runs = data.testingPerfs.data.items.nodes
         .slice()
         .sort((a: any, b: any) => new Date(a.startedAt).getTime() - new Date(b.startedAt).getTime());
-      console.log(runs);
       setAvailableRuns(runs);
-      setSelectedRunId(runs[runs.length - 1].id);
+      if (runs.length > 0) {
+        setSelectedRunId(runs[runs.length - 1].id);
+      } else {
+        setSelectedRunId('');
+      }
     }
     if (loading) {
       setLoading(true);

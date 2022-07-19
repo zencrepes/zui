@@ -9,6 +9,9 @@ query($id: String!) {
         verified
         verified_by
         verified_date
+        group
+        group_by
+        group_date
         analysis
         analysis_by
         analysis_date

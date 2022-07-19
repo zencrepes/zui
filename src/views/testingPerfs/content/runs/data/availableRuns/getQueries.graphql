@@ -1,7 +1,7 @@
 query($query: String) {
   testingPerfs {
     data(query: $query) {
-      items {
+      items(size: 1000) {
         nodes {
           id
           name

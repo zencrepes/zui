@@ -24,7 +24,7 @@ const mapDispatch = (dispatch: any) => ({
 
 interface Props {
   sourceRun: any;
-  updateRunField: (field: string, value: any) => void;
+  updateRunField: (content: { field: string; value: any }[]) => void;
 }
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;
@@ -40,9 +40,6 @@ const ApplyButton: React.FC<connectedProps> = (props: connectedProps) => {
     updateRunField,
   } = props;
 
-  console.log('sourceRun', sourceRun);
-  console.log('openEditRun', openEditRun);
-
   const [updateRun, { loading, error }] = useMutation(GQL_UPDATE_RUN);
 
   if (error) {
@@ -50,17 +47,20 @@ const ApplyButton: React.FC<connectedProps> = (props: connectedProps) => {
   }
 
   const applyChanges = () => {
-    console.log('apply');
     updateRun({
       variables: {
         id: openEditRun.id,
         username: username,
+        group: openEditRun.group,
         description: openEditRun.description,
         analysis: openEditRun.analysis,
       },
       update() {
-        updateRunField('analysis', openEditRun.analysis);
-        updateRunField('description', openEditRun.description);
+        updateRunField([
+          { field: 'group', value: openEditRun.group },
+          { field: 'analysis', value: openEditRun.analysis },
+          { field: 'description', value: openEditRun.description },
+        ]);
         setOpenEditRunModal(false);
         openEditRunOnSuccess();
       },
@@ -68,7 +68,11 @@ const ApplyButton: React.FC<connectedProps> = (props: connectedProps) => {
   };
 
   let contentUnmodified = true;
-  if (openEditRun.description !== sourceRun.description || openEditRun.analysis !== sourceRun.analysis) {
+  if (
+    openEditRun.description !== sourceRun.description ||
+    openEditRun.analysis !== sourceRun.analysis ||
+    openEditRun.group !== sourceRun.group
+  ) {
     contentUnmodified = false;
   }
 

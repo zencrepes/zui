@@ -13,20 +13,20 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import CustomCard from '../../../../../../components/customCard';
 
 import Download from './actions/download';
 import Verify from './actions/verify';
+import Edit from './actions/edit';
 
 const GQL_QUERY_UNVERIFY_RUN = loader('./actions/unverifyRun.graphql');
 const GQL_QUERY_VERIFY_RUN = loader('./actions/verifyRun.graphql');
 
 interface Props {
   run: any;
-  updateRunField: (field: string, value: any) => void;
+  updateRunField: (content: { field: string; value: any }[]) => void;
 }
 
 const Details: React.FC<Props> = (props: Props) => {
@@ -71,6 +71,12 @@ const Details: React.FC<Props> = (props: Props) => {
             <TableRow>
               <TableCell>Duration</TableCell>
               <TableCell>{run.duration}s</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Group</TableCell>
+              <TableCell>
+                {run.group} <Edit run={run} />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Platform</TableCell>

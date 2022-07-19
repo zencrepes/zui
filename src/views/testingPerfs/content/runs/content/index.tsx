@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { iRootState } from '../../../../../store';
-import { TableConfig } from '../../../../../global';
 
 import Summary from './summary';
 import Details from './details';

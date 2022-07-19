@@ -16,7 +16,7 @@ const mapDispatch = (dispatch: any) => ({
 });
 
 interface Props {
-  updateRunField: (field: string, value: any) => void;
+  updateRunField: (content: { field: string; value: any }[]) => void;
 }
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & Props;
