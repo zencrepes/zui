@@ -107,7 +107,11 @@ const Transaction: React.FC<Props> = (props: Props) => {
   const selectedTransactionRun = updatedTransaction.runs.find((t: any) => t.run.id === selectedRun.id);
 
   if (selectedTransactionRun === undefined) {
-    return <span>The selected run: {selectedRun.id} is not in the list of runs used for comparison</span>;
+    console.log(
+      `Unable to display transaction: ${transaction.name}, the selected run: ${selectedRun.id} is missing from the list of runs in for that transaction: `,
+      updatedTransaction,
+    );
+    return <> </>;
   }
 
   return (
