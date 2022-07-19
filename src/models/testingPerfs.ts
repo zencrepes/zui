@@ -15,10 +15,11 @@ interface TestingPerfs {
   effects: any;
 }
 
-const comparisonTableColumns = [
+const transactionMetrics = [
   {
     id: 'sampleCount',
     name: 'Samples',
+    metric: '',
     type: 'count',
     visible: true,
     description: 'Number of samples in the transaction',
@@ -26,6 +27,7 @@ const comparisonTableColumns = [
   {
     id: 'errorCount',
     name: 'Errors',
+    metric: '',
     type: 'count',
     visible: true,
     description: 'Number of samples in the transaction that resulted in an error',
@@ -33,6 +35,7 @@ const comparisonTableColumns = [
   {
     id: 'errorPct',
     name: 'Error %',
+    metric: '%',
     type: 'count',
     visible: false,
     description: 'Percentage of the samples in the transaction transaction which returned an error',
@@ -40,6 +43,7 @@ const comparisonTableColumns = [
   {
     id: 'minResTime',
     name: 'Min',
+    metric: 'ms',
     type: 'responseTime',
     visible: false,
     description: 'Lowest response time across all samples of the transaction',
@@ -47,6 +51,7 @@ const comparisonTableColumns = [
   {
     id: 'maxResTime',
     name: 'Max',
+    metric: 'ms',
     type: 'responseTime',
     visible: false,
     description: 'Highest response time across all samples of the transaction',
@@ -54,21 +59,24 @@ const comparisonTableColumns = [
   {
     id: 'meanResTime',
     name: 'Mean',
+    metric: 'ms',
     type: 'responseTime',
-    visible: true,
+    visible: false,
     description: 'The average response time across all samples of the transaction',
   },
   {
     id: 'medianResTime',
     name: 'Median',
+    metric: 'ms',
     type: 'responseTime',
-    visible: false,
+    visible: true,
     description:
       'Number which divides the samples into two equal halves. Half of the smaples are higher than this value while the other half is lower',
   },
   {
     id: 'pct1ResTime',
     name: '90%',
+    metric: 'ms',
     type: 'responseTime',
     visible: true,
     description: '90% of the samples are below that value',
@@ -76,6 +84,7 @@ const comparisonTableColumns = [
   {
     id: 'pct2ResTime',
     name: '95%',
+    metric: 'ms',
     type: 'responseTime',
     visible: true,
     description: '95% of the samples are below that value',
@@ -83,6 +92,7 @@ const comparisonTableColumns = [
   {
     id: 'pct3ResTime',
     name: '99%',
+    metric: 'ms',
     type: 'responseTime',
     visible: true,
     description: '99% of the samples are below that value',
@@ -90,6 +100,7 @@ const comparisonTableColumns = [
   {
     id: 'throughput',
     name: 'Throughput',
+    metric: 'q/s',
     type: 'count',
     visible: true,
     description: 'Number of samples processsed per second across the transaction',
@@ -100,11 +111,19 @@ export const testingPerfs: TestingPerfs = {
   state: {
     log: {},
     loading: false,
-    selectedTab: 'explore',
+    selectedTab: 'runs',
     dataset: 'testingPerfs',
 
     query: {},
     queries: [],
+    availableRuns: [],
+    selectedRunId: '',
+    selectedRunTab: 'summary',
+
+    runs: [],
+    selectedRun: {},
+    selectedRunData: {},
+    selectedRunProfile: '',
 
     analyzeSelectedRunId: '',
 
@@ -114,7 +133,9 @@ export const testingPerfs: TestingPerfs = {
     tablePaginationLimit: 25,
     defaultPoints: false,
 
-    comparisonTableColumns: comparisonTableColumns,
+    transactionMetrics: transactionMetrics,
+
+    comparisonTableColumns: transactionMetrics,
     comparisonTableHideCompare: false,
     compareAvailableQueries: [],
     compareAvailableProfiles: [],
@@ -149,6 +170,9 @@ export const testingPerfs: TestingPerfs = {
     },
     setSelectedTab(state: any, payload: any) {
       return { ...state, selectedTab: payload };
+    },
+    setSelectedRunTab(state: any, payload: any) {
+      return { ...state, selectedRunTab: payload };
     },
     setAnalyzeSelectedRunId(state: any, payload: any) {
       return { ...state, analyzeSelectedRunId: payload };
@@ -230,6 +254,24 @@ export const testingPerfs: TestingPerfs = {
     },
     setOpenEditRunOnFailure(state: any, payload: any) {
       return { ...state, openEditRunOnFailure: payload };
+    },
+    setAvailableRuns(state: any, payload: any) {
+      return { ...state, availableRuns: payload };
+    },
+    setRuns(state: any, payload: any) {
+      return { ...state, runs: payload };
+    },
+    setSelectedRun(state: any, payload: any) {
+      return { ...state, selectedRun: payload };
+    },
+    setSelectedRunId(state: any, payload: any) {
+      return { ...state, selectedRunId: payload };
+    },
+    setSelectedRunData(state: any, payload: any) {
+      return { ...state, selectedRunData: payload };
+    },
+    setSelectedRunProfile(state: any, payload: any) {
+      return { ...state, selectedRunProfile: payload };
     },
   },
   effects: (dispatch: Dispatch) => ({

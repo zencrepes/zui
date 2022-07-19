@@ -1,0 +1,72 @@
+query($id: String!) {
+  testingPerfs {
+    data {
+      item(id: $id) {
+        id
+        name
+        startedAt
+        duration
+        verified
+        verified_by
+        verified_date
+        group
+        group_by
+        group_date
+        analysis
+        analysis_by
+        analysis_date
+        description
+        description_by
+        description_date
+        url
+        platform {
+          vendor
+          tenant
+          region
+        }
+        resources {
+          edges {
+            node {
+              id
+              name
+              image
+              size
+            }
+          }
+        }
+        runs {
+          edges {
+            node {
+              id
+              name
+              userCount
+              statistics {
+                transaction
+                sampleCount
+                errorCount
+                errorPct
+                meanResTime
+                medianResTime
+                minResTime
+                maxResTime
+                pct1ResTime
+                pct2ResTime
+                pct3ResTime
+                throughput
+                receivedKBytesPerSec
+                sentKBytesPerSec
+              }
+            }
+          }
+        }
+        tags {
+          edges {
+            node {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
