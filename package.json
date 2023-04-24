@@ -47,7 +47,7 @@
     "cytoscape-popper": "^1.0.7",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.10",
-    "dexie": "^3.0.2",
+    "dexie": "^3.2.2",
     "graphql": "^15.3.0",
     "graphql.macro": "^1.4.2",
     "jsoneditor": "^9.0.4",
