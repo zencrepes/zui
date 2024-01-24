@@ -32,37 +32,48 @@ class TransactionChart extends Component<any, any> {
   };
 
   buildChart = () => {
-    const { transaction, metricId, transactionMetrics, selectedRun } = this.props;
+    const { transaction, metricId, transactionMetrics, selectedRun, runsWithShapes } = this.props;
 
     const transactionDetails = transactionMetrics.find((t: any) => t.id === metricId);
+
+    const dataPoints = runsWithShapes.map((r: any) => {
+      return {
+        type: 'line',
+        pointRadius: 4,
+        showLine: false,
+        label: r.name,
+        data: transaction.runs.map((ru: any) => {
+          if (ru.run.name !== r.name) {
+            return null;
+          }
+          return Math.round(ru.statistics[metricId] * 10) / 10;
+        }),
+        pointStyle: r.shape,
+        backgroundColor: r.color,
+        borderColor: r.color,
+        fill: false,
+      };
+    });
 
     const chartData = {
       datasets: [
         {
           type: 'line',
           pointRadius: 2,
-          label: transactionDetails.name,
+          label: 'Rolling Average',
           data: transaction.runs.map((r: any) => Math.round(r.velocityStatistics[metricId] * 10) / 10),
           backgroundColor: 'rgb(255, 99, 132)', // Red
           borderColor: 'rgb(255, 99, 132)', // Red
           fill: false,
         },
-        {
-          type: 'line',
-          borderColor: 'rgb(54, 162, 235)', // Blue
-          pointRadius: 4,
-          label: transactionDetails.name,
-          data: transaction.runs.map((r: any) => Math.round(r.statistics[metricId] * 10) / 10),
-          backgroundColor: 'rgb(54, 162, 235)', // Blue
-          showLine: false,
-        },
+        ...dataPoints,
         {
           // This is used to place a circle around the run currently selected
           type: 'line',
           pointRadius: 10,
           pointBorderColor: 'rgb(224, 224, 224)', // Grey
           pointBorderWidth: 3,
-          label: transactionDetails.name,
+          label: 'Current',
           data: transaction.runs.map((r: any) => {
             if (r.run.id === selectedRun.id) {
               return Math.round(r.statistics[metricId] * 10) / 10;
@@ -87,7 +98,7 @@ class TransactionChart extends Component<any, any> {
       data: chartData,
       options: {
         legend: {
-          display: false,
+          display: true,
         },
         title: {
           display: true,

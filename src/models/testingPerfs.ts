@@ -121,6 +121,8 @@ export const testingPerfs: TestingPerfs = {
     selectedRunTab: 'summary',
 
     runs: [],
+    // Maximum number of runs to display in the transactions table
+    maxRunsCount: 100,
     selectedRun: {},
     selectedRunData: {},
     selectedRunProfile: '',
@@ -260,6 +262,9 @@ export const testingPerfs: TestingPerfs = {
     },
     setRuns(state: any, payload: any) {
       return { ...state, runs: payload };
+    },
+    setMaxRunsCount(state: any, payload: any) {
+      return { ...state, maxRunsCount: payload };
     },
     setSelectedRun(state: any, payload: any) {
       return { ...state, selectedRun: payload };
