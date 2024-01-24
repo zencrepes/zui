@@ -10,6 +10,7 @@ const GQL_QUERY = loader('./getQueries.graphql');
 const mapState = (state: iRootState) => ({
   query: state.testingPerfs.query,
   selectedRunProfile: state.testingPerfs.selectedRunProfile,
+  maxRunsCount: state.testingPerfs.maxRunsCount,
 });
 
 const mapDispatch = (dispatch: any) => ({
@@ -19,13 +20,14 @@ const mapDispatch = (dispatch: any) => ({
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
 const Profiles: React.FC<connectedProps> = (props: connectedProps) => {
-  const { setRuns, query, selectedRunProfile } = props;
+  const { setRuns, query, selectedRunProfile, maxRunsCount } = props;
 
   const { data } = useQuery(GQL_QUERY, {
     variables: {
       query: JSON.stringify(query),
       transactions: ['*'],
       profileName: selectedRunProfile,
+      maxRunsSize: maxRunsCount,
     },
     fetchPolicy: 'network-only',
   });

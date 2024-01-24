@@ -26,6 +26,7 @@ interface Props {
   selectedRunProfile: string;
   availableProfiles: string[];
   setSelectedRunProfile: (value: string) => void;
+  runsWithShapes: { name: string; shape: string; color: string }[];
 }
 
 const getTrend = (metric: any, transaction: any, selectedRun: any, compareType: string) => {
@@ -35,6 +36,14 @@ const getTrend = (metric: any, transaction: any, selectedRun: any, compareType: 
 
   //Only compare if there are 5 runs in the dataset
   if (transaction.runs.length < 5) {
+    return <TableCell key={metric.id} align="center"></TableCell>;
+  }
+
+  //Do not compare if some metrics are not available
+  if (
+    transaction.runs[selectedTransactionIdx] === undefined ||
+    transaction.runs[selectedTransactionIdx - 5] === undefined
+  ) {
     return <TableCell key={metric.id} align="center"></TableCell>;
   }
 
@@ -81,6 +90,7 @@ const Transaction: React.FC<Props> = (props: Props) => {
     selectedRunProfile,
     availableProfiles,
     setSelectedRunProfile,
+    runsWithShapes,
   } = props;
 
   // Append velocity data to the transaction
@@ -179,6 +189,7 @@ const Transaction: React.FC<Props> = (props: Props) => {
             selectedRun={selectedRun}
             transactionMetrics={transactionMetrics}
             metricId={'medianResTime'}
+            runsWithShapes={runsWithShapes}
           />
         </Grid>
         <Grid item xs={4}>
@@ -187,6 +198,7 @@ const Transaction: React.FC<Props> = (props: Props) => {
             selectedRun={selectedRun}
             transactionMetrics={transactionMetrics}
             metricId={'pct1ResTime'}
+            runsWithShapes={runsWithShapes}
           />
         </Grid>
         <Grid item xs={4}>
@@ -195,6 +207,7 @@ const Transaction: React.FC<Props> = (props: Props) => {
             selectedRun={selectedRun}
             transactionMetrics={transactionMetrics}
             metricId={'pct2ResTime'}
+            runsWithShapes={runsWithShapes}
           />
         </Grid>
       </Grid>

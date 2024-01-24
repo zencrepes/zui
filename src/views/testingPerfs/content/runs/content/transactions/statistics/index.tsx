@@ -30,6 +30,37 @@ const Statistics: React.FC<connectedProps> = (props: connectedProps) => {
 
   const availableProfiles = selectedRunData.runs.edges.map((r: any) => r.node.name);
 
+  // As per: https://www.chartjs.org/docs/2.9.4/configuration/elements.html#point-styles
+  const charJsDotShapes = [
+    { shape: 'circle', color: 'rgb(54, 162, 235)' },
+    { shape: 'triangle', color: 'rgb(255, 152, 0)' },
+    { shape: 'rect', color: 'rgb(76, 175, 80)' },
+    { shape: 'rectRounded', color: 'rgb(63, 81, 181)' },
+    { shape: 'rectRot', color: 'rgb(156, 39, 176)' },
+    { shape: 'cross', color: 'rgb(205, 220, 57)' },
+    { shape: 'crossRot', color: 'rgb(255, 172, 51)' },
+    { shape: 'star', color: 'rgb(213, 0, 249)' },
+    { shape: 'line', color: 'rgb(178, 135, 4)' },
+  ];
+
+  const runsWithShapes = runs.reduce((acc: any[], r: any) => {
+    if (acc.find((ru) => ru.name === r.name) === undefined) {
+      if (charJsDotShapes[acc.length] === undefined) {
+        acc.push({
+          shape: 'dash',
+          color: 'rgb(165, 42, 42)',
+          name: r.name,
+        });
+      } else {
+        acc.push({
+          ...charJsDotShapes[acc.length],
+          name: r.name,
+        });
+      }
+    }
+    return acc;
+  }, []);
+
   // Create an Array of all available transactions across all runs
   const transactions = runs
     .reduce((acc: any[], r: any) => {
@@ -39,6 +70,7 @@ const Statistics: React.FC<connectedProps> = (props: connectedProps) => {
             name: stat.transaction,
             run: {
               id: r.id,
+              name: r.name,
               profile: profile.node.name,
               startedAt: r.startedAt,
             },
@@ -98,6 +130,7 @@ const Statistics: React.FC<connectedProps> = (props: connectedProps) => {
             <Transaction
               key={t.name}
               transaction={t}
+              runsWithShapes={runsWithShapes}
               selectedRun={selectedRunData}
               transactionMetrics={transactionMetrics}
               selectedRunProfile={selectedRunProfile}

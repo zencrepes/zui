@@ -1,7 +1,7 @@
-query($query: String) {
+query($query: String, $maxRunsSize: Int) {
   testingPerfs {
     data(query: $query) {
-      items(size: 1000) {
+      items(size: $maxRunsSize, orderBy: { direction: desc, field: "startedAt" }) {
         nodes {
           id
           name
