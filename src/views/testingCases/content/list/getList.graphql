@@ -1,0 +1,22 @@
+query($from: Int, $size: Int, $query: String, $sortField: String, $sortDirection: OrderDirection!) {
+  dataset: testingCases {
+    data(query: $query) {
+      count
+      items(from: $from, size: $size, orderBy: { direction: $sortDirection, field: $sortField }) {
+        totalCount
+        nodes {
+          id
+          createdAt
+          name
+          suite
+          jahia
+          module
+          full
+          state
+          url
+          duration
+        }
+      }
+    }
+  }
+}

@@ -17,6 +17,7 @@ import { circleciPipelines } from './circleciPipelines';
 import { circleciInsights } from './circleciInsights';
 import { testingStates } from './testingStates';
 import { testingRuns } from './testingRuns';
+import { testingCases } from './testingCases';
 import { testingPerfs } from './testingPerfs';
 import { bambooRuns } from './bambooRuns';
 
@@ -40,6 +41,7 @@ export interface RootModel {
   circleciInsights: typeof circleciInsights;
   testingStates: typeof testingStates;
   testingRuns: typeof testingRuns;
+  testingCases: typeof testingCases;
   testingPerfs: typeof testingPerfs;
   bambooRuns: typeof bambooRuns;
 }
@@ -64,6 +66,7 @@ export const models: RootModel = {
   circleciInsights,
   testingStates,
   testingRuns,
+  testingCases,
   testingPerfs,
   bambooRuns,
 };

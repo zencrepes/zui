@@ -186,8 +186,8 @@ cd zqueue; yarn run start:dev
 
 Without Keycloak:
 cd zapi; KEYCLOAK_DISABLED=true yarn run start:dev
-cd zui; KEYCLOAK_DISABLED=true yarn run start:dev
-cd zqueue; yarn run start:dev
+cd zui; NODE_OPTIONS=--openssl-legacy-provider KEYCLOAK_DISABLED=true yarn run start:dev
+cd zqueue; NODE_OPTIONS=--openssl-legacy-provider yarn run start:dev
 
 ```
 

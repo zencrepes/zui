@@ -1,0 +1,24 @@
+query($query: String, $aggOptionsAllCases: String, $aggOptionsFailedCases: String) {
+  testingCases {
+    data(query: $query) {
+      allCases: aggregations(field: "createdAt", aggType: "date_histogram", aggOptions: $aggOptionsAllCases) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          moving
+          sum
+        }
+      }
+      failedCases: aggregations(field: "createdAt", aggType: "date_histogram", aggOptions: $aggOptionsFailedCases) {
+        buckets {
+          keyAsString
+          key
+          docCount
+          moving
+          sum
+        }
+      }
+    }
+  }
+}

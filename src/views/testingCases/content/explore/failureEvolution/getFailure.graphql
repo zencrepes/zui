@@ -1,0 +1,25 @@
+query($query: String, $interval: String) {
+  testingCases {
+    data(query: $query) {
+      failurerate(interval: $interval, buckets: 50) {
+        field
+        fromDateStart
+        toDateStart
+        buckets {
+          key
+          docCount
+          caseFailureRate
+          caseTotal
+          caseTotalAvg
+          buckets {
+            dateStart
+            docCount
+            caseFailureRate
+            caseTotal
+            caseTotalAvg
+          }
+        }
+      }
+    }
+  }
+}
